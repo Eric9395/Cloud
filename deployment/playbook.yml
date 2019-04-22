@@ -1,0 +1,6 @@
+---
+- name: Install packages
+  hosts: client
+  become: yes
+  roles:
+     - common
