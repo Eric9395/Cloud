@@ -1,5 +1,5 @@
 ---
-
+# Security group
 - name: Create a security group
   os_security_group:
     name: '{{ item.name }}'

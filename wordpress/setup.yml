@@ -1,0 +1,158 @@
+---
+- hosts: client
+  vars_files: vars.yml
+  tasks:
+    - name: Gather facts of remote host
+      setup:
+        gather_subset: all
+
+    - name: Install all dependencies
+      tags: always
+      become: yes
+      apt:
+        name: ['apt-transport-https', 'build-essential', 'ca-certificates', 'curl', 'git', 'python-pip']
+        state: latest
+        install_recommends: no
+        update_cache: yes
+
+    - name: Update pip
+      tags: always
+      become: yes
+      pip:
+        name: ['pip']
+        state: latest
+
+    # docker
+    - name: Uninstall old versions of docker
+      tags: 'docker'
+      become: yes
+      apt:
+        name: ['docker', 'docker-engine', 'docker.io']
+        state: absent
+
+    - name: Install dependencies
+      tags: 'docker'
+      become: yes
+      apt:
+        name: ['apt-transport-https', 'ca-certificates', 'curl', 'python-setuptools', 'software-properties-common']
+        state: latest
+        install_recommends: no
+        update_cache: yes
+
+    - name: Add Docker apt reporsitory key
+      tags: 'docker'
+      become: yes
+      apt_key:
+        url: https://download.docker.com/linux/ubuntu/gpg
+        state: present
+
+    - name: Add Docker apt repository and update apt update cache
+      tags: 'docker'
+      become: yes
+      apt_repository:
+        repo: "deb [arch=amd64] https://download.docker.com/linux/ubuntu bionic stable"
+        # repo: "deb https://download.docker.com/linux/{{ ansible_distribution|lower }} {{ ansible_distribution_release -cs}}"
+        mode: '644'
+        update_cache: yes
+        state: present
+
+    - name: Install Docker
+      tags: 'docker'
+      become: yes
+      apt:
+        name: ['docker-ce']
+        state: latest
+        install_recommends: no
+        update_cache: yes
+
+    - name: Install docker-compose
+      tags: 'docker'
+      become: yes
+      pip:
+        name: ['docker-compose']
+        # 'pull' issue: https://github/com/ansible/ansible/issues/47978
+        version: 1.22.0
+        state: present
+
+    # volumes
+    - name: Install dependencies
+      tags: 'volumes'
+      become: yes
+      apt:
+        name: ['xfsprogs']
+        state: latest
+        install_recommends: no
+        update_cache: yes
+
+    - name: Make file system
+      tags: 'volumes'
+      become: yes
+      filesystem:
+        fstype: xfs
+        dev: "{{ item.device }}"
+      when: item.device is defined
+      with_items:
+        - "{{ volumes }}"
+
+    - name: Checking folers
+      tags: 'volumes'
+      become: yes
+      stat:
+        path: "{{ item.mountpoint }}"
+      register: directory_stats
+      with_items:
+        - "{{ volumes }}"
+
+    # check mountpoint, if not exist, then create one
+    - name: Create directory
+      tags: 'volumes'
+      become: yes
+      file:
+        path: "{{ item.item.mountpoint }}"
+        recurse: yes
+        state: directory
+      when: item.stat.exists == false
+      with_items:
+        - "{{ directory_stats.results }}"
+
+    - name: Mount device
+      tags: 'volumes'
+      become: yes
+      mount:
+        path: "{{ item.mountpoint }}"
+        src: "{{ item.device }}"
+        fstype: xfs
+        state: mounted
+      when: item.device is defined
+      with_items:
+        - "{{ volumes }}"
+
+    # Wordpress
+    - name: Create Wordpress directory
+      tags: 'wordpress'
+      become: yes
+      file:
+        path: "{{ wp_dir }}"
+        owner: "{{ ansible_user }}"
+        group: "{{ ansible_user }}"
+        recurse: yes
+        state: directory
+
+    - name: Configure compose
+      tags: 'wordpress'
+      become: yes
+      template:
+        src: docer-compose.yml.j2
+        dest: "{{ wp_dir }}/docker-compose.yml"
+        owner: "{{ ansible_user }}"
+        group: "{{ ansible_user }}"
+
+    - name: Run docker compose
+      tags: 'wordpress'
+      become: yes
+      docker_service:
+        project_src: "{{ wp_dir }}"
+        pull: yes
+        state: present
+        remove_orphans: yes
+        recreate: always
