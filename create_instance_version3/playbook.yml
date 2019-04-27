@@ -1,0 +1,13 @@
+- name: Create an instance on nectar
+  hosts: localhost
+  vars_files:
+    - host_vars/vars.yml
+  gather_facts: true
+
+  roles:
+    - role: common
+    - role: images
+    - role: volume
+    - role: security_group
+    - role: instance
+    - role: volume_snapshot

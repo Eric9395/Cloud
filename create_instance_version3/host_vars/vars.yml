@@ -1,0 +1,32 @@
+# These are common variables for the instances of nectar
+availability_zone: melbourne-qh2-uom
+
+#Volume
+volumes:
+  - vol_name: demo1
+    vol_size: 10
+  - vol_name: demo2
+    vol_size: 10
+
+#Security group
+# if want only access from the unimelb
+# we can the ip address to 128.250.0.0/16
+security_groups:
+  - name: demo_ssh
+    description: "This is the demo of the instance security:: TCP"
+    protocol: tcp
+    port_range_min: 22
+    port_range_max: 22
+    remote_ip_prefix: 0.0.0.0/0
+  - name: demo_http
+    description: "This is the demo the instance security:: HTTP"
+    protocol: tcp
+    port_range_min: 80
+    port_range_max: 443
+    remote_ip_prefix: 0.0.0.0/0
+
+instance_name: demo
+instance_image: 955a0556-1224-4499-a895-87d54d5cbf32
+#instance_image: 0a2bac09-8beb-464a-9cbc-6adf4dfcd5e5
+instance_key_name: testKeypair
+instance_flavor: uom.general.2c8g
