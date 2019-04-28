@@ -1,0 +1,5 @@
+The project is run by the command: sh run_setup.sh
+However, you may encounter a problem like invalid_key_name: http 400 .
+This is because in openstack, when you want launch an instane, you should be the user who create the key. So in order to run the code,
+you should create your own key and import it to nectar cloud. Then change the insance_key_name variable use the key you created. The 
+file is host_vars/vars.yml.
