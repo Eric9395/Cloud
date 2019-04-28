@@ -10,5 +10,4 @@
 
 - name: Install openstacksdk
   become: yes
-  command: pip3 install python-openstackclient
-
+  command: pip3 install python3-openstackclient
