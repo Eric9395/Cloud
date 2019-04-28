@@ -4,26 +4,27 @@ import time
 import sys
 
 
-def save_data(data):
+def initial_database(database_name):
+    global server, tweets_db
     server = couchdb.Server('http://Admin:admin@127.0.0.1:5984/')
-    tweets_db = server['tweets_new']
-    tweets_db.save(data)
+    try:
+        tweets_db = server[database_name]
+    except couchdb.http.ResourceNotFound as e:
+        server.create(database_name)
+        tweets_db = server[database_name]
 
 
 def deal_with_tweets(tweet, tweet_id,queries_count,user_ids):
     tweet_id.append(tweet.id)
     print(queries_count, tweet)
-    user_ids.add(tweet._json['user']['id_str'])
-    tweet._json['_id'] = tweet.id_str
-    save_data(tweet._json)
+    user_ids.add(str(tweet._json['user']['id']))
+    tweet._json['_id'] = str(tweet.id)
+    tweets_db.save(tweet._json)
     return tweet_id, user_ids
 
 
 def get_tweet(consumer_key, consumer_secret, access_token, access_token_secret, interested_city):
-    # consumer_key = 'Zf28oOjHPsWlCgZ0n9TF42XDg'
-    # consumer_secret = 'jnWreweMUzZwSYRlL5hAEqpGGIO8DMVMAhtRqOG7fmiTHzM3bN'
-    # access_token = '1119421816508825600-eEehgx2JYnp8frBiNJCMrTxdEdaCps'
-    # access_token_secret = 'u16kBCbFQwl0kCOkFGTMoM4oEmRHGuP4FBsbXp0kv3NHC'
+    total_count = 0
     auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
     auth.set_access_token(access_token, access_token_secret)
 
@@ -49,14 +50,16 @@ def get_tweet(consumer_key, consumer_secret, access_token, access_token_secret, 
                         tweet_id, user_ids = deal_with_tweets(tweet, tweet_ids,queries_count,user_ids)
                         count+=1
                     max_id = min(tweet_ids)
-                    print(count)
+                    total_count += count
+                    print(total_count, count)
                 else:
                     count = 0
                     for tweet in api.search(q="place:%s" % place_id[1], count=100, max_id=max_id-1):
                         tweet_id, user_ids = deal_with_tweets(tweet, tweet_ids,queries_count,user_ids)
                         count += 1
                     max_id = min(tweet_ids)
-                    print(count)
+                    total_count += count
+                    print(total_count, count)
                 if count == 0:
                     break
                 queries_count += 1
@@ -69,12 +72,22 @@ def get_tweet(consumer_key, consumer_secret, access_token, access_token_secret, 
                 continue
 
     for user_id in user_ids:
-        for tweet in api.user_timeline(user_id=user_id, count=100):
-            print(user_id, tweet)
-            save_data(tweet._json)
+        user_tweet_count = 0
+        try:
+            for tweet in api.user_timeline(user_id=user_id, count=100):
+                print(user_id, tweet)
+                tweets_db.save(tweet._json)
+                user_tweet_count += 1
+            total_count += user_tweet_count
+            print(total_count, user_tweet_count)
+        except tweepy.error.TweepError as e:
+            print(e)
+            continue
+    return total_count
 
 
 def main(argv):
+    global server
     if len(argv) < 5:
         print('command: <consumer_key> <consumer_secret> <access_token> '
               '<access_token_secret> <interested_city> <database_name>')
@@ -85,7 +98,9 @@ def main(argv):
     access_token_secret = argv[3]
     interested_city = argv[4]
     database_name = argv[5]
-    get_tweet(consumer_key, consumer_secret, access_token, access_token_secret, interested_city)
+    initial_database(database_name)
+    total_count = get_tweet(consumer_key, consumer_secret, access_token, access_token_secret, interested_city)
+    print('Get', total_count, 'tweets')
 
 
 if __name__ == '__main__':
