@@ -4,9 +4,9 @@ import time
 import sys
 
 
-def initial_database(database_name):
+def initial_database(couchdb_username, couchdb_password, database_name):
     global server, tweets_db
-    server = couchdb.Server('http://Admin:admin@127.0.0.1:5984/')
+    server = couchdb.Server('http://'+couchdb_username+':'+couchdb_password+'@127.0.0.1:5984/')
     try:
         tweets_db = server[database_name]
     except couchdb.http.ResourceNotFound as e:
@@ -94,17 +94,20 @@ def get_tweet(consumer_key, consumer_secret, access_token, access_token_secret, 
 
 
 def main(argv):
-    if len(argv) < 6:
+    if len(argv) < 8:
         print('command: <consumer_key> <consumer_secret> <access_token> '
-              '<access_token_secret> <interested_city> <database_name>')
+              '<access_token_secret> <interested_city> <couchdb_username> <couchdb_password> <database_name>')
         sys.exit(2)
     consumer_key = argv[0]
     consumer_secret = argv[1]
     access_token = argv[2]
     access_token_secret = argv[3]
     interested_city = argv[4]
-    database_name = argv[5]
-    initial_database(database_name)
+    couchdb_username = argv[5]
+    couchdb_password = argv[6]
+    database_name = argv[7]
+    initial_database(couchdb_username, couchdb_password, database_name)
+
     total_count = get_tweet(consumer_key, consumer_secret, access_token, access_token_secret, interested_city)
     print('Get', total_count, 'tweets')
 

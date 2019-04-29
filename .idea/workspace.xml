@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="7cb2a335-b854-4094-b959-d02941aade63" name="Default Changelist" comment="First test code.">
-      <change afterPath="$PROJECT_DIR$/test.py" afterDir="false" />
+    <list default="true" id="7cb2a335-b854-4094-b959-d02941aade63" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/clawer.py" beforeDir="false" afterPath="$PROJECT_DIR$/clawer.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test.py" beforeDir="false" afterPath="$PROJECT_DIR$/test.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -17,11 +17,20 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/clawer.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-550">
-              <caret line="29" column="17" lean-forward="true" selection-start-line="29" selection-start-column="17" selection-end-line="29" selection-end-column="17" />
+            <state relative-caret-position="-1742">
+              <caret line="20" lean-forward="true" selection-start-line="20" selection-end-line="20" />
               <folding>
                 <element signature="e#0#14#0" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/test.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="66">
+              <caret line="3" column="55" selection-start-line="3" selection-start-column="55" selection-end-line="3" selection-end-column="55" />
             </state>
           </provider>
         </entry>
@@ -33,18 +42,6 @@
               <caret line="81" lean-forward="true" selection-start-line="81" selection-end-line="81" />
               <folding>
                 <element signature="e#0#11#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/test.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="110">
-              <caret line="29" column="17" selection-start-line="29" selection-start-column="17" selection-end-line="29" selection-end-column="17" />
-              <folding>
-                <element signature="e#0#14#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -130,7 +127,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Python.clawer">
+  <component name="RunManager" selected="Python.test">
     <configuration name="Clawer" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="CCC_ass2" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -223,9 +220,9 @@
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Python.test" />
         <item itemvalue="Python.clawer" />
         <item itemvalue="Python.score" />
-        <item itemvalue="Python.test" />
         <item itemvalue="Python.Clawer" />
       </list>
     </recent_temporary>
@@ -269,7 +266,21 @@
       <option name="project" value="LOCAL" />
       <updated>1556418630759</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="fix bug ,which is when conflicts occur, the program do not update max_id">
+      <created>1556498291200</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1556498291200</updated>
+    </task>
+    <task id="LOCAL-00006" summary="fix bug ,command length">
+      <created>1556502532220</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1556502532220</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -281,8 +292,8 @@
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
-      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.49867898" weight="0.34135976" />
-      <window_info active="true" anchor="bottom" id="Debug" order="3" visible="true" weight="0.20254958" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" sideWeight="0.49867898" visible="true" weight="0.21388102" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.21388102" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />
@@ -299,7 +310,9 @@
     <MESSAGE value="First test code." />
     <MESSAGE value="optimize the algorithm of getting tweets,including place-based and user-based" />
     <MESSAGE value="stable and mature version" />
-    <option name="LAST_COMMIT_MESSAGE" value="stable and mature version" />
+    <MESSAGE value="fix bug ,which is when conflicts occur, the program do not update max_id" />
+    <MESSAGE value="fix bug ,command length" />
+    <option name="LAST_COMMIT_MESSAGE" value="fix bug ,command length" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -308,11 +321,6 @@
           <url>file://D:/墨大/COMP90024-Cluster and Cloud Computing/Assignment 1/Zixuan-Zhang-846305/test.py</url>
           <line>10</line>
           <option name="timeStamp" value="11" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/test.py</url>
-          <line>30</line>
-          <option name="timeStamp" value="14" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
@@ -437,18 +445,15 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/test.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="110">
-          <caret line="29" column="17" selection-start-line="29" selection-start-column="17" selection-end-line="29" selection-end-column="17" />
-          <folding>
-            <element signature="e#0#14#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="66">
+          <caret line="3" column="55" selection-start-line="3" selection-start-column="55" selection-end-line="3" selection-end-column="55" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/clawer.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-550">
-          <caret line="29" column="17" lean-forward="true" selection-start-line="29" selection-start-column="17" selection-end-line="29" selection-end-column="17" />
+        <state relative-caret-position="-1742">
+          <caret line="20" lean-forward="true" selection-start-line="20" selection-end-line="20" />
           <folding>
             <element signature="e#0#14#0" expanded="true" />
           </folding>
