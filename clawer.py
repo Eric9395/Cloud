@@ -71,7 +71,7 @@ def get_tweet(consumer_key, consumer_secret, access_token, access_token_secret, 
                 queries_count += 1
             except tweepy.error.RateLimitError as e:
                 print(e)
-                time.sleep(60)
+                time.sleep(900)
                 continue
 
 
@@ -94,8 +94,7 @@ def get_tweet(consumer_key, consumer_secret, access_token, access_token_secret, 
 
 
 def main(argv):
-    global server
-    if len(argv) < 5:
+    if len(argv) < 6:
         print('command: <consumer_key> <consumer_secret> <access_token> '
               '<access_token_secret> <interested_city> <database_name>')
         sys.exit(2)
