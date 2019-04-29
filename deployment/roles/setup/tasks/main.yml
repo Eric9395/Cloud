@@ -3,11 +3,13 @@
 - name: Create directory
   become: yes
   file:
-    path: "/home/{{ ansible_user }}/setup"
+    path: "/home/{{ ansible_user }}/{{ item }}"
     state: directory
     mode: 0755
     owner: "{{ ansible_user }}"
     group: "{{ ansible_user }}"
+  with_items:
+    - setup
 
 - name: Copy setup file to remote
   become: yes
@@ -17,3 +19,15 @@
     mode: 0744
     owner: "{{ ansible_user }}"
     group: "{{ ansible_user }}"
+
+- name: Copy html to remote
+  become: yes
+  synchronize:
+    src: ./web_html
+    dest: "/home/{{ ansible_user }}/setup"
+
+- name: Start Apache service
+  become: yes
+  command: docker-compose up -d 
+  args:
+    chdir: "/home/{{ ansible_user }}/setup"
