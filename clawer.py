@@ -73,20 +73,25 @@ def get_tweet(consumer_key, consumer_secret, access_token, access_token_secret, 
                 print(e)
                 time.sleep(900)
                 continue
-
-
+    print('Total users num:', len(user_ids))
     for user_id in user_ids:
         user_tweet_count = 0
         try:
             for tweet in api.user_timeline(user_id=user_id, count=100):
                 try:
-                    tweets_db.save(tweet._json)
+                    if tweet._json['place']:
+                        if tweet._json['place']['full_name'] == places_ids[0][0]:
+                            tweets_db.save(tweet._json)
+                            user_tweet_count += 1
                 except couchdb.http.ResourceConflict as e:
                     print(e)
                     continue
-                user_tweet_count += 1
             total_count += user_tweet_count
-            print('Total count:',total_count, 'User id', user_id, user_tweet_count)
+            print('Total count:', total_count, 'User id', user_id, user_tweet_count)
+        except tweepy.error.RateLimitError as e:
+            print(e)
+            time.sleep(900)
+            continue
         except tweepy.error.TweepError as e:
             print(e)
             continue
@@ -95,8 +100,8 @@ def get_tweet(consumer_key, consumer_secret, access_token, access_token_secret, 
 
 def main(argv):
     if len(argv) < 8:
-        print('command: <consumer_key> <consumer_secret> <access_token> '
-              '<access_token_secret> <interested_city> <couchdb_username> <couchdb_password> <database_name>')
+        print('command: <consumer_key> <consumer_secret> <access_token> <access_token_secret> '
+              '<interested_city> <couchdb_username> <couchdb_password> <database_name>')
         sys.exit(2)
     consumer_key = argv[0]
     consumer_secret = argv[1]
