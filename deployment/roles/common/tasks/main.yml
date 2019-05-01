@@ -10,29 +10,24 @@
   become: yes
   apt:
     name: "{{ item }}"
-    state: present
+    state: latest
     install_recommends: no
     update_cache: yes
   with_items:
+    - python3-setuptools
     - python3-pip
     - curl
-    - git
     - apt-transport-https
     - ca-certificates
     - gnupg-agent
     - software-properties-common
-
-- name: Update pip
-  become: yes
-  pip:
-    name: ['pip']
-    state: latest
 
 - name: Install dependencies
   become: yes
   pip:
     name: "{{ item }}"
     state: present
+    executable: pip3
   with_items:
     - tweepy
 
@@ -76,5 +71,6 @@
   become: yes
   pip:
     name: ['docker-compose']
+    executable: pip3
     version: 1.24.0
     state: present

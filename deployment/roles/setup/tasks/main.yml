@@ -26,17 +26,31 @@
     src: ./web_html
     dest: "/home/{{ ansible_user }}/setup"
 
-- name: Start Docker Setup
+- name: Leave previous swarm on a node
   become: yes
-  command: docker-compose up -d
+  command: docker swarm leave --force
+  args:
+    chdir: "/home/{{ ansible_user }}/setup"
+  ignore_errors: yes
+
+- name: Setup master node
+  become: yes
+  shell: docker swarm init | grep 'docker swarm join --token' > join_swarm.txt
   args:
     chdir: "/home/{{ ansible_user }}/setup"
 
-- name: Check Apache Service
-  become: yes
-  command: docker ps
-  args:
-    chdir: "/home/{{ ansible_user }}/setup"
-  register: web_url
-
-- debug: var=web_url.stdout_lines
+# - name: Start Doker-Compose Setup
+#   become: yes
+#   command: docker-compose up -d
+#   args:
+#     chdir: "/home/{{ ansible_user }}/setup"
+#
+# - name: Check Apache Service
+#   become: yes
+#   command: docker ps
+#   args:
+#     chdir: "/home/{{ ansible_user }}/setup"
+#   register: web_url
+#
+# # show the url of web server
+# - debug: var=web_url.stdout_lines

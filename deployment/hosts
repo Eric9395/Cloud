@@ -1,10 +1,23 @@
 [local]
 localhost ansible_connection=local
 
-[client]
-45.113.233.223
+[master]
+45.113.233.223 ansible_ssh_private_key_file=testKeypair.pem
 
-[client:vars]
+[master:vars]
 ansible_connection=ssh
 ansible_user=ubuntu
-ansible_ssh_private_key_file=testKeypair.pem
+
+[slave1]
+45.113.233.94 ansible_ssh_private_key_file=site.key
+
+[slave1:vars]
+ansible_connection=ssh
+ansible_user=ubuntu
+
+[slave2]
+103.6.254.63 ansible_ssh_private_key_file=site.key
+
+[slave2:vars]
+ansible_connection=ssh
+ansible_user=ubuntu

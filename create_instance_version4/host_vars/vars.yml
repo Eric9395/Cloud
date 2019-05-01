@@ -28,6 +28,6 @@ security_groups:
 instance_name: demoAnsible
 instance_image: 955a0556-1224-4499-a895-87d54d5cbf32
 #instance_image: 0a2bac09-8beb-464a-9cbc-6adf4dfcd5e5
-instance_key_name: eric
+instance_key_name: site
 #instance_key_name: 6f:50:cc:e1:5e:ca:7a:a9:0a:24:ec:ae:54:6c:f0:47
 instance_flavor: uom.general.2c8g
