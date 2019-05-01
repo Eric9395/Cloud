@@ -1,0 +1,18 @@
+---
+
+- name: Leave previous swarm on a node
+  become: yes
+  command: docker swarm leave --force
+  args:
+    chdir: "/home/{{ ansible_user }}/setup"
+  ignore_errors: yes
+
+- debug: var=hostvars['master'].join_token.stdout
+- debug: var=hostvars[master].join_token
+
+
+- name: Join a swarm
+  become: yes
+  # command: "{{ hostvars['master']['join_token']['stout']}}"
+  command: "docker swarm join --token {{join_token.stdout}} {{master}}:2377"
+  # when: hostvars['master']['join_token'] is defined

@@ -1,13 +1,13 @@
 ---
 
-- hosts: slave2
+- hosts: master
   become: yes
   roles:
-    - common
-    - setup
+    # - common
+    - master_setup
 
-# - hosts: slave1
-#   become: yes
-#   roles:
-#     - common
-#     - setup
+- hosts: slave1
+  become: yes
+  roles:
+    # - common
+    - slave_setup

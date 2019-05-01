@@ -35,9 +35,16 @@
 
 - name: Setup master node
   become: yes
-  shell: docker swarm init | grep 'docker swarm join --token' > join_swarm.txt
-  args:
-    chdir: "/home/{{ ansible_user }}/setup"
+  shell: docker swarm init
+
+- name: Get the join-token of worker
+  become: yes
+  shell: docker swarm join-token worker | grep "docker swarm join"
+  register: join_token
+
+- debug: var=join_token.stdout
+
+- debug: var=hostvars['master']
 
 # - name: Start Doker-Compose Setup
 #   become: yes
