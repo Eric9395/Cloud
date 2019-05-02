@@ -1,0 +1,18 @@
+---
+
+- name: Star the web server
+  become: yes
+  command: docker stack deploy -c docker-compose.yml webservice
+  args:
+    chdir: "/home/{{ ansible_user }}/setup"
+
+- name: Scale the web service to all nodes
+  become: yes
+  command: docker service scale webservice_web=2
+
+- name: Check the status of web service
+  become: yes
+  command: docker service ps webservice_web
+  register: output
+
+- debug: var=output.stdout

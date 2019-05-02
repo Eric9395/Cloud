@@ -7,12 +7,9 @@
     chdir: "/home/{{ ansible_user }}/setup"
   ignore_errors: yes
 
-- debug: var=hostvars['master'].join_token.stdout
-- debug: var=hostvars[master].join_token
-
+- name: Reload vars
+  include_vars: host_vars/vars.yml
 
 - name: Join a swarm
   become: yes
-  # command: "{{ hostvars['master']['join_token']['stout']}}"
-  command: "docker swarm join --token {{join_token.stdout}} {{master}}:2377"
-  # when: hostvars['master']['join_token'] is defined
+  command: "{{join_token}}"

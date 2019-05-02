@@ -1,6 +1,8 @@
 ---
 
 - hosts: master
+  vars_files:
+    - host_vars/vars.yml
   become: yes
   roles:
     # - common
@@ -11,3 +13,8 @@
   roles:
     # - common
     - slave_setup
+
+- hosts: master
+  become: yes
+  roles:
+    - master_deploy

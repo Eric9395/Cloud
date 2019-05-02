@@ -40,11 +40,22 @@
 - name: Get the join-token of worker
   become: yes
   shell: docker swarm join-token worker | grep "docker swarm join"
-  register: join_token
+  register: output
 
-- debug: var=join_token.stdout
+- name: Modify join_token
+  become: yes
+  local_action:
+    module: lineinfile
+    dest: ./host_vars/vars.yml
+    regexp: 'join_token:'
+    line: 'join_token: {{ output.stdout }}'
 
-- debug: var=hostvars['master']
+
+# - debug: join_token=output
+
+# - debug: var=join_token.stdout
+
+# - debug: var=hostvars['join_token']
 
 # - name: Start Doker-Compose Setup
 #   become: yes
