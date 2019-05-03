@@ -1,0 +1,11 @@
+# Create a key pair
+- name: Creating key pairs
+  os_keypair:
+    state: present
+    name: '{{ instance_key_name }}'
+    public_key_file: '{{ key_file }}'
+  register: my_key
+
+- debug:
+    msg: "{{ instance_key_name }} has been created."
+  when: my_key is defined

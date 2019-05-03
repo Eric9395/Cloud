@@ -8,4 +8,5 @@
     - role: openstack-images
     - role: openstack-volume
     - role: openstack-security-group
+    - role: openstack-keypairs
     - role: openstack-instance
