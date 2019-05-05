@@ -2,11 +2,12 @@ import couchdb
 import tweepy
 import time
 import sys
+import requests
 
 
 def initial_database(couchdb_username, couchdb_password, database_name):
     global server, tweets_db
-    server = couchdb.Server('http://'+couchdb_username+':'+couchdb_password+'@127.0.0.1:5984/')
+    server = couchdb.Server(url='http://'+couchdb_username+':'+couchdb_password+'@127.0.0.1:5984/')
     try:
         tweets_db = server[database_name]
     except couchdb.http.ResourceNotFound as e:
@@ -18,28 +19,61 @@ def get_tweet(consumer_key, consumer_secret, access_token, access_token_secret, 
     total_count = 0
     auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
     auth.set_access_token(access_token, access_token_secret)
-    user_ids = []
-    api = tweepy.API(auth)
 
+    api = tweepy.API(auth)
     places = api.geo_search(query=interested_city)
-    places_info = []
+    places_ids = []
     places_name = []
     for place in places:
         if place.country_code == 'AU' and place.full_name not in places_name:
-            #[x_min, x_max, y_min, y_max]
-            # bounding_box = []
-            # bounding_box.append(place.bounding_box.coordinates[0][0][0])
-            # bounding_box.append(place.bounding_box.coordinates[0][2][0])
-            # bounding_box.append(place.bounding_box.coordinates[0][0][1])
-            # bounding_box.append(place.bounding_box.coordinates[0][2][1])
-            places_info.append((place.full_name, place.id))
+            places_ids.append((place.full_name, place.id))
             places_name.append(place.full_name)
             break
-
-    userids = open('userids.txt', 'r', encoding='UTF-8')
-    tweets = open('tweet.txt', 'a', encoding='UTF-8')
-    for line in userids.readlines():
-        user_ids.append(line.strip())
+    user_ids = set()
+    for place_id in places_ids:
+        print(place_id[0],place_id[1])
+        max_id = 0
+        tweet_ids = []
+        queries_count = 0
+        while True:
+            try:
+                if max_id == 0:
+                    count = 0
+                    for tweet in api.search(q="place:%s" % place_id[1], count=100):
+                        tweet_ids.append(tweet.id)
+                        user_ids.add(str(tweet._json['user']['id']))
+                        tweet._json['_id'] = str(tweet.id)
+                        try:
+                            tweets_db.save(tweet._json)
+                        except couchdb.http.ResourceConflict as e:
+                            print(e)
+                            continue
+                        count += 1
+                    max_id = min(tweet_ids)
+                    total_count += count
+                    print('Total count:', total_count, 'Query num:', queries_count, count)
+                else:
+                    count = 0
+                    for tweet in api.search(q="place:%s" % place_id[1], count=100, max_id=max_id-1):
+                        tweet_ids.append(tweet.id)
+                        user_ids.add(str(tweet._json['user']['id']))
+                        tweet._json['_id'] = str(tweet.id)
+                        try:
+                            tweets_db.save(tweet._json)
+                        except couchdb.http.ResourceConflict as e:
+                            print(e)
+                            continue
+                        count += 1
+                    max_id = min(tweet_ids)
+                    total_count += count
+                    print('Total count:', total_count, 'Query num:', queries_count, count)
+                if count == 0:
+                    break
+                queries_count += 1
+            except tweepy.error.RateLimitError as e:
+                print(e)
+                time.sleep(900)
+                continue
     print('Total users num:', len(user_ids))
     for user_id in user_ids:
         user_tweet_count = 0
@@ -47,15 +81,18 @@ def get_tweet(consumer_key, consumer_secret, access_token, access_token_secret, 
             for tweet in api.user_timeline(user_id=user_id, count=100):
                 try:
                     if tweet._json['place']:
-                        if tweet._json['place']['full_name'] == places_info[0][0]:
-
+                        if tweet._json['place']['full_name'] == places_ids[0][0]:
+                            tweets_db.save(tweet._json)
                             user_tweet_count += 1
                 except couchdb.http.ResourceConflict as e:
                     print(e)
                     continue
-
             total_count += user_tweet_count
-            print('Total count:',total_count, 'User id', user_id, user_tweet_count)
+            print('Total count:', total_count, 'User id', user_id, user_tweet_count)
+        except tweepy.error.RateLimitError as e:
+            print(e)
+            time.sleep(900)
+            continue
         except tweepy.error.TweepError as e:
             print(e)
             continue
