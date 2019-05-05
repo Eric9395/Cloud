@@ -3,12 +3,10 @@
 - name: Leave previous swarm on a node
   become: yes
   command: docker swarm leave --force
-  args:
-    chdir: "/home/{{ ansible_user }}/setup"
   ignore_errors: yes
 
 - name: Reload vars
-  include_vars: host_vars/vars.yml
+  include_vars: host_vars/join_token.yml
 
 - name: Join a swarm
   become: yes

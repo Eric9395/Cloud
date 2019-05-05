@@ -1,0 +1,23 @@
+---
+
+- name: Copy CouchDB setup file to remote
+  become: yes
+  template:
+    src: docker-compose.yml.j2
+    dest: "{{ couchdb_dir }}/docker-compose.yml"
+    mode: 0744
+    owner: "{{ ansible_user }}"
+    group: "{{ ansible_user }}"
+
+- name: Start CouchDB service -- "{{couchdb_hostname}}"
+  become: yes
+  command: "docker stack deploy -c docker-compose.yml {{ couchdb_hostname }}"
+  args:
+    chdir: "{{ couchdb_dir }}"
+
+- name: Check the status of CouchDB service -- "{{couchdb_hostname}}"
+  become: yes
+  command: "docker service ps {{ couchdb_hostname }}_couchdb"
+  register: output
+
+- debug: var=output.stdout

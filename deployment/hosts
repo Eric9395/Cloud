@@ -5,19 +5,34 @@ localhost ansible_connection=local ansible_become_pass=huangsite
 45.113.233.94 ansible_ssh_private_key_file=site.key
 
 [master:vars]
+couchdb_hostname=couchdb_master
 ansible_connection=ssh
 ansible_user=ubuntu
+crawl_place=Melbourne
 
 [slave1]
-103.6.254.63 ansible_ssh_private_key_file=site.key
+103.6.254.84 ansible_ssh_private_key_file=site.key
 
 [slave1:vars]
+couchdb_hostname=couchdb_slave1
 ansible_connection=ssh
 ansible_user=ubuntu
+crawl_place=Sydney
 
 [slave2]
-103.6.254.63 ansible_ssh_private_key_file=site.key
+@@@@@@@@@@@@ ansible_ssh_private_key_file=@@@@@@@@
 
 [slave2:vars]
+couchdb_hostname=couchdb_slave2
 ansible_connection=ssh
 ansible_user=ubuntu
+crawl_place=@@@@@@@@
+
+[slave3]
+@@@@@@@@@@@@ ansible_ssh_private_key_file=@@@@@@@@
+
+[slave3:vars]
+couchdb_hostname=couchdb_slave3
+ansible_connection=ssh
+ansible_user=ubuntu
+crawl_place=@@@@@@@@

@@ -1,0 +1,11 @@
+FROM python:3.6.8
+
+WORKDIR /twitter_clawer
+
+COPY . /twitter_clawer
+
+RUN pip3 install --trusted-host pypi.python.org couchdb
+
+RUN pip3 install --trusted-host pypi.python.org tweepy
+
+CMD ["python", "clawer.py", "{{ crawl_place }}", "{{ ansible_default_ipv4.address }}", "{{ couchdb_username }}", "{{ couchdb_password }}", "{{ crawler_database }}"]

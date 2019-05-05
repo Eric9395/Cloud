@@ -5,16 +5,46 @@
     - host_vars/vars.yml
   become: yes
   roles:
-    # - common
-    - master_setup
+    - common
 
 - hosts: slave1
+  vars_files:
+    - host_vars/vars.yml
   become: yes
   roles:
-    # - common
-    - slave_setup
+    - common
 
 - hosts: master
+  vars_files:
+    - host_vars/vars.yml
   become: yes
   roles:
-    - master_deploy
+    - setup_swarm_master
+
+- hosts: slave1
+  vars_files:
+    - host_vars/vars.yml
+  become: yes
+  roles:
+    - setup_swarm_slave
+
+- hosts: master
+  vars_files:
+    - host_vars/vars.yml
+  become: yes
+  roles:
+    - deploy_couchdb_master
+
+- hosts: slave1
+  vars_files:
+    - host_vars/vars.yml
+  become: yes
+  roles:
+    - deploy_couchdb_slave
+
+- hosts: master
+  vars_files:
+    - host_vars/vars.yml
+  become: yes
+  roles:
+    - deploy_crawler

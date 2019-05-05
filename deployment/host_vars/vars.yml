@@ -1,1 +1,17 @@
-join_token:     docker swarm join --token SWMTKN-1-0zpi57xof03exmtz435fuy2jxkrc79ucirsagdndmhhwpnjaek-7nrccyod9xjkgdeg7o4yc57s0 45.113.233.94:2377
+---
+
+web_dir: /home/{{ ansible_user }}/web_setup
+couchdb_dir: /home/{{ ansible_user }}/couchdb_setup
+couchdb_data_dir: /home/{{ ansible_user }}/couchdb_setup/data
+crawler_dir: /home/{{ ansible_user }}/crawler_setup
+
+# number of webservices to distribute among all nodes
+num_scale_webservices: 2
+
+couchdb_username: Admin
+couchdb_password: admin
+couchdb_cookie: couchcookie
+couchdb_secret: couchsecret
+
+crawler_database: tweets_v1
+crawler_tag: "{{ couchdb_hostname }}_crawler"

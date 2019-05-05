@@ -1,0 +1,23 @@
+---
+
+- name: Leave previous swarm on a node
+  become: yes
+  command: docker swarm leave --force
+  ignore_errors: yes
+
+- name: Setup master node
+  become: yes
+  shell: docker swarm init
+
+- name: Get the join-token of manager
+  become: yes
+  shell: docker swarm join-token manager | grep "docker swarm join"
+  register: output
+
+- name: Modify join_token
+  become: yes
+  local_action:
+    module: lineinfile
+    dest: ./host_vars/join_token.yml
+    regexp: 'join_token:'
+    line: 'join_token: {{ output.stdout }}'

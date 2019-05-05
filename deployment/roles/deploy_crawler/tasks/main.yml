@@ -1,0 +1,38 @@
+---
+
+- name: Copy Crawler Dockerfile to remote
+  become: yes
+  template:
+    src: Dockerfile.j2
+    dest: "{{ crawler_dir }}/Dockerfile"
+    mode: 0744
+    owner: "{{ ansible_user }}"
+    group: "{{ ansible_user }}"
+
+- name: Copy Crawler python file to remote
+  become: yes
+  template:
+    src: clawer.py.j2
+    dest: "{{ crawler_dir }}/clawer.py"
+    mode: 0744
+    owner: "{{ ansible_user }}"
+    group: "{{ ansible_user }}"
+
+- name: Start Crawler service (Crawl place -- "{{ crawl_place }}")
+  become: yes
+  command: "docker build -t {{ crawler_tag }} ."
+  args:
+    chdir: "{{ crawler_dir }}"
+
+- name: Start Crawler service (Crawl place -- "{{ crawl_place }}")
+  become: yes
+  command: "docker run -d {{ crawler_tag }}"
+  args:
+    chdir: "{{ crawler_dir }}"
+
+- name: Check the status of CouchDB Crawler database
+  become: yes
+  command: "curl -X GET 0.0.0.0:5984/{{ crawler_database }} -u {{ couchdb_username }}:{{ couchdb_password }}"
+  register: output
+
+- debug: var=output.stdout
