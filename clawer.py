@@ -16,6 +16,7 @@ def initial_database(couchdb_ip, couchdb_username, couchdb_password, database_na
 
 def get_tweet(consumer_key, consumer_secret, access_token, access_token_secret, interested_city):
     total_count = 0
+    conflict_num = 0
     auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
     auth.set_access_token(access_token, access_token_secret)
 
@@ -39,29 +40,27 @@ def get_tweet(consumer_key, consumer_secret, access_token, access_token_secret, 
                 if max_id == 0:
                     count = 0
                     for tweet in api.search(q="place:%s" % place_id[1], count=100):
+                        count += 1
                         tweet_ids.append(tweet.id)
                         user_ids.add(str(tweet._json['user']['id']))
                         tweet._json['_id'] = str(tweet.id)
                         try:
                             tweets_db.save(tweet._json)
                         except couchdb.http.ResourceConflict as e:
+                            conflict_num += 1
                             print(e)
-                            max_id = min(tweet_ids)
-                            count += 1
                             continue
                         except ConnectionRefusedError as e:
                             print(e)
-                            max_id = min(tweet_ids)
-                            count += 1
                             time.sleep(10)
                             continue
-                        count += 1
                     max_id = min(tweet_ids)
                     total_count += count
                     print('Total count:', total_count, 'Query num:', queries_count, count)
                 else:
                     count = 0
                     for tweet in api.search(q="place:%s" % place_id[1], count=100, max_id=max_id-1):
+                        count += 1
                         tweet_ids.append(tweet.id)
                         user_ids.add(str(tweet._json['user']['id']))
                         tweet._json['_id'] = str(tweet.id)
@@ -69,16 +68,12 @@ def get_tweet(consumer_key, consumer_secret, access_token, access_token_secret, 
                             tweets_db.save(tweet._json)
                         except couchdb.http.ResourceConflict as e:
                             print(e)
-                            max_id = min(tweet_ids)
-                            count += 1
+                            conflict_num += 1
                             continue
                         except ConnectionRefusedError as e:
                             print(e)
-                            max_id = min(tweet_ids)
-                            count += 1
                             time.sleep(10)
                             continue
-                        count += 1
                     max_id = min(tweet_ids)
                     total_count += count
                     print('Total count:', total_count, 'Query num:', queries_count, count)
@@ -133,7 +128,6 @@ def main(argv):
     database_name = argv[4]
     initial_database(couchdb_ip, couchdb_username, couchdb_password, database_name)
     total_count = get_tweet(consumer_key, consumer_secret, access_token, access_token_secret, interested_city)
-
     print('Get', total_count, 'tweets')
 
 
