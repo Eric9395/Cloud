@@ -1,5 +1,14 @@
 ---
 
+- name: Check the status of cluster CouchDB membership
+  when: inventory_hostname in groups['master']
+  become: yes
+  command: "curl http://{{ couchdb_username }}:{{ couchdb_password }}@0.0.0.0:5984/_membership"
+  register: output
+  ignore_errors: yes
+
+- debug: var=output.stdout
+
 - name: Copy Crawler Dockerfile to remote
   become: yes
   template:
@@ -12,8 +21,8 @@
 - name: Copy Crawler python file to remote
   become: yes
   template:
-    src: clawer.py.j2
-    dest: "{{ crawler_dir }}/clawer.py"
+    src: crawler.py.j2
+    dest: "{{ crawler_dir }}/crawler.py"
     mode: 0744
     owner: "{{ ansible_user }}"
     group: "{{ ansible_user }}"
@@ -29,10 +38,3 @@
   command: "docker run -d {{ crawler_tag }}"
   args:
     chdir: "{{ crawler_dir }}"
-
-- name: Check the status of CouchDB Crawler database
-  become: yes
-  command: "curl -X GET 0.0.0.0:5984/{{ crawler_database }} -u {{ couchdb_username }}:{{ couchdb_password }}"
-  register: output
-
-- debug: var=output.stdout

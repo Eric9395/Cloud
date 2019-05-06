@@ -6,7 +6,7 @@ import sys
 
 def initial_database(couchdb_ip, couchdb_username, couchdb_password, database_name):
     global server, tweets_db
-    server = couchdb.Server('http://'+couchdb_username+':'+couchdb_password+'@'+couchdb_ip+'/')
+    server = couchdb.Server(url='http://'+couchdb_username+':'+couchdb_password+'@'+couchdb_ip+':5984/')
     try:
         tweets_db = server[database_name]
     except couchdb.http.ResourceNotFound as e:

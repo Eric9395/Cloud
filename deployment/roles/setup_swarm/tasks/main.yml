@@ -6,18 +6,30 @@
   ignore_errors: yes
 
 - name: Setup master node
+  when: inventory_hostname in groups['master']
   become: yes
   shell: docker swarm init
 
 - name: Get the join-token of manager
+  when: inventory_hostname in groups['master']
   become: yes
   shell: docker swarm join-token manager | grep "docker swarm join"
   register: output
 
 - name: Modify join_token
+  when: inventory_hostname in groups['master']
   become: yes
   local_action:
     module: lineinfile
     dest: ./host_vars/join_token.yml
     regexp: 'join_token:'
     line: 'join_token: {{ output.stdout }}'
+
+- name: Reload join token 
+  when: inventory_hostname not in groups['master']
+  include_vars: host_vars/join_token.yml
+
+- name: Join a swarm
+  when: inventory_hostname not in groups['master']
+  become: yes
+  command: "{{ join_token }}"
