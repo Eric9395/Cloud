@@ -16,3 +16,4 @@ services:
       - COUCHDB_SECRET="{{ couchdb_secret }}"
     volumes:
       - {{ couchdb_data_dir }}:/opt/couchdb/data
+      - {{ couchdb_config_dir }}:/opt/couchdb/etc/local.d

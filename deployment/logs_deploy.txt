@@ -1,0 +1,420 @@
+PLAY [master] ******************************************************************
+
+TASK [Gathering Facts] *********************************************************
+ok: [45.113.233.94]
+
+TASK [common : Update apt package] *********************************************
+ok: [45.113.233.94]
+
+TASK [common : Install dependencies] *******************************************
+changed: [45.113.233.94] => (item=['python3-setuptools', 'python3-pip', 'curl', 'vim', 'apt-transport-https', 'ca-certificates', 'gnupg-agent', 'software-properties-common'])
+
+TASK [common : Uninstall old versions of docker] *******************************
+ok: [45.113.233.94] => (item=['docker', 'docker-engine', 'docker.io'])
+
+TASK [common : Add Docker’s official GPG key] **********************************
+changed: [45.113.233.94]
+
+TASK [common : Configure Docker apt repository] ********************************
+changed: [45.113.233.94]
+
+TASK [common : Install Docker] *************************************************
+changed: [45.113.233.94] => (item=['docker-ce', 'docker-ce-cli', 'containerd.io'])
+
+TASK [common : Install Docker Compose] *****************************************
+changed: [45.113.233.94]
+
+TASK [common : Create directory] ***********************************************
+changed: [45.113.233.94] => (item=/home/ubuntu/web_setup)
+changed: [45.113.233.94] => (item=/home/ubuntu/couchdb_setup)
+changed: [45.113.233.94] => (item=/home/ubuntu/couchdb_setup/data)
+changed: [45.113.233.94] => (item=/home/ubuntu/crawler_setup)
+
+TASK [setup_swarm : Leave previous swarm on a node] ****************************
+fatal: [45.113.233.94]: FAILED! => {"changed": true, "cmd": ["docker", "swarm", "leave", "--force"], "delta": "0:00:00.039720", "end": "2019-05-06 06:53:52.407821", "msg": "non-zero return code", "rc": 1, "start": "2019-05-06 06:53:52.368101", "stderr": "Error response from daemon: This node is not part of a swarm", "stderr_lines": ["Error response from daemon: This node is not part of a swarm"], "stdout": "", "stdout_lines": []}
+...ignoring
+
+TASK [setup_swarm : Setup master node] *****************************************
+changed: [45.113.233.94]
+
+TASK [setup_swarm : Get the join-token of manager] *****************************
+changed: [45.113.233.94]
+
+TASK [setup_swarm : Modify join_token] *****************************************
+changed: [45.113.233.94 -> localhost]
+
+TASK [setup_swarm : Reload join token] *****************************************
+skipping: [45.113.233.94]
+
+TASK [setup_swarm : Join a swarm] **********************************************
+skipping: [45.113.233.94]
+
+TASK [setup_couchdb_cluster : Copy CouchDB setup file to remote] ***************
+changed: [45.113.233.94]
+
+TASK [setup_couchdb_cluster : Remove previous CouchDB service] *****************
+changed: [45.113.233.94]
+
+TASK [setup_couchdb_cluster : Build CouchDB service -- "master"] ***************
+changed: [45.113.233.94]
+
+TASK [setup_couchdb_cluster : Wait 10 seconds for services to start] ***********
+Pausing for 10 seconds
+(ctrl+C then 'C' = continue early, ctrl+C then 'A' = abort)
+ok: [45.113.233.94]
+
+TASK [setup_couchdb_cluster : Copy scripts to remote] **************************
+changed: [45.113.233.94]
+
+TASK [setup_couchdb_cluster : Run cluster setup script] ************************
+skipping: [45.113.233.94]
+
+TASK [setup_couchdb_cluster : debug] *******************************************
+skipping: [45.113.233.94]
+
+PLAY [slave1] ******************************************************************
+
+TASK [Gathering Facts] *********************************************************
+ok: [103.6.254.26]
+
+TASK [common : Update apt package] *********************************************
+ok: [103.6.254.26]
+
+TASK [common : Install dependencies] *******************************************
+changed: [103.6.254.26] => (item=['python3-setuptools', 'python3-pip', 'curl', 'vim', 'apt-transport-https', 'ca-certificates', 'gnupg-agent', 'software-properties-common'])
+
+TASK [common : Uninstall old versions of docker] *******************************
+ok: [103.6.254.26] => (item=['docker', 'docker-engine', 'docker.io'])
+
+TASK [common : Add Docker’s official GPG key] **********************************
+changed: [103.6.254.26]
+
+TASK [common : Configure Docker apt repository] ********************************
+changed: [103.6.254.26]
+
+TASK [common : Install Docker] *************************************************
+changed: [103.6.254.26] => (item=['docker-ce', 'docker-ce-cli', 'containerd.io'])
+
+TASK [common : Install Docker Compose] *****************************************
+changed: [103.6.254.26]
+
+TASK [common : Create directory] ***********************************************
+changed: [103.6.254.26] => (item=/home/ubuntu/web_setup)
+changed: [103.6.254.26] => (item=/home/ubuntu/couchdb_setup)
+changed: [103.6.254.26] => (item=/home/ubuntu/couchdb_setup/data)
+changed: [103.6.254.26] => (item=/home/ubuntu/crawler_setup)
+
+TASK [setup_swarm : Leave previous swarm on a node] ****************************
+fatal: [103.6.254.26]: FAILED! => {"changed": true, "cmd": ["docker", "swarm", "leave", "--force"], "delta": "0:00:00.052652", "end": "2019-05-06 06:55:08.806349", "msg": "non-zero return code", "rc": 1, "start": "2019-05-06 06:55:08.753697", "stderr": "Error response from daemon: This node is not part of a swarm", "stderr_lines": ["Error response from daemon: This node is not part of a swarm"], "stdout": "", "stdout_lines": []}
+...ignoring
+
+TASK [setup_swarm : Setup master node] *****************************************
+skipping: [103.6.254.26]
+
+TASK [setup_swarm : Get the join-token of manager] *****************************
+skipping: [103.6.254.26]
+
+TASK [setup_swarm : Modify join_token] *****************************************
+skipping: [103.6.254.26]
+
+TASK [setup_swarm : Reload join token] *****************************************
+ok: [103.6.254.26]
+
+TASK [setup_swarm : Join a swarm] **********************************************
+changed: [103.6.254.26]
+
+TASK [setup_couchdb_cluster : Copy CouchDB setup file to remote] ***************
+changed: [103.6.254.26]
+
+TASK [setup_couchdb_cluster : Remove previous CouchDB service] *****************
+changed: [103.6.254.26]
+
+TASK [setup_couchdb_cluster : Build CouchDB service -- "slave1"] ***************
+changed: [103.6.254.26]
+
+TASK [setup_couchdb_cluster : Wait 10 seconds for services to start] ***********
+Pausing for 10 seconds
+(ctrl+C then 'C' = continue early, ctrl+C then 'A' = abort)
+ok: [103.6.254.26]
+
+TASK [setup_couchdb_cluster : Copy scripts to remote] **************************
+changed: [103.6.254.26]
+
+TASK [setup_couchdb_cluster : Run cluster setup script] ************************
+changed: [103.6.254.26]
+
+TASK [setup_couchdb_cluster : debug] *******************************************
+ok: [103.6.254.26] => {
+    "output.stdout": "Join in CouchDB Cluster\n{\"ok\":true}\n{\"ok\":true}"
+}
+
+PLAY [slave2] ******************************************************************
+
+TASK [Gathering Facts] *********************************************************
+ok: [103.6.254.39]
+
+TASK [common : Update apt package] *********************************************
+ok: [103.6.254.39]
+
+TASK [common : Install dependencies] *******************************************
+changed: [103.6.254.39] => (item=['python3-setuptools', 'python3-pip', 'curl', 'vim', 'apt-transport-https', 'ca-certificates', 'gnupg-agent', 'software-properties-common'])
+
+TASK [common : Uninstall old versions of docker] *******************************
+ok: [103.6.254.39] => (item=['docker', 'docker-engine', 'docker.io'])
+
+TASK [common : Add Docker’s official GPG key] **********************************
+changed: [103.6.254.39]
+
+TASK [common : Configure Docker apt repository] ********************************
+changed: [103.6.254.39]
+
+TASK [common : Install Docker] *************************************************
+changed: [103.6.254.39] => (item=['docker-ce', 'docker-ce-cli', 'containerd.io'])
+
+TASK [common : Install Docker Compose] *****************************************
+changed: [103.6.254.39]
+
+TASK [common : Create directory] ***********************************************
+changed: [103.6.254.39] => (item=/home/ubuntu/web_setup)
+changed: [103.6.254.39] => (item=/home/ubuntu/couchdb_setup)
+changed: [103.6.254.39] => (item=/home/ubuntu/couchdb_setup/data)
+changed: [103.6.254.39] => (item=/home/ubuntu/crawler_setup)
+
+TASK [setup_swarm : Leave previous swarm on a node] ****************************
+fatal: [103.6.254.39]: FAILED! => {"changed": true, "cmd": ["docker", "swarm", "leave", "--force"], "delta": "0:00:00.044328", "end": "2019-05-06 06:56:21.384466", "msg": "non-zero return code", "rc": 1, "start": "2019-05-06 06:56:21.340138", "stderr": "Error response from daemon: This node is not part of a swarm", "stderr_lines": ["Error response from daemon: This node is not part of a swarm"], "stdout": "", "stdout_lines": []}
+...ignoring
+
+TASK [setup_swarm : Setup master node] *****************************************
+skipping: [103.6.254.39]
+
+TASK [setup_swarm : Get the join-token of manager] *****************************
+skipping: [103.6.254.39]
+
+TASK [setup_swarm : Modify join_token] *****************************************
+skipping: [103.6.254.39]
+
+TASK [setup_swarm : Reload join token] *****************************************
+ok: [103.6.254.39]
+
+TASK [setup_swarm : Join a swarm] **********************************************
+changed: [103.6.254.39]
+
+TASK [setup_couchdb_cluster : Copy CouchDB setup file to remote] ***************
+changed: [103.6.254.39]
+
+TASK [setup_couchdb_cluster : Remove previous CouchDB service] *****************
+changed: [103.6.254.39]
+
+TASK [setup_couchdb_cluster : Build CouchDB service -- "slave2"] ***************
+changed: [103.6.254.39]
+
+TASK [setup_couchdb_cluster : Wait 10 seconds for services to start] ***********
+Pausing for 10 seconds
+(ctrl+C then 'C' = continue early, ctrl+C then 'A' = abort)
+ok: [103.6.254.39]
+
+TASK [setup_couchdb_cluster : Copy scripts to remote] **************************
+changed: [103.6.254.39]
+
+TASK [setup_couchdb_cluster : Run cluster setup script] ************************
+changed: [103.6.254.39]
+
+TASK [setup_couchdb_cluster : debug] *******************************************
+ok: [103.6.254.39] => {
+    "output.stdout": "Join in CouchDB Cluster\n{\"ok\":true}\n{\"ok\":true}"
+}
+
+PLAY [slave3] ******************************************************************
+
+TASK [Gathering Facts] *********************************************************
+ok: [103.6.254.86]
+
+TASK [common : Update apt package] *********************************************
+ok: [103.6.254.86]
+
+TASK [common : Install dependencies] *******************************************
+changed: [103.6.254.86] => (item=['python3-setuptools', 'python3-pip', 'curl', 'vim', 'apt-transport-https', 'ca-certificates', 'gnupg-agent', 'software-properties-common'])
+
+TASK [common : Uninstall old versions of docker] *******************************
+ok: [103.6.254.86] => (item=['docker', 'docker-engine', 'docker.io'])
+
+TASK [common : Add Docker’s official GPG key] **********************************
+changed: [103.6.254.86]
+
+TASK [common : Configure Docker apt repository] ********************************
+changed: [103.6.254.86]
+
+TASK [common : Install Docker] *************************************************
+changed: [103.6.254.86] => (item=['docker-ce', 'docker-ce-cli', 'containerd.io'])
+
+TASK [common : Install Docker Compose] *****************************************
+changed: [103.6.254.86]
+
+TASK [common : Create directory] ***********************************************
+changed: [103.6.254.86] => (item=/home/ubuntu/web_setup)
+changed: [103.6.254.86] => (item=/home/ubuntu/couchdb_setup)
+changed: [103.6.254.86] => (item=/home/ubuntu/couchdb_setup/data)
+changed: [103.6.254.86] => (item=/home/ubuntu/crawler_setup)
+
+TASK [setup_swarm : Leave previous swarm on a node] ****************************
+fatal: [103.6.254.86]: FAILED! => {"changed": true, "cmd": ["docker", "swarm", "leave", "--force"], "delta": "0:00:00.040331", "end": "2019-05-06 06:57:35.183789", "msg": "non-zero return code", "rc": 1, "start": "2019-05-06 06:57:35.143458", "stderr": "Error response from daemon: This node is not part of a swarm", "stderr_lines": ["Error response from daemon: This node is not part of a swarm"], "stdout": "", "stdout_lines": []}
+...ignoring
+
+TASK [setup_swarm : Setup master node] *****************************************
+skipping: [103.6.254.86]
+
+TASK [setup_swarm : Get the join-token of manager] *****************************
+skipping: [103.6.254.86]
+
+TASK [setup_swarm : Modify join_token] *****************************************
+skipping: [103.6.254.86]
+
+TASK [setup_swarm : Reload join token] *****************************************
+ok: [103.6.254.86]
+
+TASK [setup_swarm : Join a swarm] **********************************************
+changed: [103.6.254.86]
+
+TASK [setup_couchdb_cluster : Copy CouchDB setup file to remote] ***************
+changed: [103.6.254.86]
+
+TASK [setup_couchdb_cluster : Remove previous CouchDB service] *****************
+changed: [103.6.254.86]
+
+TASK [setup_couchdb_cluster : Build CouchDB service -- "slave3"] ***************
+changed: [103.6.254.86]
+
+TASK [setup_couchdb_cluster : Wait 10 seconds for services to start] ***********
+Pausing for 10 seconds
+(ctrl+C then 'C' = continue early, ctrl+C then 'A' = abort)
+ok: [103.6.254.86]
+
+TASK [setup_couchdb_cluster : Copy scripts to remote] **************************
+changed: [103.6.254.86]
+
+TASK [setup_couchdb_cluster : Run cluster setup script] ************************
+changed: [103.6.254.86]
+
+TASK [setup_couchdb_cluster : debug] *******************************************
+ok: [103.6.254.86] => {
+    "output.stdout": "Join in CouchDB Cluster\n{\"ok\":true}\n{\"ok\":true}"
+}
+
+PLAY [master] ******************************************************************
+
+TASK [Gathering Facts] *********************************************************
+ok: [45.113.233.94]
+
+TASK [deploy_crawler : Check the status of cluster CouchDB membership] *********
+changed: [45.113.233.94]
+
+TASK [deploy_crawler : debug] **************************************************
+ok: [45.113.233.94] => {
+    "output.stdout": {
+        "all_nodes": [
+            "couchdb@103.6.254.26",
+            "couchdb@103.6.254.39",
+            "couchdb@103.6.254.86",
+            "couchdb@45.113.233.94"
+        ],
+        "cluster_nodes": [
+            "couchdb@103.6.254.26",
+            "couchdb@103.6.254.39",
+            "couchdb@103.6.254.86",
+            "couchdb@45.113.233.94"
+        ]
+    }
+}
+
+TASK [deploy_crawler : Copy Crawler Dockerfile to remote] **********************
+changed: [45.113.233.94]
+
+TASK [deploy_crawler : Copy Crawler python file to remote] *********************
+changed: [45.113.233.94]
+
+TASK [deploy_crawler : Start Crawler service (Crawl place -- "Melbourne")] *****
+changed: [45.113.233.94]
+
+TASK [deploy_crawler : Start Crawler service (Crawl place -- "Melbourne")] *****
+changed: [45.113.233.94]
+
+PLAY [slave1] ******************************************************************
+
+TASK [Gathering Facts] *********************************************************
+ok: [103.6.254.26]
+
+TASK [deploy_crawler : Check the status of cluster CouchDB membership] *********
+skipping: [103.6.254.26]
+
+TASK [deploy_crawler : debug] **************************************************
+ok: [103.6.254.26] => {
+    "output.stdout": "VARIABLE IS NOT DEFINED!"
+}
+
+TASK [deploy_crawler : Copy Crawler Dockerfile to remote] **********************
+changed: [103.6.254.26]
+
+TASK [deploy_crawler : Copy Crawler python file to remote] *********************
+changed: [103.6.254.26]
+
+TASK [deploy_crawler : Start Crawler service (Crawl place -- "Sydney")] ********
+changed: [103.6.254.26]
+
+TASK [deploy_crawler : Start Crawler service (Crawl place -- "Sydney")] ********
+changed: [103.6.254.26]
+
+PLAY [slave2] ******************************************************************
+
+TASK [Gathering Facts] *********************************************************
+ok: [103.6.254.39]
+
+TASK [deploy_crawler : Check the status of cluster CouchDB membership] *********
+skipping: [103.6.254.39]
+
+TASK [deploy_crawler : debug] **************************************************
+ok: [103.6.254.39] => {
+    "output.stdout": "VARIABLE IS NOT DEFINED!"
+}
+
+TASK [deploy_crawler : Copy Crawler Dockerfile to remote] **********************
+changed: [103.6.254.39]
+
+TASK [deploy_crawler : Copy Crawler python file to remote] *********************
+changed: [103.6.254.39]
+
+TASK [deploy_crawler : Start Crawler service (Crawl place -- "Perth")] *********
+changed: [103.6.254.39]
+
+TASK [deploy_crawler : Start Crawler service (Crawl place -- "Perth")] *********
+changed: [103.6.254.39]
+
+PLAY [slave3] ******************************************************************
+
+TASK [Gathering Facts] *********************************************************
+ok: [103.6.254.86]
+
+TASK [deploy_crawler : Check the status of cluster CouchDB membership] *********
+skipping: [103.6.254.86]
+
+TASK [deploy_crawler : debug] **************************************************
+ok: [103.6.254.86] => {
+    "output.stdout": "VARIABLE IS NOT DEFINED!"
+}
+
+TASK [deploy_crawler : Copy Crawler Dockerfile to remote] **********************
+changed: [103.6.254.86]
+
+TASK [deploy_crawler : Copy Crawler python file to remote] *********************
+changed: [103.6.254.86]
+
+TASK [deploy_crawler : Start Crawler service (Crawl place -- "Brisbane")] ******
+changed: [103.6.254.86]
+
+TASK [deploy_crawler : Start Crawler service (Crawl place -- "Brisbane")] ******
+changed: [103.6.254.86]
+
+PLAY RECAP *********************************************************************
+103.6.254.26               : ok=25   changed=17   unreachable=0    failed=0
+103.6.254.39               : ok=25   changed=17   unreachable=0    failed=0
+103.6.254.86               : ok=25   changed=17   unreachable=0    failed=0
+45.113.233.94              : ok=25   changed=19   unreachable=0    failed=0

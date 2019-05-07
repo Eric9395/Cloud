@@ -16,6 +16,7 @@ services:
       COUCHDB_SECRET: "secret"
     volumes:
       - ./data:/opt/couchdb/data
+      - ./couchdb_configs:/opt/couchdb/etc/local.d
     networks:
       couchdb_net:
         ipv4_address: "{{ansible_default_ipv4.address}}"

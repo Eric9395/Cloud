@@ -3,8 +3,20 @@
 - name: Copy CouchDB setup file to remote
   become: yes
   template:
-    src: docker-compose.yml.j2
-    dest: "{{ couchdb_dir }}/docker-compose.yml"
+    src: "{{ item }}.j2"
+    dest: "{{ couchdb_dir }}/{{ item }}"
+    mode: 0744
+    owner: "{{ ansible_user }}"
+    group: "{{ ansible_user }}"
+  with_items:
+    - docker-compose.yml
+    - cluster.sh
+
+- name: Copy CouchDB configs to remote
+  become: yes
+  template:
+    src: docker.ini.j2
+    dest: "{{ couchdb_config_dir }}/docker.ini"
     mode: 0744
     owner: "{{ ansible_user }}"
     group: "{{ ansible_user }}"
@@ -26,14 +38,7 @@
   pause:
     seconds: 10
 
-- name: Copy scripts to remote
-  become: yes
-  template:
-    src: cluster.sh.j2
-    dest: "{{ couchdb_dir }}/cluster.sh"
-    mode: 0744
-    owner: "{{ ansible_user }}"
-    group: "{{ ansible_user }}"
+
 
 - name: Run cluster setup script
   when: inventory_hostname not in groups['master']

@@ -4,6 +4,7 @@ web_dir: /home/{{ ansible_user }}/web_setup
 couchdb_dir: /home/{{ ansible_user }}/couchdb_setup
 couchdb_data_dir: /home/{{ ansible_user }}/couchdb_setup/data
 crawler_dir: /home/{{ ansible_user }}/crawler_setup
+couchdb_config_dir: /home/{{ ansible_user }}/couchdb_setup/couchdb_configs
 
 # number of webservices to distribute among all nodes
 num_scale_webservices: 4
