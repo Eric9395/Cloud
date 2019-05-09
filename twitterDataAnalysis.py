@@ -101,6 +101,11 @@ train_set = pos_tweets_set + neg_tweets_set
 
 classifier = NaiveBayesClassifier.train(train_set)
 
+
+def sentimentValue(tweetText):
+    return classifier.prob_classify(bag_of_words(tweetText)).prob('pos')
+
+
 twitter_file = 'tinyTwitter.json'
 
 with open(twitter_file, 'r') as f:
