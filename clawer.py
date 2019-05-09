@@ -64,9 +64,9 @@ def get_tweet(consumer_key, consumer_secret, access_token, access_token_secret,
                         score = tp.sentimentValue(text)
                         tweet._json['score'] = score
                         if score > MAX_THRESHOLD:
-                            positive_db.save(tweet._json['text'])
+                            positive_db.save({'text':tweet._json['text']})
                         elif score < MIN_THRESHOLD:
-                            negative_db.save(tweet._json['text'])
+                            negative_db.save({'text':tweet._json['text']})
                         try:
                             tweets_db.save(tweet._json)
                         except couchdb.http.ResourceConflict as e:
@@ -91,9 +91,9 @@ def get_tweet(consumer_key, consumer_secret, access_token, access_token_secret,
                         score = tp.sentimentValue(text)
                         tweet._json['score'] = score
                         if score > MAX_THRESHOLD:
-                            positive_db.save(tweet._json['text'])
+                            positive_db.save({'text':tweet._json['text']})
                         elif score < MIN_THRESHOLD:
-                            negative_db.save(tweet._json['text'])
+                            negative_db.save({'text':tweet._json['text']})
                         try:
                             tweets_db.save(tweet._json)
                         except couchdb.http.ResourceConflict as e:
@@ -129,9 +129,9 @@ def get_tweet(consumer_key, consumer_secret, access_token, access_token_secret,
                             score = tp.sentimentValue(text)
                             tweet._json['score'] = score
                             if score > MAX_THRESHOLD:
-                                positive_db.save(tweet._json['text'])
+                                positive_db.save({'text':tweet._json['text']})
                             elif score < MIN_THRESHOLD:
-                                negative_db.save(tweet._json['text'])
+                                negative_db.save({'text':tweet._json['text']})
                             user_tweet_count += 1
                 except couchdb.http.ResourceConflict as e:
                     print(e)

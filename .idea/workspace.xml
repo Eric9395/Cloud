@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="7cb2a335-b854-4094-b959-d02941aade63" name="Default Changelist" comment="fix bugs, when conflicts occur or couchdb down, the code can work">
+    <list default="true" id="7cb2a335-b854-4094-b959-d02941aade63" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/clawer.py" beforeDir="false" afterPath="$PROJECT_DIR$/clawer.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/twitterProcessor.py" beforeDir="false" afterPath="$PROJECT_DIR$/twitterProcessor.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -17,8 +16,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/clawer.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="189">
-              <caret line="117" column="28" selection-start-line="117" selection-start-column="28" selection-end-line="117" selection-end-column="28" />
+            <state relative-caret-position="385">
+              <caret line="133" column="78" lean-forward="true" selection-start-line="133" selection-start-column="78" selection-end-line="133" selection-end-column="78" />
               <folding>
                 <element signature="e#0#14#0" expanded="true" />
               </folding>
@@ -347,7 +346,21 @@
       <option name="project" value="LOCAL" />
       <updated>1557126961577</updated>
     </task>
-    <option name="localTasksCounter" value="11" />
+    <task id="LOCAL-00011" summary="add analysis model">
+      <created>1557383245384</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1557383245384</updated>
+    </task>
+    <task id="LOCAL-00012" summary="add analysis model">
+      <created>1557383577247</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1557383577247</updated>
+    </task>
+    <option name="localTasksCounter" value="13" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -359,7 +372,7 @@
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" sideWeight="0.49867898" visible="true" weight="0.29461756" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" sideWeight="0.49867898" visible="true" weight="0.23512748" />
       <window_info anchor="bottom" id="Debug" order="3" sideWeight="0.49867898" weight="0.2549575" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -382,7 +395,8 @@
     <MESSAGE value="fix bug ,add couchdb_username, couchdb_password to commands" />
     <MESSAGE value="filter the user's tweets' location" />
     <MESSAGE value="fix bugs, when conflicts occur or couchdb down, the code can work" />
-    <option name="LAST_COMMIT_MESSAGE" value="fix bugs, when conflicts occur or couchdb down, the code can work" />
+    <MESSAGE value="add analysis model" />
+    <option name="LAST_COMMIT_MESSAGE" value="add analysis model" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -404,7 +418,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/clawer.py</url>
-          <line>47</line>
+          <line>56</line>
           <option name="timeStamp" value="27" />
         </line-breakpoint>
       </breakpoints>
@@ -667,8 +681,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/clawer.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="189">
-          <caret line="117" column="28" selection-start-line="117" selection-start-column="28" selection-end-line="117" selection-end-column="28" />
+        <state relative-caret-position="385">
+          <caret line="133" column="78" lean-forward="true" selection-start-line="133" selection-start-column="78" selection-end-line="133" selection-end-column="78" />
           <folding>
             <element signature="e#0#14#0" expanded="true" />
           </folding>
