@@ -2,6 +2,7 @@ import couchdb
 import tweepy
 import time
 import sys
+import twitterProcessor
 
 
 def initial_database(couchdb_ip, couchdb_username, couchdb_password, database_name):
@@ -12,6 +13,7 @@ def initial_database(couchdb_ip, couchdb_username, couchdb_password, database_na
     except couchdb.http.ResourceNotFound as e:
         server.create(database_name)
         tweets_db = server[database_name]
+    tp = twitterProcessor()
 
 
 def get_tweet(consumer_key, consumer_secret, access_token, access_token_secret, interested_city):
@@ -31,7 +33,7 @@ def get_tweet(consumer_key, consumer_secret, access_token, access_token_secret, 
             break
     user_ids = set()
     for place_id in places_ids:
-        print(place_id[0],place_id[1])
+        print(place_id[0], place_id[1])
         max_id = 0
         tweet_ids = []
         queries_count = 0
@@ -41,6 +43,8 @@ def get_tweet(consumer_key, consumer_secret, access_token, access_token_secret, 
                     count = 0
                     for tweet in api.search(q="place:%s" % place_id[1], count=100):
                         count += 1
+                        tweet_text = tweet._json['text']
+                        print(tp.sentimentValue(tweet_text))
                         tweet_ids.append(tweet.id)
                         user_ids.add(str(tweet._json['user']['id']))
                         tweet._json['_id'] = str(tweet.id)
@@ -127,7 +131,8 @@ def main(argv):
     couchdb_password = argv[3]
     database_name = argv[4]
     initial_database(couchdb_ip, couchdb_username, couchdb_password, database_name)
-    total_count = get_tweet(consumer_key, consumer_secret, access_token, access_token_secret, interested_city)
+    total_count = get_tweet(consumer_key, consumer_secret, access_token,
+                            access_token_secret, interested_city)
     print('Get', total_count, 'tweets')
 
 
