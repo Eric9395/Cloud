@@ -8,11 +8,20 @@ import twitterProcessor
 def initial_database(couchdb_ip, couchdb_username, couchdb_password, database_name):
     global server, tweets_db, tp, positive_db, negative_db
     server = couchdb.Server('http://'+couchdb_username+':'+couchdb_password+'@'+couchdb_ip+'/')
+
     try:
-        server.create('positive_database')
-        server.create('negative_database')
         positive_db = server['positive_database']
+    except couchdb.http.ResourceNotFound as e:
+        server.create('positive_database')
+        positive_db = server['positive_database']
+
+    try:
         negative_db = server['negative_database']
+    except couchdb.http.ResourceNotFound as e:
+        server.create('negative_database')
+        negative_db = server['negative_database']
+
+    try:
         tweets_db = server[database_name]
     except couchdb.http.ResourceNotFound as e:
         server.create(database_name)
