@@ -6,17 +6,22 @@ import twitterProcessor
 
 
 def initial_database(couchdb_ip, couchdb_username, couchdb_password, database_name):
-    global server, tweets_db
+    global server, tweets_db, tp, positive_db, negative_db
     server = couchdb.Server('http://'+couchdb_username+':'+couchdb_password+'@'+couchdb_ip+'/')
     try:
+        server.create('positive_database')
+        server.create('negative_database')
+        positive_db = server['positive_database']
+        negative_db = server['negative_database']
         tweets_db = server[database_name]
     except couchdb.http.ResourceNotFound as e:
         server.create(database_name)
         tweets_db = server[database_name]
-    tp = twitterProcessor()
+    tp = twitterProcessor.twitterProcessor()
 
 
-def get_tweet(consumer_key, consumer_secret, access_token, access_token_secret, interested_city):
+def get_tweet(consumer_key, consumer_secret, access_token, access_token_secret,
+              interested_city, MAX_THRESHOLD, MIN_THRESHOLD):
     total_count = 0
     conflict_num = 0
     auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
@@ -33,7 +38,7 @@ def get_tweet(consumer_key, consumer_secret, access_token, access_token_secret, 
             break
     user_ids = set()
     for place_id in places_ids:
-        print(place_id[0], place_id[1])
+        print(place_id[0],place_id[1])
         max_id = 0
         tweet_ids = []
         queries_count = 0
@@ -43,11 +48,16 @@ def get_tweet(consumer_key, consumer_secret, access_token, access_token_secret, 
                     count = 0
                     for tweet in api.search(q="place:%s" % place_id[1], count=100):
                         count += 1
-                        tweet_text = tweet._json['text']
-                        print(tp.sentimentValue(tweet_text))
                         tweet_ids.append(tweet.id)
                         user_ids.add(str(tweet._json['user']['id']))
                         tweet._json['_id'] = str(tweet.id)
+                        text = tweet._json['text']
+                        score = tp.sentimentValue(text)
+                        tweet._json['score'] = score
+                        if score > MAX_THRESHOLD:
+                            positive_db.save(tweet._json['text'])
+                        elif score < MIN_THRESHOLD:
+                            negative_db.save(tweet._json['text'])
                         try:
                             tweets_db.save(tweet._json)
                         except couchdb.http.ResourceConflict as e:
@@ -68,6 +78,13 @@ def get_tweet(consumer_key, consumer_secret, access_token, access_token_secret, 
                         tweet_ids.append(tweet.id)
                         user_ids.add(str(tweet._json['user']['id']))
                         tweet._json['_id'] = str(tweet.id)
+                        text = tweet._json['text']
+                        score = tp.sentimentValue(text)
+                        tweet._json['score'] = score
+                        if score > MAX_THRESHOLD:
+                            positive_db.save(tweet._json['text'])
+                        elif score < MIN_THRESHOLD:
+                            negative_db.save(tweet._json['text'])
                         try:
                             tweets_db.save(tweet._json)
                         except couchdb.http.ResourceConflict as e:
@@ -96,7 +113,16 @@ def get_tweet(consumer_key, consumer_secret, access_token, access_token_secret, 
                 try:
                     if tweet._json['place']:
                         if tweet._json['place']['full_name'] == places_ids[0][0]:
+                            tweet._json['_id'] = str(tweet.id)
                             tweets_db.save(tweet._json)
+
+                            text = tweet._json['text']
+                            score = tp.sentimentValue(text)
+                            tweet._json['score'] = score
+                            if score > MAX_THRESHOLD:
+                                positive_db.save(tweet._json['text'])
+                            elif score < MIN_THRESHOLD:
+                                negative_db.save(tweet._json['text'])
                             user_tweet_count += 1
                 except couchdb.http.ResourceConflict as e:
                     print(e)
@@ -121,6 +147,8 @@ def main(argv):
     if len(argv) < 5:
         print('command: <interested_city> <couchdb_ip> <couchdb_username> <couchdb_password> <database_name>')
         sys.exit(2)
+    MAX_THRESHOLD = 0.8
+    MIN_THRESHOLD = 0.2
     consumer_key = 'Zf28oOjHPsWlCgZ0n9TF42XDg'
     consumer_secret = 'jnWreweMUzZwSYRlL5hAEqpGGIO8DMVMAhtRqOG7fmiTHzM3bN'
     access_token = '1119421816508825600-eEehgx2JYnp8frBiNJCMrTxdEdaCps'
@@ -131,8 +159,8 @@ def main(argv):
     couchdb_password = argv[3]
     database_name = argv[4]
     initial_database(couchdb_ip, couchdb_username, couchdb_password, database_name)
-    total_count = get_tweet(consumer_key, consumer_secret, access_token,
-                            access_token_secret, interested_city)
+    total_count = get_tweet(consumer_key, consumer_secret, access_token, access_token_secret,
+                            interested_city, MAX_THRESHOLD, MIN_THRESHOLD)
     print('Get', total_count, 'tweets')
 
 

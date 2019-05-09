@@ -11,7 +11,7 @@ from collections import Counter
 import nltk
 import string
 from nltk.tokenize import TweetTokenizer
-from gensim.models import Word2Vec
+
 
 
 class twitterProcessor():
@@ -24,7 +24,7 @@ class twitterProcessor():
         self.stopwords_english = stopwords.words('english')
 
         self.lemmatizer = nltk.stem.wordnet.WordNetLemmatizer()
-        self.classifier = generateModel(pos_tweets, neg_tweets)
+        self.classifier = self.generateModel(pos_tweets, neg_tweets)
 
     def lemmatize(self, word):
         lemma = self.lemmatizer.lemmatize(word, 'v')
@@ -70,7 +70,7 @@ class twitterProcessor():
 
         tweets_clean = []
         for word in tweet_tokens:
-            if (word not in stopwords_english and  # remove stopwords
+            if (word not in self.stopwords_english and  # remove stopwords
                 # word not in emoticons and  # remove emoticons
                     word not in string.punctuation):  # remove punctuation
                 # tweets_clean.append(word)
@@ -97,5 +97,5 @@ class twitterProcessor():
 
         return NaiveBayesClassifier.train(train_set)
 
-    def sentimentValue(tweetText):
-        return self.classifier.prob_classify(bag_of_words(tweetText)).prob('pos')
+    def sentimentValue(self, tweetText):
+        return self.classifier.prob_classify(self.bag_of_words(tweetText)).prob('pos')
