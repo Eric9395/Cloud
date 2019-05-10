@@ -63,3 +63,31 @@
   become: yes
   roles:
     - deploy_crawler
+
+# - hosts: master
+#   vars_files:
+#     - host_vars/vars.yml
+#   become: yes
+#   roles:
+#     - deploy_web
+#
+# - hosts: slave1
+#   vars_files:
+#     - host_vars/vars.yml
+#   become: yes
+#   roles:
+#     - deploy_web
+#
+# - hosts: slave2
+#   vars_files:
+#     - host_vars/vars.yml
+#   become: yes
+#   roles:
+#     - deploy_web
+#
+# - hosts: slave3
+#   vars_files:
+#     - host_vars/vars.yml
+#   become: yes
+#   roles:
+#     - deploy_web

@@ -1,0 +1,43 @@
+---
+
+- name: Copy html to remote
+  become: yes
+  synchronize:
+    src: ./web_html
+    dest: "{{ web_dir }}"
+
+- name: Copy Web service setup file to remote
+  become: yes
+  template:
+    src: docker-compose.yml.j2
+    dest: "{{ web_dir }}/docker-compose.yml"
+    mode: 0744
+    owner: "{{ ansible_user }}"
+    group: "{{ ansible_user }}"
+
+
+- name: Copy Web Service Dockerfile to remote
+  become: yes
+  template:
+    src: Dockerfile.j2
+    dest: "{{ web_dir }}/web_html/Dockerfile"
+    mode: 0744
+    owner: "{{ ansible_user }}"
+    group: "{{ ansible_user }}"
+
+- name: Start Web service
+  become: yes
+  command: docker stack deploy -c docker-compose.yml webservice
+  args:
+    chdir: "{{ web_dir }}"
+
+- name: Scale Web service to all nodes
+  become: yes
+  command: "docker service scale webservice_web={{ num_scale_webservices }}"
+
+- name: Check the status of Web service
+  become: yes
+  command: docker service ps webservice_web
+  register: output
+
+- debug: var=output.stdout

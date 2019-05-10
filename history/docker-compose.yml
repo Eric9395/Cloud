@@ -25,6 +25,17 @@ networks:
   couchdb_net:
     driver: overlay
     attachable: true
+
+
+
+version: "3.7"
+services:
+  web:
+    image: httpd:2.4-alpine
+    volumes:
+      - ./web_html:/usr/local/apache2/htdocs/
+    ports:
+      - "80:80"
     # networks:
     #   - test_net
         # ipv4_address: 172.20.0.2

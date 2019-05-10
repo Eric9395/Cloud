@@ -1,0 +1,20 @@
+consumer_key = 'Zf28oOjHPsWlCgZ0n9TF42XDg'
+consumer_secret = 'jnWreweMUzZwSYRlL5hAEqpGGIO8DMVMAhtRqOG7fmiTHzM3bN'
+access_token = '1119421816508825600-eEehgx2JYnp8frBiNJCMrTxdEdaCps'
+access_token_secret = 'u16kBCbFQwl0kCOkFGTMoM4oEmRHGuP4FBsbXp0kv3NHC'
+
+consumer_key = 'nESO9ucfOTiv08SsxaAl6t0Qh'
+consumer_secret = 'svqy64wtBCEH4y2H6LSdQFc7Dmuy3Be2fX4a8PGyHbS7ibyzHa'
+access_token = '964007150736498688-yqzlupT3PM0SIhgJufghwRP8Q4STz5G'
+access_token_secret = 'eU5vVKlNtckGj6JAnHRFMxtyFKqOzMa6BzDHpF1dnHZfm'
+
+
+consumer_key = '6ogx30hPU5SR2zEQ47keKxwk2'
+consumer_secret = 'F8UA9ElNW7SBuYcLgPZm1rh4jOLSbSTj0p4MeQO140QghZywZf'
+access_token = '1126729803732643842-Jxt4MjOMU3vZravlQHxhIP7LUbtQxp'
+access_token_secret = '0xegnUzbqaX6Oj2ut0Xs55kUaC1e2wG9flc76AJapGnQK'
+
+consumer_key = 'bSgkWo8gVE0mSn8Sy6k9swi2H'
+consumer_secret = 'FZ6rTH4ThzEO6nbzceokUnTeOhh7xnM86kDdsQWbYmv9Uc8SRY'
+access_token = '1126741982284353537-EUQmaKBPzLYrmTK4KfLh5QSVK4BDEq'
+access_token_secret = 'P1OZzu341dTX4UxD7IueVLACoIpgqPPXISP0NgSE0IPqD'

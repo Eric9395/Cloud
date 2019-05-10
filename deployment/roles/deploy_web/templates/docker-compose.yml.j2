@@ -1,0 +1,14 @@
+version: "3.7"
+services:
+  web:
+    image: python
+    volumes:
+      - ./web_html:/web
+    environment:
+      FLASK_APP: "microblog.py"
+    command: >
+      sh -c "pip3 install flask
+             pip3 install bs4
+             flask run"
+    ports:
+      - "80:80"

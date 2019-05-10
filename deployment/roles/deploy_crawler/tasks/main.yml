@@ -8,24 +8,20 @@
   ignore_errors: yes
 
 - debug: var=output.stdout
+  when: inventory_hostname in groups['master']
 
-- name: Copy Crawler Dockerfile to remote
+- name: Copy Crawler setup files to remote
   become: yes
   template:
-    src: Dockerfile.j2
-    dest: "{{ crawler_dir }}/Dockerfile"
+    src: "{{ item }}.j2"
+    dest: "{{ crawler_dir }}/{{ item }}"
     mode: 0744
     owner: "{{ ansible_user }}"
     group: "{{ ansible_user }}"
-
-- name: Copy Crawler python file to remote
-  become: yes
-  template:
-    src: crawler.py.j2
-    dest: "{{ crawler_dir }}/crawler.py"
-    mode: 0744
-    owner: "{{ ansible_user }}"
-    group: "{{ ansible_user }}"
+  with_items:
+    - Dockerfile
+    - crawler.py
+    - twitterProcessor.py
 
 - name: Start Crawler service (Crawl place -- "{{ crawl_place }}")
   become: yes
