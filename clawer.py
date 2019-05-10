@@ -26,6 +26,7 @@ def initial_database(couchdb_ip, couchdb_username, couchdb_password, database_na
     except couchdb.http.ResourceNotFound as e:
         server.create(database_name)
         tweets_db = server[database_name]
+
     tp = twitterProcessor.twitterProcessor()
 
 
@@ -153,20 +154,21 @@ def get_tweet(consumer_key, consumer_secret, access_token, access_token_secret,
 
 
 def main(argv):
-    if len(argv) < 5:
-        print('command: <interested_city> <couchdb_ip> <couchdb_username> <couchdb_password> <database_name>')
+    if len(argv) < 9:
+        print('command: <consumer_key> <consumer_secret> <access_token> <access_token_secret> '
+              '<interested_city> <couchdb_ip> <couchdb_username> <couchdb_password> <database_name>')
         sys.exit(2)
     MAX_THRESHOLD = 0.8
     MIN_THRESHOLD = 0.2
-    consumer_key = 'Zf28oOjHPsWlCgZ0n9TF42XDg'
-    consumer_secret = 'jnWreweMUzZwSYRlL5hAEqpGGIO8DMVMAhtRqOG7fmiTHzM3bN'
-    access_token = '1119421816508825600-eEehgx2JYnp8frBiNJCMrTxdEdaCps'
-    access_token_secret = 'u16kBCbFQwl0kCOkFGTMoM4oEmRHGuP4FBsbXp0kv3NHC'
-    interested_city = argv[0]
-    couchdb_ip = argv[1]
-    couchdb_username = argv[2]
-    couchdb_password = argv[3]
-    database_name = argv[4]
+    consumer_key = argv[0]
+    consumer_secret = argv[1]
+    access_token = argv[2]
+    access_token_secret = argv[3]
+    interested_city = argv[4]
+    couchdb_ip = argv[5]
+    couchdb_username = argv[6]
+    couchdb_password = argv[7]
+    database_name = argv[8]
     initial_database(couchdb_ip, couchdb_username, couchdb_password, database_name)
     total_count = get_tweet(consumer_key, consumer_secret, access_token, access_token_secret,
                             interested_city, MAX_THRESHOLD, MIN_THRESHOLD)
