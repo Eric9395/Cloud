@@ -18,6 +18,8 @@ class twitterProcessor():
 
     def __init__(self):
         nltk.download('twitter_samples')
+        nltk.download('stopwords')
+        nltk.download('wordnet')
         pos_tweets = twitter_samples.strings('positive_tweets.json')
         neg_tweets = twitter_samples.strings('negative_tweets.json')
 
