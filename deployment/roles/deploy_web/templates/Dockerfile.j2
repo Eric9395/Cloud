@@ -1,0 +1,13 @@
+FROM python:3.6.8
+
+COPY . /web
+
+WORKDIR /web
+
+RUN pip3 install --trusted-host pypi.python.org flask
+
+RUN pip3 install --trusted-host pypi.python.org bs4
+
+ENV FLASK_APP="microblog.py"
+
+CMD ["flask", "run"]

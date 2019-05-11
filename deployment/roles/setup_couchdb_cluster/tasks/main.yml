@@ -1,0 +1,52 @@
+---
+
+- name: Copy CouchDB setup file to remote
+  become: yes
+  template:
+    src: "{{ item }}.j2"
+    dest: "{{ couchdb_dir }}/{{ item }}"
+    mode: 0744
+    owner: "{{ ansible_user }}"
+    group: "{{ ansible_user }}"
+  with_items:
+    - docker-compose.yml
+    - cluster.sh
+
+- name: Copy CouchDB configs to remote
+  become: yes
+  template:
+    src: docker.ini.j2
+    dest: "{{ couchdb_config_dir }}/docker.ini"
+    mode: 0744
+    owner: "{{ ansible_user }}"
+    group: "{{ ansible_user }}"
+
+- name: Remove previous CouchDB service
+  become: yes
+  command: "docker-compose down"
+  args:
+    chdir: "{{ couchdb_dir }}"
+  ignore_errors: yes
+
+- name: Build CouchDB service -- "{{couchdb_hostname}}"
+  become: yes
+  command: "docker-compose up -d"
+  args:
+    chdir: "{{ couchdb_dir }}"
+
+- name: Wait 10 seconds for services to start
+  pause:
+    seconds: 10
+
+
+
+- name: Run cluster setup script
+  when: inventory_hostname not in groups['master']
+  become: yes
+  shell: sh cluster.sh
+  args:
+    chdir: "{{ couchdb_dir }}"
+  register: output
+
+- debug: var=output.stdout
+  when: inventory_hostname not in groups['master']
