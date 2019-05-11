@@ -1,6 +1,6 @@
 # Common vars
 availability_zone: melbourne-qh2-uom
-key_file: /home/polaris/.ssh/id_rsa.pub
+key_file: site.key.pub
 
 # volumes, need to be modified
 # volumes:
