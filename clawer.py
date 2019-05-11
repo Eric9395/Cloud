@@ -49,65 +49,38 @@ def get_tweet(consumer_key, consumer_secret, access_token, access_token_secret,
     user_ids = set()
     for place_id in places_ids:
         print(place_id[0],place_id[1])
-        max_id = 0
+        max_id = float('inf')
         tweet_ids = []
         queries_count = 0
         while True:
             try:
-                if max_id == 0:
-                    count = 0
-                    for tweet in api.search(q="place:%s" % place_id[1], count=100):
-                        count += 1
-                        tweet_ids.append(tweet.id)
-                        user_ids.add(str(tweet._json['user']['id']))
-                        tweet._json['_id'] = str(tweet.id)
-                        text = tweet._json['text']
-                        score = tp.sentimentValue(text)
-                        tweet._json['score'] = score
+                count = 0
+                for tweet in api.search(q="place:%s" % place_id[1], count=100, max_id=max_id-1):
+                    count += 1
+                    tweet_ids.append(tweet.id)
+                    user_ids.add(str(tweet._json['user']['id']))
+                    tweet._json['_id'] = str(tweet.id)
+                    text = tweet._json['text']
+                    score = tp.sentimentValue(text)
+                    tweet._json['score'] = score
+                    try:
                         if score > MAX_THRESHOLD:
                             positive_db.save({'_id':str(tweet.id), 'text':tweet._json['text']})
                         elif score < MIN_THRESHOLD:
                             negative_db.save({'_id':str(tweet.id), 'text':tweet._json['text']})
-                        try:
-                            tweets_db.save(tweet._json)
-                        except couchdb.http.ResourceConflict as e:
-                            conflict_num += 1
-                            print(e)
-                            continue
-                        except ConnectionRefusedError as e:
-                            print(e)
-                            time.sleep(10)
-                            continue
-                    max_id = min(tweet_ids)
-                    total_count += count
-                    print('Total count:', total_count, 'Query num:', queries_count, count)
-                else:
-                    count = 0
-                    for tweet in api.search(q="place:%s" % place_id[1], count=100, max_id=max_id-1):
-                        count += 1
-                        tweet_ids.append(tweet.id)
-                        user_ids.add(str(tweet._json['user']['id']))
-                        tweet._json['_id'] = str(tweet.id)
-                        text = tweet._json['text']
-                        score = tp.sentimentValue(text)
-                        tweet._json['score'] = score
-                        if score > MAX_THRESHOLD:
-                            positive_db.save({'_id':str(tweet.id), 'text':tweet._json['text']})
-                        elif score < MIN_THRESHOLD:
-                            negative_db.save({'_id':str(tweet.id), 'text':tweet._json['text']})
-                        try:
-                            tweets_db.save(tweet._json)
-                        except couchdb.http.ResourceConflict as e:
-                            print(e)
-                            conflict_num += 1
-                            continue
-                        except ConnectionRefusedError as e:
-                            print(e)
-                            time.sleep(10)
-                            continue
-                    max_id = min(tweet_ids)
-                    total_count += count
-                    print('Total count:', total_count, 'Query num:', queries_count, count)
+
+                        tweets_db.save(tweet._json)
+                    except couchdb.http.ResourceConflict as e:
+                        print(e)
+                        conflict_num += 1
+                        continue
+                    except ConnectionRefusedError as e:
+                        print(e)
+                        time.sleep(10)
+                        continue
+                max_id = min(tweet_ids)
+                total_count += count
+                print('Total count:', total_count, 'Query num:', queries_count, count)
                 if count == 0:
                     break
                 queries_count += 1
@@ -125,7 +98,6 @@ def get_tweet(consumer_key, consumer_secret, access_token, access_token_secret,
                         if tweet._json['place']['full_name'] == places_ids[0][0]:
                             tweet._json['_id'] = str(tweet.id)
                             tweets_db.save(tweet._json)
-
                             text = tweet._json['text']
                             score = tp.sentimentValue(text)
                             tweet._json['score'] = score
@@ -155,8 +127,8 @@ def get_tweet(consumer_key, consumer_secret, access_token, access_token_secret,
 
 def main(argv):
     if len(argv) < 9:
-        print('command: <consumer_key> <consumer_secret> <access_token> <access_token_secret> '
-              '<interested_city> <couchdb_ip> <couchdb_username> <couchdb_password> <database_name>')
+        print('command: <consumer_key> <consumer_secret> <access_token> <access_token_secret> <interested_city> '
+              '<couchdb_ip> <couchdb_username> <couchdb_password> <database_name>')
         sys.exit(2)
     MAX_THRESHOLD = 0.8
     MIN_THRESHOLD = 0.2
