@@ -56,7 +56,7 @@ class viewGenerator:
             '''
             },
             'get_hashtag_sum': {
-                'map': 'function(doc){for(var i=0; i<doc.hashtags.length;i++){emit([doc.hashtags[i].text, doc.place.full_name], 1);}}',
+                'map': 'function(doc){for(var i=0; i<doc.entities.hashtags.length;i++){emit([doc.entities.hashtags[i].text, doc.place.full_name], 1);}}',
                 'reduce': 'function(keys, values){return sum(values);}'
             }
         }
@@ -90,4 +90,5 @@ class viewGenerator:
         data['hashtag_total'] = {}
         for item in self.dataDB.view('summary/get_hashtag_sum', group=True, group_level=1, descending=True, limit=50):
             data['hashtag_total'][item.key] = item.value
+
         self.resultDB.update([data])
