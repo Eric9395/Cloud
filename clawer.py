@@ -3,11 +3,12 @@ import tweepy
 import time
 import sys
 import twitterProcessor
+import viewGenerator
 
 
 def initial_database(couchdb_ip, couchdb_username, couchdb_password, database_name):
-    global server, tweets_db, tp, positive_db, negative_db
-    server = couchdb.Server('http://'+couchdb_username+':'+couchdb_password+'@'+couchdb_ip+'/')
+    global server, tweets_db, tp, positive_db, negative_db, vg
+    server = couchdb.Server('http://'+couchdb_username+':'+couchdb_password+'@'+couchdb_ip+':5984/')
     try:
         positive_db = server['positive_database']
     except couchdb.http.ResourceNotFound as e:
@@ -27,6 +28,8 @@ def initial_database(couchdb_ip, couchdb_username, couchdb_password, database_na
         tweets_db = server[database_name]
 
     tp = twitterProcessor.twitterProcessor()
+    vg = viewGenerator.viewGenerator(couchdb_ip, couchdb_username, couchdb_password, database_name)
+    vg.generateView()
 
 
 def get_tweet(consumer_key, consumer_secret, access_token, access_token_secret,
@@ -60,12 +63,14 @@ def get_tweet(consumer_key, consumer_secret, access_token, access_token_secret,
                     tweet._json['_id'] = str(tweet.id)
                     text = tweet._json['text']
                     score = tp.sentimentValue(text)
-                    tweet._json['score'] = score
+                    tweet._json['wrath_score'] = score
                     try:
                         if score > MAX_THRESHOLD:
-                            positive_db.save({'_id':str(tweet.id), 'text':tweet._json['text']})
+                            positive_db.save({'_id':str(tweet.id), 'text':tweet._json['text'],
+                                                  'place':place_id[0],'wrath_score':score})
                         elif score < MIN_THRESHOLD:
-                            negative_db.save({'_id':str(tweet.id), 'text':tweet._json['text']})
+                            negative_db.save({'_id':str(tweet.id), 'text':tweet._json['text'],
+                                                  'place':place_id[0],'wrath_score':score})
 
                         tweets_db.save(tweet._json)
                     except couchdb.http.ResourceConflict as e:
@@ -95,14 +100,16 @@ def get_tweet(consumer_key, consumer_secret, access_token, access_token_secret,
                     if tweet._json['place']:
                         if tweet._json['place']['full_name'] == places_ids[0][0]:
                             tweet._json['_id'] = str(tweet.id)
-                            tweets_db.save(tweet._json)
                             text = tweet._json['text']
                             score = tp.sentimentValue(text)
-                            tweet._json['score'] = score
+                            tweet._json['wrath_score'] = score
                             if score > MAX_THRESHOLD:
-                                positive_db.save({'_id':str(tweet.id), 'text':tweet._json['text']})
+                                positive_db.save({'_id':str(tweet.id), 'text':tweet._json['text'],
+                                                  'place':place_id[0],'wrath_score':score})
                             elif score < MIN_THRESHOLD:
-                                negative_db.save({'_id':str(tweet.id), 'text':tweet._json['text']})
+                                negative_db.save({'_id':str(tweet.id), 'text':tweet._json['text'],
+                                                  'place':place_id[0],'wrath_score':score})
+                            tweets_db.save(tweet._json)
                             user_tweet_count += 1
                 except couchdb.http.ResourceConflict as e:
                     print(e)
@@ -115,6 +122,8 @@ def get_tweet(consumer_key, consumer_secret, access_token, access_token_secret,
             print('Total count:', total_count, 'User id', user_id, user_tweet_count)
         except tweepy.error.RateLimitError as e:
             print(e)
+            print('Update view')
+            vg.updateView()
             time.sleep(900)
             continue
         except tweepy.error.TweepError as e:

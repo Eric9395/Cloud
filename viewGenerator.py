@@ -3,17 +3,17 @@ import couchdb
 
 class viewGenerator:
     def __init__(self, server_ip, username, password, dataDB):
-        serverFullAddress = 'http://%s:%s@%s' % (username, password, server_ip)
+        serverFullAddress = 'http://%s:%s@%s:5984/' % (username, password, server_ip)
         self.server = couchdb.Server(serverFullAddress)
-        self.dataDB = server[data]
+        self.dataDB = self.server[dataDB]
         try:
-            resultDB = server.create('result')  # First time
+            self.resultDB = self.server.create('result')  # First time
         except:
-            resultDB = server['result']  # if database has already created
+            self.resultDB = self.server['result']  # if database has already created
 
         self.allView = {
             'get_wrath_score': {
-                'map': 'function(doc){emit([doc._id, doc.place.full_name], doc.wrath_score);}'
+                'map': 'function(doc){emit([doc._id, doc.place.full_name], doc.wrath_score);}',
                 'reduce': '''
             function (keys, values, rereduce) {
               var result = 0;
@@ -34,7 +34,7 @@ class viewGenerator:
             '''
             },
             'get_pride_score': {
-                'map': 'function(doc){emit([doc._id, doc.place.full_name], {followers: doc.user.followers_count, textlength: doc.text.split(" ").length, favourites: doc.user.favourites_count, retweet: doc.retweet_count+1});}'
+                'map': 'function(doc){emit([doc._id, doc.place.full_name], {followers: doc.user.followers_count, textlength: doc.text.split(" ").length, favourites: doc.user.favourites_count, retweet: doc.retweet_count+1});}',
                 'reduce': '''
             function (keys, values, rereduce) {
               var result = 0;
