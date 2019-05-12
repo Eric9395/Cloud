@@ -16,5 +16,3 @@ couchdb_secret: couchsecret
 
 crawler_database: tweets_v1
 crawler_tag: "{{ couchdb_hostname }}_crawler"
-
-coordination_node_ip: 45.113.235.145

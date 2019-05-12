@@ -25,7 +25,7 @@
     - melbourne_suburbs.geojson
     - viewGenerator.py
 
-- name: Start Crawler service (Crawl place -- "{{ crawl_place }}")
+- name: Build Crawler service (Crawl place -- "{{ crawl_place }}")
   become: yes
   command: "docker build -t {{ crawler_tag }} ."
   args:

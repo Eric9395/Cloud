@@ -1,13 +1,16 @@
 [local]
 localhost ansible_connection=local ansible_become_pass=huangsite
 
+[all:vars]
+ansible_connection=ssh
+ansible_user=ubuntu
+coordination_node_ip=45.113.235.145
+
 [master]
 45.113.235.145 ansible_ssh_private_key_file=site.key
 
 [master:vars]
 couchdb_hostname=master
-ansible_connection=ssh
-ansible_user=ubuntu
 crawl_place=Melbourne
 twitter_consumer_key = Zf28oOjHPsWlCgZ0n9TF42XDg
 twitter_consumer_secret = jnWreweMUzZwSYRlL5hAEqpGGIO8DMVMAhtRqOG7fmiTHzM3bN
@@ -15,12 +18,10 @@ twitter_access_token = 1119421816508825600-eEehgx2JYnp8frBiNJCMrTxdEdaCps
 twitter_access_token_secret = u16kBCbFQwl0kCOkFGTMoM4oEmRHGuP4FBsbXp0kv3NHC
 
 [slave1]
-103.6.254.117 ansible_ssh_private_key_file=site.key
+103.6.254.131 ansible_ssh_private_key_file=site.key
 
 [slave1:vars]
 couchdb_hostname=slave1
-ansible_connection=ssh
-ansible_user=ubuntu
 crawl_place=Sydney
 twitter_consumer_key = nESO9ucfOTiv08SsxaAl6t0Qh
 twitter_consumer_secret = svqy64wtBCEH4y2H6LSdQFc7Dmuy3Be2fX4a8PGyHbS7ibyzHa
@@ -28,12 +29,10 @@ twitter_access_token = 964007150736498688-yqzlupT3PM0SIhgJufghwRP8Q4STz5G
 twitter_access_token_secret = eU5vVKlNtckGj6JAnHRFMxtyFKqOzMa6BzDHpF1dnHZfm
 
 [slave2]
-103.6.254.135 ansible_ssh_private_key_file=testKeypair.pem
+103.6.254.96 ansible_ssh_private_key_file=site.key
 
 [slave2:vars]
 couchdb_hostname=slave2
-ansible_connection=ssh
-ansible_user=ubuntu
 crawl_place=Perth
 twitter_consumer_key = 6ogx30hPU5SR2zEQ47keKxwk2
 twitter_consumer_secret = F8UA9ElNW7SBuYcLgPZm1rh4jOLSbSTj0p4MeQO140QghZywZf
@@ -41,12 +40,10 @@ twitter_access_token = 1126729803732643842-Jxt4MjOMU3vZravlQHxhIP7LUbtQxp
 twitter_access_token_secret = 0xegnUzbqaX6Oj2ut0Xs55kUaC1e2wG9flc76AJapGnQK
 
 [slave3]
-103.6.254.104 ansible_ssh_private_key_file=testKeypair.pem
+103.6.254.132 ansible_ssh_private_key_file=site.key
 
 [slave3:vars]
 couchdb_hostname=slave3
-ansible_connection=ssh
-ansible_user=ubuntu
 crawl_place=Brisbane
 twitter_consumer_key = bSgkWo8gVE0mSn8Sy6k9swi2H
 twitter_consumer_secret = FZ6rTH4ThzEO6nbzceokUnTeOhh7xnM86kDdsQWbYmv9Uc8SRY
