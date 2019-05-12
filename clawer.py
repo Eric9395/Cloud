@@ -89,6 +89,8 @@ def get_tweet(consumer_key, consumer_secret, access_token, access_token_secret,
                 queries_count += 1
             except tweepy.error.RateLimitError as e:
                 print(e)
+                print('Update view')
+                vg.updateView()
                 time.sleep(900)
                 continue
     print('Total users num:', len(user_ids))
