@@ -13,7 +13,7 @@ class viewGenerator:
 
         self.allView = {
             'get_wrath_score': {
-                'map': 'function(doc){emit([doc._id, doc.place.full_name], doc.wrath_score);}',
+                'map': 'function(doc){emit(doc.place.full_name, doc.wrath_score);}',
                 'reduce': '''
             function (keys, values, rereduce) {
               var result = 0;
@@ -34,7 +34,7 @@ class viewGenerator:
             '''
             },
             'get_pride_score': {
-                'map': 'function(doc){emit([doc._id, doc.place.full_name], {followers: doc.user.followers_count, textlength: doc.text.split(" ").length, favourites: doc.user.favourites_count, retweet: doc.retweet_count+1});}',
+                'map': 'function(doc){emit(doc.place.full_name, {followers: doc.user.followers_count, textlength: doc.text.split(" ").length, favourites: doc.user.favourites_count, retweet: doc.retweet_count+1});}',
                 'reduce': '''
             function (keys, values, rereduce) {
               var result = 0;
@@ -65,11 +65,11 @@ class viewGenerator:
 
     def updateView(self):
         data = self.resultDB['wrath_score']
-        for index, item in enumerate(self.dataDB.view('design_doc/get_wrath_score', group=True)):
+        for index, item in enumerate(self.dataDB.view('summary/get_wrath_score', group=True)):
             data[index] = item
         self.resultDB.save(data)
 
         data = self.resultDB['pride_score']
-        for index, item in enumerate(self.dataDB.view('design_doc/get_pride_score', group=True)):
+        for index, item in enumerate(self.dataDB.view('summary/get_pride_score', group=True)):
             data[index] = item
         self.resultDB.save(data)
