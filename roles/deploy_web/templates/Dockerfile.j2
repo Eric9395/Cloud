@@ -1,0 +1,5 @@
+FROM python:3.6.8
+ENV PYTHONUNBUFFERED 1
+WORKDIR /web
+COPY . /web
+RUN pip3 install --trusted-host pypi.python.org Django

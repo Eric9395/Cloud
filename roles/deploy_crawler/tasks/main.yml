@@ -22,6 +22,8 @@
     - Dockerfile
     - crawler.py
     - twitterProcessor.py
+    - melbourne_suburbs.geojson
+    - viewGenerator.py
 
 - name: Start Crawler service (Crawl place -- "{{ crawl_place }}")
   become: yes

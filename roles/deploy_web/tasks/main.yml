@@ -4,30 +4,40 @@
   become: yes
   synchronize:
     src: ./web_html
-    dest: "{{ web_dir }}"
+    dest: "{{ home_dir }}"
 
 - name: Copy Web service setup file to remote
   become: yes
   template:
-    src: docker-compose.yml.j2
-    dest: "{{ web_dir }}/docker-compose.yml"
+    src: "{{ item }}.j2"
+    dest: "{{ home_dir }}/web_html/{{ item }}"
     mode: 0744
     owner: "{{ ansible_user }}"
     group: "{{ ansible_user }}"
+  with_items:
+    - docker-compose.yml
+    - Dockerfile
+    - local.conf
 
-- name: Start Web service
+- name: Build Webservice -- "{{couchdb_hostname}}"
   become: yes
-  command: docker stack deploy -c docker-compose.yml webservice
+  command: "docker-compose up -d"
   args:
-    chdir: "{{ web_dir }}"
+    chdir: "{{ home_dir }}/web_html"
 
-- name: Scale Web service to all nodes
-  become: yes
-  command: "docker service scale webservice_web={{ num_scale_webservices }}"
-
-- name: Check the status of Web service
-  become: yes
-  command: docker service ps webservice_web
-  register: output
-
-- debug: var=output.stdout
+# - name: Start Web service
+#   become: yes
+#   command: docker stack deploy -c docker-compose.yml webservice
+#   args:
+#     chdir: "{{ home_dir }}/web_html/"
+#
+# - name: Scale Web service to all nodes
+#   become: yes
+#   command: "docker service scale webservice_web={{ num_scale_webservices }}"
+#
+# - name: Check the status of Web service
+#   become: yes
+#   command: docker service ps webservice_web
+#   register: output
+#
+# - debug: var=output.stdout

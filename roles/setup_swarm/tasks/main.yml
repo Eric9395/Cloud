@@ -1,9 +1,9 @@
 ---
 
-- name: Leave previous swarm on a node
-  become: yes
-  command: docker swarm leave --force
-  ignore_errors: yes
+# - name: Leave previous swarm on a node
+#   become: yes
+#   command: docker swarm leave --force
+#   ignore_errors: yes
 
 - name: Setup master node
   when: inventory_hostname in groups['master']
@@ -13,7 +13,7 @@
 - name: Get the join-token of manager
   when: inventory_hostname in groups['master']
   become: yes
-  shell: docker swarm join-token manager | grep "docker swarm join"
+  shell: docker swarm join-token worker | grep "docker swarm join"
   register: output
 
 - name: Modify join_token
@@ -25,7 +25,7 @@
     regexp: 'join_token:'
     line: 'join_token: {{ output.stdout }}'
 
-- name: Reload join token 
+- name: Reload join token
   when: inventory_hostname not in groups['master']
   include_vars: host_vars/join_token.yml
 

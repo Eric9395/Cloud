@@ -2,7 +2,7 @@
 localhost ansible_connection=local ansible_become_pass=huangsite
 
 [master]
-45.113.235.12 ansible_ssh_private_key_file=site.key
+45.113.235.145 ansible_ssh_private_key_file=site.key
 
 [master:vars]
 couchdb_hostname=master
@@ -15,7 +15,7 @@ twitter_access_token = 1119421816508825600-eEehgx2JYnp8frBiNJCMrTxdEdaCps
 twitter_access_token_secret = u16kBCbFQwl0kCOkFGTMoM4oEmRHGuP4FBsbXp0kv3NHC
 
 [slave1]
-45.113.235.143 ansible_ssh_private_key_file=site.key
+103.6.254.117 ansible_ssh_private_key_file=site.key
 
 [slave1:vars]
 couchdb_hostname=slave1
@@ -28,7 +28,7 @@ twitter_access_token = 964007150736498688-yqzlupT3PM0SIhgJufghwRP8Q4STz5G
 twitter_access_token_secret = eU5vVKlNtckGj6JAnHRFMxtyFKqOzMa6BzDHpF1dnHZfm
 
 [slave2]
-45.113.233.94 ansible_ssh_private_key_file=site.key
+103.6.254.135 ansible_ssh_private_key_file=testKeypair.pem
 
 [slave2:vars]
 couchdb_hostname=slave2
@@ -41,7 +41,7 @@ twitter_access_token = 1126729803732643842-Jxt4MjOMU3vZravlQHxhIP7LUbtQxp
 twitter_access_token_secret = 0xegnUzbqaX6Oj2ut0Xs55kUaC1e2wG9flc76AJapGnQK
 
 [slave3]
-103.6.254.37 ansible_ssh_private_key_file=site.key
+103.6.254.104 ansible_ssh_private_key_file=testKeypair.pem
 
 [slave3:vars]
 couchdb_hostname=slave3

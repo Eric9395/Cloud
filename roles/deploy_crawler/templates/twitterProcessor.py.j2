@@ -1,17 +1,12 @@
 from nltk import NaiveBayesClassifier
-from nltk import classify
 from nltk.corpus import twitter_samples
-from nltk.stem import PorterStemmer
 from nltk.corpus import stopwords
-import numpy as np
 import json
 import re
-import sys
-from collections import Counter
 import nltk
 import string
 from nltk.tokenize import TweetTokenizer
-
+from shapely.geometry import shape, Point
 
 
 class twitterProcessor():
@@ -27,6 +22,15 @@ class twitterProcessor():
 
         self.lemmatizer = nltk.stem.wordnet.WordNetLemmatizer()
         self.classifier = self.generateModel(pos_tweets, neg_tweets)
+        with open('melbourne_suburbs.geojson') as f:
+            self.geoJs = json.load(f)
+
+    def locate(self, lon, lat):
+        point = Point(lon, lat)
+        for feature in self.geoJs['features']:
+            polygon = shape(feature['geometry'])
+            if polygon.contains(point):
+                return feature['properties']['SA2_NAME16']
 
     def lemmatize(self, word):
         lemma = self.lemmatizer.lemmatize(word, 'v')

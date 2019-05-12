@@ -12,4 +12,6 @@ RUN pip3 install --trusted-host pypi.python.org nltk
 
 RUN pip3 install --trusted-host pypi.python.org numpy
 
+RUN pip3 install --trusted-host pypi.python.org shapely
+
 CMD ["python", "crawler.py", "{{ twitter_consumer_key }}","{{ twitter_consumer_secret }}","{{ twitter_access_token }}","{{ twitter_access_token_secret }}","{{ crawl_place }}", "{{ ansible_default_ipv4.address }}", "{{ couchdb_username }}", "{{ couchdb_password }}", "{{ crawler_database }}"]

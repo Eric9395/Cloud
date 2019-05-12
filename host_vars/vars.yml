@@ -1,6 +1,6 @@
 ---
 
-web_dir: /home/{{ ansible_user }}/web_setup
+home_dir: /home/{{ ansible_user }}
 couchdb_dir: /home/{{ ansible_user }}/couchdb_setup
 couchdb_data_dir: /home/{{ ansible_user }}/couchdb_setup/data
 crawler_dir: /home/{{ ansible_user }}/crawler_setup
@@ -17,4 +17,4 @@ couchdb_secret: couchsecret
 crawler_database: tweets_v1
 crawler_tag: "{{ couchdb_hostname }}_crawler"
 
-coordination_node_ip: 45.113.235.12
+coordination_node_ip: 45.113.235.145
