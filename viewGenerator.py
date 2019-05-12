@@ -9,7 +9,7 @@ class viewGenerator:
         try:
             self.resultDB = self.server.create('result')  # First time
         except:
-            self.resultDB = self.server['result']  # if database has already created
+            self.resultDB = self.server['result'+dataDB]  # if database has already created
 
         self.allView = {
             'get_wrath_score': {
@@ -55,7 +55,7 @@ class viewGenerator:
             '''
             },
             'get_hashtag_sum': {
-                'map': 'function(doc){for(var i=0; i<doc.hashtags.length;i++){emit([doc.place.full_name,doc.hashtags[i].text], 1);}}',
+                'map': 'function(doc){for(var i=0; i<doc.hashtags.length;i++){emit([doc.hashtags[i].text, doc.place.full_name], 1);}}',
                 'reduce': 'function(keys, values){return sum(values);}'
             }
         }
@@ -69,15 +69,15 @@ class viewGenerator:
 
     def updateView(self):
         data = {'wrath_score': {}}
-        for index, item in self.dataDB.view('summary/get_wrath_score', group=True):
+        for item in self.dataDB.view('summary/get_wrath_score', group=True):
             data['wrath_score'][item.key] = item.value
 
         data['pride_score'] = {}
-        for index, item in self.dataDB.view('summary/get_pride_score', group=True):
+        for item in self.dataDB.view('summary/get_pride_score', group=True):
             data['pride_score'][item.key] = item.value
 
         data['hashtag'] = {}
-        for index in self.dataDB.view('summary/get_pride_score', group=True, group_level=2, descending=True, limit=50):
+        for item in self.dataDB.view('summary/get_hashtag_sum', group=True, group_level=2, descending=True, limit=50):
             data['hashtag'][item.key] = item.value
 
         self.resultDB.save(data)
