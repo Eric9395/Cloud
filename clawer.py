@@ -8,7 +8,6 @@ import twitterProcessor
 def initial_database(couchdb_ip, couchdb_username, couchdb_password, database_name):
     global server, tweets_db, tp, positive_db, negative_db
     server = couchdb.Server('http://'+couchdb_username+':'+couchdb_password+'@'+couchdb_ip+'/')
-
     try:
         positive_db = server['positive_database']
     except couchdb.http.ResourceNotFound as e:
@@ -42,10 +41,9 @@ def get_tweet(consumer_key, consumer_secret, access_token, access_token_secret,
     places_ids = []
     places_name = []
     for place in places:
-        if place.country_code == 'AU' and place.full_name not in places_name:
+        if place.country_code == 'AU' and place.place_type == 'city':
             places_ids.append((place.full_name, place.id))
             places_name.append(place.full_name)
-            break
     user_ids = set()
     for place_id in places_ids:
         print(place_id[0],place_id[1])
