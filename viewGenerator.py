@@ -68,17 +68,16 @@ class viewGenerator:
             self.dataDB['_design/summary'] = dict(language='javascript', views=self.allView)
 
     def updateView(self):
-        data = self.resultDB['wrath_score']
-        for index, item in enumerate(self.dataDB.view('summary/get_wrath_score', group=True)):
-            data[index] = item
-        self.resultDB.save(data)
+        data = {'wrath_score': {}}
+        for index, item in self.dataDB.view('summary/get_wrath_score', group=True):
+            data['wrath_score'][item.key] = item.value
 
-        data = self.resultDB['pride_score']
-        for index, item in enumerate(self.dataDB.view('summary/get_pride_score', group=True)):
-            data[index] = item
-        self.resultDB.save(data)
+        data['pride_score'] = {}
+        for index, item in self.dataDB.view('summary/get_pride_score', group=True):
+            data['pride_score'][item.key] = item.value
 
-        data = self.resultDB['hashtag']
-        for index, item in enumerate(self.dataDB.view('summary/get_pride_score', group=True, group_level=2, descending=True, limit=50)):
-            data[index] = item
+        data['hashtag'] = {}
+        for index in self.dataDB.view('summary/get_pride_score', group=True, group_level=2, descending=True, limit=50):
+            data['hashtag'][item.key] = item.value
+
         self.resultDB.save(data)
