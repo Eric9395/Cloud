@@ -76,19 +76,19 @@ class viewGenerator:
             data = {'_id': '0'}
 
         data['wrath_score'] = {}
-   for item in self.dataDB.view('summary/get_wrath_score', group=True):
-        data['wrath_score'][item.key] = item.value
+        for item in self.dataDB.view('summary/get_wrath_score', group=True):
+            data['wrath_score'][item.key] = item.value
 
-    data['pride_score'] = {}
-    for item in self.dataDB.view('summary/get_pride_score', group=True):
-        data['pride_score'][item.key] = item.value
+        data['pride_score'] = {}
+        for item in self.dataDB.view('summary/get_pride_score', group=True):
+            data['pride_score'][item.key] = item.value
 
-    data['hashtag'] = {}
-    for item in self.dataDB.view('summary/get_hashtag_sum', group=True, group_level=2, descending=True, limit=50):
-        data['hashtag'][item.key] = item.value
+        data['hashtag'] = {}
+        for item in self.dataDB.view('summary/get_hashtag_sum', group=True, group_level=2, descending=True, limit=50):
+            data['hashtag'][item.key] = item.value
 
-    data['hashtag_total'] = {}
-    for item in self.dataDB.view('summary/get_hashtag_sum', group=True, group_level=1, descending=True, limit=50):
-        data['hashtag_total'][item.key] = item.value
+        data['hashtag_total'] = {}
+        for item in self.dataDB.view('summary/get_hashtag_sum', group=True, group_level=1, descending=True, limit=50):
+            data['hashtag_total'][item.key] = item.value
 
-    self.resultDB.update([data])
+        self.resultDB.update([data])
