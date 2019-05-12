@@ -80,8 +80,9 @@ def get_tweet(consumer_key, consumer_secret, access_token, access_token_secret,
                     y_max = tweet.place.bounding_box.coordinates[0][2][1]
                     x = (x_min+x_max)/2.0
                     y = (y_min+y_max)/2.0
-                    surburb_name = tp.locate(x ,y)
-                    tweet._json['place']['full_name'] = surburb_name
+                    surburb_name = tp.locate(x,y)
+                    if surburb_name:
+                        tweet._json['place']['full_name'] = surburb_name
                     try:
                         if score > MAX_THRESHOLD:
                             positive_db.save(tweet._json)

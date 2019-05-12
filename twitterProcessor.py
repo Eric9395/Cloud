@@ -1,13 +1,8 @@
 from nltk import NaiveBayesClassifier
-from nltk import classify
 from nltk.corpus import twitter_samples
-from nltk.stem import PorterStemmer
 from nltk.corpus import stopwords
-import numpy as np
 import json
 import re
-import sys
-from collections import Counter
 import nltk
 import string
 from nltk.tokenize import TweetTokenizer
