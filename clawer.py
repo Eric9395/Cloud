@@ -7,7 +7,7 @@ import viewGenerator
 
 
 def initial_database(couchdb_ip, couchdb_username, couchdb_password, database_name):
-    global server, tweets_db, tp, positive_db, negative_db, vg
+    global server, tweets_db, tp, positive_db, negative_db, vg, vgp, vgn
     server = couchdb.Server('http://'+couchdb_username+':'+couchdb_password+'@'+couchdb_ip+':5984/')
     try:
         positive_db = server['positive_database']
@@ -29,7 +29,10 @@ def initial_database(couchdb_ip, couchdb_username, couchdb_password, database_na
 
     tp = twitterProcessor.twitterProcessor()
     vg = viewGenerator.viewGenerator(couchdb_ip, couchdb_username, couchdb_password, database_name)
-    vg.generateView()
+    vgp = viewGenerator.viewGenerator(couchdb_ip, couchdb_username,
+                                      couchdb_password, 'positive_database')
+    vgn = viewGenerator.viewGenerator(couchdb_ip, couchdb_username,
+                                      couchdb_password, 'negative_database')
 
 
 def get_tweet(consumer_key, consumer_secret, access_token, access_token_secret,
@@ -49,7 +52,7 @@ def get_tweet(consumer_key, consumer_secret, access_token, access_token_secret,
             places_name.append(place.full_name)
     user_ids = set()
     for place_id in places_ids:
-        print(place_id[0],place_id[1])
+        print(place_id[0], place_id[1])
         max_id = float('inf')
         tweet_ids = []
         queries_count = 0
@@ -93,6 +96,8 @@ def get_tweet(consumer_key, consumer_secret, access_token, access_token_secret,
                 print(e)
                 print('Update view')
                 vg.updateView()
+                vgp.updateView()
+                vgn.updateView()
                 time.sleep(900)
                 continue
     print('Total users num:', len(user_ids))
@@ -126,6 +131,8 @@ def get_tweet(consumer_key, consumer_secret, access_token, access_token_secret,
             print(e)
             print('Update view')
             vg.updateView()
+            vgp.updateView()
+            vgn.updateView()
             time.sleep(900)
             continue
         except tweepy.error.TweepError as e:

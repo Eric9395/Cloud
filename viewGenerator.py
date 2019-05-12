@@ -60,6 +60,7 @@ class viewGenerator:
                 'reduce': 'function(keys, values){return sum(values);}'
             }
         }
+        self.generateView()
 
     def generateView(self):
         try:

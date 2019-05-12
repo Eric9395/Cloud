@@ -13,7 +13,6 @@ import string
 from nltk.tokenize import TweetTokenizer
 
 
-
 class twitterProcessor():
 
     def __init__(self):
