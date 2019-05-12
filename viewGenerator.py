@@ -53,6 +53,10 @@ class viewGenerator:
               return ({result: result, count: count});
             }
             '''
+            },
+            'get_hashtag_sum': {
+                'map': 'function(doc){for(var i=0; i<doc.hashtags.length;i++){emit([doc.place.full_name,doc.hashtags[i].text], 1);}}',
+                'reduce': 'function(keys, values){return sum(values);}'
             }
         }
 
@@ -71,5 +75,10 @@ class viewGenerator:
 
         data = self.resultDB['pride_score']
         for index, item in enumerate(self.dataDB.view('summary/get_pride_score', group=True)):
+            data[index] = item
+        self.resultDB.save(data)
+
+        data = self.resultDB['hashtag']
+        for index, item in enumerate(self.dataDB.view('summary/get_pride_score', group=True, group_level=2, descending=True, limit=50)):
             data[index] = item
         self.resultDB.save(data)
