@@ -5,29 +5,23 @@ import json
 with open('../static/map/img/sentiment_by_suburbs.geojson') as f:
     geojson = json.load(f)
 
-with open('../static/map/img/sentiment_by_suburbs.geojson') as data:
-    json = json.load(data)
-
-    for key in json
-
-
     for feature in geojson["features"]:
         properties = feature["properties"]
 
         sentiment = properties["pos_rate"]
 
         if sentiment is None:
-            properties["color"] = "#8E8080"
+            properties["color"] = "#666666"
         elif float(sentiment) < 0.2:
-            properties["color"] = "#FA8072"
+            properties["color"] = "#FF3333"
         elif float(sentiment) < 0.4:
-            properties["color"] = "#F08080"
+            properties["color"] = "#FF9933"
         elif float(sentiment) < 0.6:
-            properties["color"] = "#DC143C"
+            properties["color"] = "#FFFF33"
         elif float(sentiment) < 0.8:
-            properties["color"] = "#FF0000"
+            properties["color"] = "#99FF33"
         else:
-            properties["color"] = "FFC6AE"
+            properties["color"] = "#00BB00"
 
     with open('../static/map/res/melbourne_suburbs.geojson', 'w') as outFile:
         json.dump(geojson, outFile)
