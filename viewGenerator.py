@@ -7,14 +7,9 @@ class viewGenerator:
         self.server = couchdb.Server(serverFullAddress)
         self.dataDB = self.server[dataDB]
         try:
-
-            self.resultDB = self.server.create('result'+dataDB)  # First time
-        except:
-            self.resultDB = self.server['result'+dataDB]  # if database has already created
-
-            self.resultDB = self.server['result'+dataDB]  # if database has already created
+            self.resultDB = self.server['result' + dataDB]# if database has already created
         except couchdb.http.ResourceNotFound as e:
-            self.resultDB = self.server.create('result'+dataDB)  # First time
+            self.resultDB = self.server.create('result' + dataDB)# First time
             self.resultDB = self.server['result'+dataDB]
 
         self.allView = {
@@ -74,7 +69,11 @@ class viewGenerator:
             self.dataDB['_design/summary'] = dict(language='javascript', views=self.allView)
 
     def updateView(self):
-        data = {'wrath_score': {}}
+        data = self.resultDB.get('0')
+        if not data:
+            data = {'_id':'0'}
+
+        data['wrath_score'] = {}
         for item in self.dataDB.view('summary/get_wrath_score', group=True):
             data['wrath_score'][item.key] = item.value
 
@@ -90,4 +89,4 @@ class viewGenerator:
         for item in self.dataDB.view('summary/get_hashtag_sum', group=True, group_level=1, descending=True, limit=50):
             data['hashtag_total'][item.key] = item.value
 
-        self.resultDB.save(data)
+        self.resultDB.update([data])
