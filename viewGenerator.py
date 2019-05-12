@@ -74,7 +74,8 @@ class viewGenerator:
             self.dataDB['_design/summary'] = dict(language='javascript', views=self.allView)
 
     def updateView(self):
-        data = {'wrath_score': {}}
+
+        data = {'_id': 0, 'wrath_score': {}}
         for item in self.dataDB.view('summary/get_wrath_score', group=True):
             data['wrath_score'][item.key] = item.value
 
