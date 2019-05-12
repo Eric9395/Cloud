@@ -86,4 +86,8 @@ class viewGenerator:
         for item in self.dataDB.view('summary/get_hashtag_sum', group=True, group_level=2, descending=True, limit=50):
             data['hashtag'][item.key] = item.value
 
+        data['hashtag_total'] = {}
+        for item in self.dataDB.view('summary/get_hashtag_sum', group=True, group_level=1, descending=True, limit=50):
+            data['hashtag_total'][item.key] = item.value
+
         self.resultDB.save(data)
