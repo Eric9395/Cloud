@@ -53,8 +53,13 @@ def get_tweet(consumer_key, consumer_secret, access_token, access_token_secret,
         max_id = float('inf')
         tweet_ids = []
         queries_count = 0
+        i = 0
         while True:
             try:
+                # i+=1
+                # if i > 5:
+                #     print('Update view')
+                #     vg.updateView()
                 count = 0
                 for tweet in api.search(q="place:%s" % place_id[1], count=100, max_id=max_id-1):
                     count += 1
@@ -66,12 +71,9 @@ def get_tweet(consumer_key, consumer_secret, access_token, access_token_secret,
                     tweet._json['wrath_score'] = score
                     try:
                         if score > MAX_THRESHOLD:
-                            positive_db.save({'_id':str(tweet.id), 'text':tweet._json['text'],
-                                                  'place':place_id[0],'wrath_score':score})
+                            positive_db.save(tweet._json)
                         elif score < MIN_THRESHOLD:
-                            negative_db.save({'_id':str(tweet.id), 'text':tweet._json['text'],
-                                                  'place':place_id[0],'wrath_score':score})
-
+                            negative_db.save(tweet._json)
                         tweets_db.save(tweet._json)
                     except couchdb.http.ResourceConflict as e:
                         print(e)
@@ -106,11 +108,9 @@ def get_tweet(consumer_key, consumer_secret, access_token, access_token_secret,
                             score = tp.sentimentValue(text)
                             tweet._json['wrath_score'] = score
                             if score > MAX_THRESHOLD:
-                                positive_db.save({'_id':str(tweet.id), 'text':tweet._json['text'],
-                                                  'place':place_id[0],'wrath_score':score})
+                                positive_db.save(tweet._json)
                             elif score < MIN_THRESHOLD:
-                                negative_db.save({'_id':str(tweet.id), 'text':tweet._json['text'],
-                                                  'place':place_id[0],'wrath_score':score})
+                                negative_db.save(tweet._json)
                             tweets_db.save(tweet._json)
                             user_tweet_count += 1
                 except couchdb.http.ResourceConflict as e:

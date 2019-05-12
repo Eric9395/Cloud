@@ -7,14 +7,9 @@ class viewGenerator:
         self.server = couchdb.Server(serverFullAddress)
         self.dataDB = self.server[dataDB]
         try:
-
-            self.resultDB = self.server.create('result'+dataDB)  # First time
-        except:
-            self.resultDB = self.server['result'+dataDB]  # if database has already created
-
-            self.resultDB = self.server['result'+dataDB]  # if database has already created
+            self.resultDB = self.server['result' + dataDB]  # if database has already created
         except couchdb.http.ResourceNotFound as e:
-            self.resultDB = self.server.create('result'+dataDB)  # First time
+            self.resultDB = self.server.create('result' + dataDB)  # First time
             self.resultDB = self.server['result'+dataDB]
 
         self.allView = {
@@ -75,20 +70,24 @@ class viewGenerator:
 
     def updateView(self):
 
-        data = {'_id': 0, 'wrath_score': {}}
-        for item in self.dataDB.view('summary/get_wrath_score', group=True):
-            data['wrath_score'][item.key] = item.value
+        data = self.resultDB.get('0')
+        if not data:
+            data = {'_id': '0'}
 
-        data['pride_score'] = {}
-        for item in self.dataDB.view('summary/get_pride_score', group=True):
-            data['pride_score'][item.key] = item.value
+        data['wrath_score'] = {}
+   for item in self.dataDB.view('summary/get_wrath_score', group=True):
+        data['wrath_score'][item.key] = item.value
 
-        data['hashtag'] = {}
-        for item in self.dataDB.view('summary/get_hashtag_sum', group=True, group_level=2, descending=True, limit=50):
-            data['hashtag'][item.key] = item.value
+    data['pride_score'] = {}
+    for item in self.dataDB.view('summary/get_pride_score', group=True):
+        data['pride_score'][item.key] = item.value
 
-        data['hashtag_total'] = {}
-        for item in self.dataDB.view('summary/get_hashtag_sum', group=True, group_level=1, descending=True, limit=50):
-            data['hashtag_total'][item.key] = item.value
+    data['hashtag'] = {}
+    for item in self.dataDB.view('summary/get_hashtag_sum', group=True, group_level=2, descending=True, limit=50):
+        data['hashtag'][item.key] = item.value
 
-        self.resultDB.save(data)
+    data['hashtag_total'] = {}
+    for item in self.dataDB.view('summary/get_hashtag_sum', group=True, group_level=1, descending=True, limit=50):
+        data['hashtag_total'][item.key] = item.value
+
+    self.resultDB.update([data])
