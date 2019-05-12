@@ -25,7 +25,7 @@ def index(request):
 
 
 def sentiment(request):
-    return render(request, 'map/sentiment.html')
+    return render(request, 'map/wrath.html')
 
 
 # RESTful api
