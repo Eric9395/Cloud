@@ -23,5 +23,6 @@ with open('../static/map/img/sentiment_by_suburbs.geojson') as f:
         else:
             properties["color"] = "#00BB00"
 
+
     with open('../static/map/res/melbourne_suburbs.geojson', 'w') as outFile:
         json.dump(geojson, outFile)

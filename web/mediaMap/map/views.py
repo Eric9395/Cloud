@@ -65,8 +65,8 @@ def avengers_data(request):
         return HttpResponse(json.dumps(data), content_type='application/json')
 
 
-def traffic(request):
-    return render(request, 'map/traffic.html')
+def pride(request):
+    return render(request, 'map/pride.html')
 
 
 def traffic_data(request):

@@ -9,16 +9,16 @@
 {% block content %}
 <div class="container" style="margin-bottom: 80px;">
     <div class="row">
-        <div id="map"></div>
+        <!--<div id="map"></div>-->
         <div class="card z-depth-1-half" style="width: 100%; margin-bottom: 20px">
             <div class="card-body">
-                <h5 class="card-title">COMP90024 Assignment 2</h5>
-                <h6 class="card-subtitle mb-2 text-muted">Team 20</h6>
-                <p class="card-text">Data Source:&nbsp;&nbsp;&nbsp;
-                    <a href="https://portal.aurin.org.au/">AURIN</a>&nbsp;&nbsp;&nbsp;
-                    <a href="https://developer.twitter.com/">Twitter API</a>&nbsp;&nbsp;&nbsp;
+                <h4 class="card-title">2019 COMP90024 Assignment 2</h4>
+                <h5 class="card-subtitle mb-2 text-muted">Team 20</h5>
+                <p class="card-text">Reference:&nbsp;&nbsp;&nbsp;
                     <a href="http://www.abs.gov.au/AUSSTATS/abs@.nsf/DetailsPage/1270.0.55.006July%202011?OpenDocument">
-                        Australian Bureau of Statistics</a>
+                        Australian Bureau of Statistics</a>&nbsp;&nbsp;&nbsp;
+                    <a href="https://portal.aurin.org.au/">AURIN</a>&nbsp;&nbsp;&nbsp;
+                    <a href="https://developer.twitter.com/">Twitter API</a>&nbsp;
                 </p>
             </div>
         </div>
@@ -31,11 +31,19 @@
     <div class="row">
         <div class="col-sm-6 col-md-6 col-xl-3 mb-3">
             <a href="{% url 'map:sentiment' %}">
-                <img class="img-thumbnail mb-3" src="{% static 'map/img/sentiment.png' %}" alt="sentiment"
+                <img class="img-thumbnail mb-3" src="{% static 'map/img/wrath.png' %}" alt="sentiment"
                      align="center">
-                <h5 class="mb-1" align="center">Sentiment Analysis</h5>
+                <h5 class="mb-1" align="center">Melbourne Wrath Analysis</h5>
             </a>
-            <p class="text-muted">Sentiment analysis based on the tweets of Melbourne in the past couple of weeks.</p>
+            <p class="text-muted">Wrath analysis: darker the color is, more angry the people in the area could be...</p>
+        </div>
+        <div class="col-sm-6 col-md-6 col-xl-3 mb-3">
+            <a href="{% url 'map:pride' %}">
+                <img class="img-thumbnail mb-3" src="{% static 'map/img/pride.png' %}" alt="pride"
+                     align="center">
+                <h5 class="mb-1" align="center">Melbourne Pride Analysis</h5>
+            </a>
+            <p class="text-muted">More popular the person are, more pride the person could be...</p>
         </div>
         <div class="col-sm-6 col-md-6 col-xl-3 mb-3">
             <a href="{% url 'map:avengers' %}">
@@ -45,14 +53,6 @@
             </a>
             <p class="text-muted">Melburnians' attitudes towards the movie <b>Avengers: Infinity War</b> and super heroes in
                 it.</p>
-        </div>
-        <div class="col-sm-6 col-md-6 col-xl-3 mb-3">
-            <a href="{% url 'map:traffic' %}">
-                <img class="img-thumbnail mb-3" src="{% static 'map/img/traffic.png' %}" alt="traffic"
-                     align="center">
-                <h5 class="mb-1" align="center">Traffic</h5>
-            </a>
-            <p class="text-muted">Have a look at Melbourne's traffic volume and the complaints about Melburnian traffic...</p>
         </div>
         <div class="col-sm-6 col-md-6 col-xl-3 mb-3">
             <a href="{% url 'map:affordability' %}">
