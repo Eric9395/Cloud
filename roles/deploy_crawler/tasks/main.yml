@@ -1,0 +1,36 @@
+---
+
+- name: Check the status of cluster CouchDB membership
+  when: inventory_hostname in groups['master']
+  become: yes
+  command: "curl http://{{ couchdb_username }}:{{ couchdb_password }}@0.0.0.0:5984/_membership"
+  register: output
+  ignore_errors: yes
+
+- debug: var=output.stdout
+  when: inventory_hostname in groups['master']
+
+- name: Copy Crawler setup files to remote
+  become: yes
+  template:
+    src: "{{ item }}.j2"
+    dest: "{{ crawler_dir }}/{{ item }}"
+    mode: 0744
+    owner: "{{ ansible_user }}"
+    group: "{{ ansible_user }}"
+  with_items:
+    - Dockerfile
+    - crawler.py
+    - twitterProcessor.py
+
+- name: Start Crawler service (Crawl place -- "{{ crawl_place }}")
+  become: yes
+  command: "docker build -t {{ crawler_tag }} ."
+  args:
+    chdir: "{{ crawler_dir }}"
+
+- name: Start Crawler service (Crawl place -- "{{ crawl_place }}")
+  become: yes
+  command: "docker run -d {{ crawler_tag }}"
+  args:
+    chdir: "{{ crawler_dir }}"

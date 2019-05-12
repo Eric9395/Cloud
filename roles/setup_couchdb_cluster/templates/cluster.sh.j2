@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+echo "Join in CouchDB Cluster"
+
+user={{ couchdb_username }}
+pass={{ couchdb_password }}
+master_ip={{ coordination_node_ip }}
+slave_ip={{ ansible_default_ipv4.address }}
+
+
+curl -X POST "http://${user}:${pass}@${master_ip}:5984/_cluster_setup" -H 'Content-Type: application/json' \
+  -d "{\"action\": \"enable_cluster\", \"bind_address\":\"0.0.0.0\", \"username\": \"${user}\", \
+  \"password\":\"${pass}\", \"port\": 5984,\"node_count\": \"4\", \"remote_node\": \"${slave_ip}\", \
+  \"remote_current_user\": \"${user}\", \"remote_current_password\": \"${pass}\" }"
+
+
+curl -X POST "http://${user}:${pass}@${master_ip}:5984/_cluster_setup" -H 'Content-Type: application/json' \
+  -d "{\"action\": \"add_node\", \"host\":\"${slave_ip}\", \"port\": 5984, \"username\": \"${user}\", \"password\":\"${pass}\"}"

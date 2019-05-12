@@ -1,0 +1,8 @@
+version: "3.7"
+services:
+  web:
+    image: httpd:2.4-alpine
+    volumes:
+      - ./web_html:/usr/local/apache2/htdocs/
+    ports:
+      - "80:80"

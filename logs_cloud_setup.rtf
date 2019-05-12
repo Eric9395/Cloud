@@ -1,0 +1,665 @@
+{\rtf1\ansi\ansicpg1252\cocoartf1671\cocoasubrtf400
+{\fonttbl\f0\fswiss\fcharset0 Helvetica;\f1\fnil\fcharset77 ZapfDingbatsITC;}
+{\colortbl;\red255\green255\blue255;}
+{\*\expandedcolortbl;;}
+\margl1440\margr1440\vieww21360\viewh13960\viewkind0
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\f0\fs24 \cf0 PLAY [master] ******************************************************************\
+\
+TASK [Gathering Facts] *********************************************************\
+ok: [45.113.233.94]\
+\
+TASK [common : Update apt package] *********************************************\
+ok: [45.113.233.94]\
+\
+TASK [common : Install dependencies] *******************************************\
+ok: [45.113.233.94] => (item=['python3-setuptools', 'python3-pip', 'curl', 'vim', 'apt-transport-https', 'ca-certificates', 'gnupg-agent', 'software-properties-common'])\
+\
+TASK [common : Uninstall old versions of docker] *******************************\
+ok: [45.113.233.94] => (item=['docker', 'docker-engine', 'docker.io'])\
+\
+TASK [common : Add Docker\'92s official GPG key] **********************************\
+ok: [45.113.233.94]\
+\
+TASK [common : Configure Docker apt repository] ********************************\
+ok: [45.113.233.94]\
+\
+TASK [common : Install Docker] *************************************************\
+ok: [45.113.233.94] => (item=['docker-ce', 'docker-ce-cli', 'containerd.io'])\
+\
+TASK [common : Install Docker Compose] *****************************************\
+ok: [45.113.233.94]\
+\
+TASK [common : Create directory] ***********************************************\
+ok: [45.113.233.94] => (item=/home/ubuntu/web_setup)\
+ok: [45.113.233.94] => (item=/home/ubuntu/couchdb_setup)\
+changed: [45.113.233.94] => (item=/home/ubuntu/couchdb_setup/data)\
+ok: [45.113.233.94] => (item=/home/ubuntu/crawler_setup)\
+changed: [45.113.233.94] => (item=/home/ubuntu/couchdb_setup/couchdb_configs)\
+\
+TASK [setup_swarm : Leave previous swarm on a node] ****************************\
+changed: [45.113.233.94]\
+\
+TASK [setup_swarm : Setup master node] *****************************************\
+changed: [45.113.233.94]\
+\
+TASK [setup_swarm : Get the join-token of manager] *****************************\
+changed: [45.113.233.94]\
+\
+TASK [setup_swarm : Modify join_token] *****************************************\
+changed: [45.113.233.94 -> localhost]\
+\
+TASK [setup_swarm : Reload join token] *****************************************\
+skipping: [45.113.233.94]\
+\
+TASK [setup_swarm : Join a swarm] **********************************************\
+skipping: [45.113.233.94]\
+\
+TASK [setup_couchdb_cluster : Copy CouchDB setup file to remote] ***************\
+ok: [45.113.233.94] => (item=docker-compose.yml)\
+ok: [45.113.233.94] => (item=cluster.sh)\
+\
+TASK [setup_couchdb_cluster : Copy CouchDB configs to remote] ******************\
+changed: [45.113.233.94]\
+\
+TASK [setup_couchdb_cluster : Remove previous CouchDB service] *****************\
+changed: [45.113.233.94]\
+\
+TASK [setup_couchdb_cluster : Build CouchDB service -- "master"] ***************\
+changed: [45.113.233.94]\
+\
+TASK [setup_couchdb_cluster : Wait 10 seconds for services to start] ***********\
+Pausing for 10 seconds\
+(ctrl+C then 'C' = continue early, ctrl+C then 'A' = abort)\
+ok: [45.113.233.94]\
+\
+TASK [setup_couchdb_cluster : Run cluster setup script] ************************\
+skipping: [45.113.233.94]\
+\
+TASK [setup_couchdb_cluster : debug] *******************************************\
+skipping: [45.113.233.94]\
+\
+PLAY [slave1] ******************************************************************\
+\
+TASK [Gathering Facts] *********************************************************\
+ok: [45.113.235.12]\
+\
+TASK [common : Update apt package] *********************************************\
+ok: [45.113.235.12]\
+\
+TASK [common : Install dependencies] *******************************************\
+ok: [45.113.235.12] => (item=['python3-setuptools', 'python3-pip', 'curl', 'vim', 'apt-transport-https', 'ca-certificates', 'gnupg-agent', 'software-properties-common'])\
+\
+TASK [common : Uninstall old versions of docker] *******************************\
+ok: [45.113.235.12] => (item=['docker', 'docker-engine', 'docker.io'])\
+\
+TASK [common : Add Docker\'92s official GPG key] **********************************\
+ok: [45.113.235.12]\
+\
+TASK [common : Configure Docker apt repository] ********************************\
+ok: [45.113.235.12]\
+\
+TASK [common : Install Docker] *************************************************\
+ok: [45.113.235.12] => (item=['docker-ce', 'docker-ce-cli', 'containerd.io'])\
+\
+TASK [common : Install Docker Compose] *****************************************\
+ok: [45.113.235.12]\
+\
+TASK [common : Create directory] ***********************************************\
+ok: [45.113.235.12] => (item=/home/ubuntu/web_setup)\
+ok: [45.113.235.12] => (item=/home/ubuntu/couchdb_setup)\
+changed: [45.113.235.12] => (item=/home/ubuntu/couchdb_setup/data)\
+ok: [45.113.235.12] => (item=/home/ubuntu/crawler_setup)\
+changed: [45.113.235.12] => (item=/home/ubuntu/couchdb_setup/couchdb_configs)\
+\
+TASK [setup_swarm : Leave previous swarm on a node] ****************************\
+changed: [45.113.235.12]\
+\
+TASK [setup_swarm : Setup master node] *****************************************\
+skipping: [45.113.235.12]\
+\
+TASK [setup_swarm : Get the join-token of manager] *****************************\
+skipping: [45.113.235.12]\
+\
+TASK [setup_swarm : Modify join_token] *****************************************\
+skipping: [45.113.235.12]\
+\
+TASK [setup_swarm : Reload join token] *****************************************\
+ok: [45.113.235.12]\
+\
+TASK [setup_swarm : Join a swarm] **********************************************\
+changed: [45.113.235.12]\
+\
+TASK [setup_couchdb_cluster : Copy CouchDB setup file to remote] ***************\
+ok: [45.113.235.12] => (item=docker-compose.yml)\
+ok: [45.113.235.12] => (item=cluster.sh)\
+\
+TASK [setup_couchdb_cluster : Copy CouchDB configs to remote] ******************\
+changed: [45.113.235.12]\
+\
+TASK [setup_couchdb_cluster : Remove previous CouchDB service] *****************\
+changed: [45.113.235.12]\
+\
+TASK [setup_couchdb_cluster : Build CouchDB service -- "slave1"] ***************\
+changed: [45.113.235.12]\
+\
+TASK [setup_couchdb_cluster : Wait 10 seconds for services to start] ***********\
+Pausing for 10 seconds\
+(ctrl+C then 'C' = continue early, ctrl+C then 'A' = abort)\
+ok: [45.113.235.12]\
+\
+TASK [setup_couchdb_cluster : Run cluster setup script] ************************\
+changed: [45.113.235.12]\
+\
+TASK [setup_couchdb_cluster : debug] *******************************************\
+ok: [45.113.235.12] => \{\
+    "output.stdout": "Join in CouchDB Cluster\\n\{\\"ok\\":true\}\\n\{\\"error\\":\\"bad_request\\",\\"reason\\":\\"Add node failed. Invalid Host and/or Port.\\"\}"\
+\}\
+\
+PLAY [slave2] ******************************************************************\
+\
+TASK [Gathering Facts] *********************************************************\
+ok: [45.113.235.143]\
+\
+TASK [common : Update apt package] *********************************************\
+ok: [45.113.235.143]\
+\
+TASK [common : Install dependencies] *******************************************\
+ok: [45.113.235.143] => (item=['python3-setuptools', 'python3-pip', 'curl', 'vim', 'apt-transport-https', 'ca-certificates', 'gnupg-agent', 'software-properties-common'])\
+\
+TASK [common : Uninstall old versions of docker] *******************************\
+ok: [45.113.235.143] => (item=['docker', 'docker-engine', 'docker.io'])\
+\
+TASK [common : Add Docker\'92s official GPG key] **********************************\
+ok: [45.113.235.143]\
+\
+TASK [common : Configure Docker apt repository] ********************************\
+ok: [45.113.235.143]\
+\
+TASK [common : Install Docker] *************************************************\
+^CProcess WorkerProcess-51:\
+ [ERROR]: User interrupted execution\
+\
+Traceback (most recent call last):\
+  File "/usr/local/Cellar/python/3.7.3/Frameworks/Python.framework/Versions/3.7/lib/python3.7/multiprocessing/process.py", line 297, in _bootstrap\
+    self.run()\
+  File "/usr/local/lib/python3.7/site-packages/ansible/executor/process/worker.py", line 118, in run\
+    self._final_q\
+  File "/usr/local/lib/python3.7/site-packages/ansible/executor/task_executor.py", line 106, in run\
+    item_results = self._run_loop(items)\
+  File "/usr/local/lib/python3.7/site-packages/ansible/executor/task_executor.py", line 343, in _run_loop\
+    res = self._execute(variables=task_vars)\
+  File "/usr/local/lib/python3.7/site-packages/ansible/executor/task_executor.py", line 612, in _execute\
+    result = self._handler.run(task_vars=variables)\
+  File "/usr/local/lib/python3.7/site-packages/ansible/plugins/action/normal.py", line 46, in run\
+    result = merge_hash(result, self._execute_module(task_vars=task_vars, wrap_async=wrap_async))\
+  File "/usr/local/lib/python3.7/site-packages/ansible/plugins/action/__init__.py", line 843, in _execute_module\
+    res = self._low_level_execute_command(cmd, sudoable=sudoable, in_data=in_data)\
+  File "/usr/local/lib/python3.7/site-packages/ansible/plugins/action/__init__.py", line 962, in _low_level_execute_command\
+    rc, stdout, stderr = self._connection.exec_command(cmd, in_data=in_data, sudoable=sudoable)\
+  File "/usr/local/lib/python3.7/site-packages/ansible/plugins/connection/ssh.py", line 1145, in exec_command\
+    (returncode, stdout, stderr) = self._run(cmd, in_data, sudoable=sudoable)\
+  File "/usr/local/lib/python3.7/site-packages/ansible/plugins/connection/ssh.py", line 392, in wrapped\
+    return_tuple = func(self, *args, **kwargs)\
+  File "/usr/local/lib/python3.7/site-packages/ansible/plugins/connection/ssh.py", line 1035, in _run\
+    return self._bare_run(cmd, in_data, sudoable=sudoable, checkrc=checkrc)\
+  File "/usr/local/lib/python3.7/site-packages/ansible/plugins/connection/ssh.py", line 872, in _bare_run\
+    events = selector.select(timeout)\
+  File "/usr/local/Cellar/python/3.7.3/Frameworks/Python.framework/Versions/3.7/lib/python3.7/selectors.py", line 558, in select\
+    kev_list = self._selector.control(None, max_ev, timeout)\
+KeyboardInterrupt\
+ 
+\f1 \uc0\u10008 
+\f0  mysite@SiteMac \uc0\u57520  ~/Desktop/cloud_assignment/ass2/deployment \uc0\u57520  \uc0\u57504  cloud_deploy \uc0\u9679  \uc0\u57520  ssh -i site.key ubuntu@\
+45.113.235.143\
+^C\
+ 
+\f1 \uc0\u10008 
+\f0  mysite@SiteMac \uc0\u57520  ~/Desktop/cloud_assignment/ass2/deployment \uc0\u57520  \uc0\u57504  cloud_deploy \uc0\u9679  \uc0\u57520  ssh -i site.key ubuntu@\
+45.113.235.143\
+45.113.235.143\
+ 
+\f1 \uc0\u10008 
+\f0  mysite@SiteMac \uc0\u57520  ~/Desktop/cloud_assignment/ass2/deployment \uc0\u57520  \uc0\u57504  cloud_deploy \uc0\u9679  \uc0\u57520  ssh -i site.key ubuntu@45.113.235.143\
+The authenticity of host '45.113.235.143 (45.113.235.143)' can't be established.\
+ECDSA key fingerprint is SHA256:BWVMGS36yxW7rvkPgUR0x+g8eMYtM9jgI5NmT/hvJ8Y.\
+Are you sure you want to continue connecting (yes/no)? yes\
+Warning: Permanently added '45.113.235.143' (ECDSA) to the list of known hosts.\
+\
+The programs included with the Ubuntu system are free software;\
+the exact distribution terms for each program are described in the\
+individual files in /usr/share/doc/*/copyright.\
+\
+Ubuntu comes with ABSOLUTELY NO WARRANTY, to the extent permitted by\
+applicable law.\
+\
+To run a command as administrator (user "root"), use "sudo <command>".\
+See "man sudo_root" for details.\
+\
+ubuntu@slave2:~$ exit\
+logout\
+Connection to 45.113.235.143 closed.\
+ mysite@SiteMac \uc0\u57520  ~/Desktop/cloud_assignment/ass2/deployment \uc0\u57520  \uc0\u57504  cloud_deploy \uc0\u9679  \uc0\u57520  clear\
+ mysite@SiteMac \uc0\u57520  ~/Desktop/cloud_assignment/ass2/deployment \uc0\u57520  \uc0\u57504  cloud_deploy \uc0\u9679  \uc0\u57520  sh run_con....\
+run-help       run_config.sh\
+ mysite@SiteMac \uc0\u57520  ~/Desktop/cloud_assignment/ass2/deployment \uc0\u57520  \uc0\u57504  cloud_deploy \uc0\u9679  \uc0\u57520  sh run_config.sh\
+\
+PLAY [master] **********************************************************************************\
+\
+TASK [Gathering Facts] *************************************************************************\
+ok: [45.113.233.94]\
+\
+TASK [common : Update apt package] *************************************************************\
+ok: [45.113.233.94]\
+\
+TASK [common : Install dependencies] ***********************************************************\
+changed: [45.113.233.94] => (item=['python3-setuptools', 'python3-pip', 'curl', 'vim', 'apt-transport-https', 'ca-certificates', 'gnupg-agent', 'software-properties-common'])\
+\
+TASK [common : Uninstall old versions of docker] ***********************************************\
+ok: [45.113.233.94] => (item=['docker', 'docker-engine', 'docker.io'])\
+\
+TASK [common : Add Docker\'92s official GPG key] **************************************************\
+changed: [45.113.233.94]\
+\
+TASK [common : Configure Docker apt repository] ************************************************\
+changed: [45.113.233.94]\
+\
+TASK [common : Install Docker] *****************************************************************\
+changed: [45.113.233.94] => (item=['docker-ce', 'docker-ce-cli', 'containerd.io'])\
+\
+TASK [common : Install Docker Compose] *********************************************************\
+changed: [45.113.233.94]\
+\
+TASK [common : Create directory] ***************************************************************\
+changed: [45.113.233.94] => (item=/home/ubuntu/web_setup)\
+changed: [45.113.233.94] => (item=/home/ubuntu/couchdb_setup)\
+changed: [45.113.233.94] => (item=/home/ubuntu/couchdb_setup/data)\
+changed: [45.113.233.94] => (item=/home/ubuntu/crawler_setup)\
+changed: [45.113.233.94] => (item=/home/ubuntu/couchdb_setup/couchdb_configs)\
+\
+TASK [setup_swarm : Leave previous swarm on a node] ********************************************\
+fatal: [45.113.233.94]: FAILED! => \{"changed": true, "cmd": ["docker", "swarm", "leave", "--force"], "delta": "0:00:00.041130", "end": "2019-05-10 07:31:00.386770", "msg": "non-zero return code", "rc": 1, "start": "2019-05-10 07:31:00.345640", "stderr": "Error response from daemon: This node is not part of a swarm", "stderr_lines": ["Error response from daemon: This node is not part of a swarm"], "stdout": "", "stdout_lines": []\}\
+...ignoring\
+\
+TASK [setup_swarm : Setup master node] *********************************************************\
+changed: [45.113.233.94]\
+\
+TASK [setup_swarm : Get the join-token of manager] *********************************************\
+changed: [45.113.233.94]\
+\
+TASK [setup_swarm : Modify join_token] *********************************************************\
+changed: [45.113.233.94 -> localhost]\
+\
+TASK [setup_swarm : Reload join token] *********************************************************\
+skipping: [45.113.233.94]\
+\
+TASK [setup_swarm : Join a swarm] **************************************************************\
+skipping: [45.113.233.94]\
+\
+TASK [setup_couchdb_cluster : Copy CouchDB setup file to remote] *******************************\
+changed: [45.113.233.94] => (item=docker-compose.yml)\
+changed: [45.113.233.94] => (item=cluster.sh)\
+\
+TASK [setup_couchdb_cluster : Copy CouchDB configs to remote] **********************************\
+changed: [45.113.233.94]\
+\
+TASK [setup_couchdb_cluster : Remove previous CouchDB service] *********************************\
+changed: [45.113.233.94]\
+\
+TASK [setup_couchdb_cluster : Build CouchDB service -- "master"] *******************************\
+changed: [45.113.233.94]\
+\
+TASK [setup_couchdb_cluster : Wait 10 seconds for services to start] ***************************\
+Pausing for 10 seconds\
+(ctrl+C then 'C' = continue early, ctrl+C then 'A' = abort)\
+ok: [45.113.233.94]\
+\
+TASK [setup_couchdb_cluster : Run cluster setup script] ****************************************\
+skipping: [45.113.233.94]\
+\
+TASK [setup_couchdb_cluster : debug] ***********************************************************\
+skipping: [45.113.233.94]\
+\
+PLAY [slave1] **********************************************************************************\
+\
+TASK [Gathering Facts] *************************************************************************\
+ok: [45.113.235.12]\
+\
+TASK [common : Update apt package] *************************************************************\
+ok: [45.113.235.12]\
+\
+TASK [common : Install dependencies] ***********************************************************\
+changed: [45.113.235.12] => (item=['python3-setuptools', 'python3-pip', 'curl', 'vim', 'apt-transport-https', 'ca-certificates', 'gnupg-agent', 'software-properties-common'])\
+\
+TASK [common : Uninstall old versions of docker] ***********************************************\
+ok: [45.113.235.12] => (item=['docker', 'docker-engine', 'docker.io'])\
+\
+TASK [common : Add Docker\'92s official GPG key] **************************************************\
+changed: [45.113.235.12]\
+\
+TASK [common : Configure Docker apt repository] ************************************************\
+changed: [45.113.235.12]\
+\
+TASK [common : Install Docker] *****************************************************************\
+changed: [45.113.235.12] => (item=['docker-ce', 'docker-ce-cli', 'containerd.io'])\
+\
+TASK [common : Install Docker Compose] *********************************************************\
+changed: [45.113.235.12]\
+\
+TASK [common : Create directory] ***************************************************************\
+changed: [45.113.235.12] => (item=/home/ubuntu/web_setup)\
+changed: [45.113.235.12] => (item=/home/ubuntu/couchdb_setup)\
+changed: [45.113.235.12] => (item=/home/ubuntu/couchdb_setup/data)\
+changed: [45.113.235.12] => (item=/home/ubuntu/crawler_setup)\
+changed: [45.113.235.12] => (item=/home/ubuntu/couchdb_setup/couchdb_configs)\
+\
+TASK [setup_swarm : Leave previous swarm on a node] ********************************************\
+fatal: [45.113.235.12]: FAILED! => \{"changed": true, "cmd": ["docker", "swarm", "leave", "--force"], "delta": "0:00:00.038438", "end": "2019-05-10 07:32:51.510764", "msg": "non-zero return code", "rc": 1, "start": "2019-05-10 07:32:51.472326", "stderr": "Error response from daemon: This node is not part of a swarm", "stderr_lines": ["Error response from daemon: This node is not part of a swarm"], "stdout": "", "stdout_lines": []\}\
+...ignoring\
+\
+TASK [setup_swarm : Setup master node] *********************************************************\
+skipping: [45.113.235.12]\
+\
+TASK [setup_swarm : Get the join-token of manager] *********************************************\
+skipping: [45.113.235.12]\
+\
+TASK [setup_swarm : Modify join_token] *********************************************************\
+skipping: [45.113.235.12]\
+\
+TASK [setup_swarm : Reload join token] *********************************************************\
+ok: [45.113.235.12]\
+\
+TASK [setup_swarm : Join a swarm] **************************************************************\
+changed: [45.113.235.12]\
+\
+TASK [setup_couchdb_cluster : Copy CouchDB setup file to remote] *******************************\
+changed: [45.113.235.12] => (item=docker-compose.yml)\
+changed: [45.113.235.12] => (item=cluster.sh)\
+\
+TASK [setup_couchdb_cluster : Copy CouchDB configs to remote] **********************************\
+changed: [45.113.235.12]\
+\
+TASK [setup_couchdb_cluster : Remove previous CouchDB service] *********************************\
+changed: [45.113.235.12]\
+\
+TASK [setup_couchdb_cluster : Build CouchDB service -- "slave1"] *******************************\
+changed: [45.113.235.12]\
+\
+TASK [setup_couchdb_cluster : Wait 10 seconds for services to start] ***************************\
+Pausing for 10 seconds\
+(ctrl+C then 'C' = continue early, ctrl+C then 'A' = abort)\
+ok: [45.113.235.12]\
+\
+TASK [setup_couchdb_cluster : Run cluster setup script] ****************************************\
+changed: [45.113.235.12]\
+\
+TASK [setup_couchdb_cluster : debug] ***********************************************************\
+ok: [45.113.235.12] => \{\
+    "output.stdout": "Join in CouchDB Cluster\\n\{\\"ok\\":true\}\\n\{\\"ok\\":true\}"\
+\}\
+\
+PLAY [slave2] **********************************************************************************\
+\
+TASK [Gathering Facts] *************************************************************************\
+ok: [45.113.235.143]\
+\
+TASK [common : Update apt package] *************************************************************\
+ok: [45.113.235.143]\
+\
+TASK [common : Install dependencies] ***********************************************************\
+changed: [45.113.235.143] => (item=['python3-setuptools', 'python3-pip', 'curl', 'vim', 'apt-transport-https', 'ca-certificates', 'gnupg-agent', 'software-properties-common'])\
+\
+TASK [common : Uninstall old versions of docker] ***********************************************\
+ok: [45.113.235.143] => (item=['docker', 'docker-engine', 'docker.io'])\
+\
+TASK [common : Add Docker\'92s official GPG key] **************************************************\
+changed: [45.113.235.143]\
+\
+TASK [common : Configure Docker apt repository] ************************************************\
+changed: [45.113.235.143]\
+\
+TASK [common : Install Docker] *****************************************************************\
+changed: [45.113.235.143] => (item=['docker-ce', 'docker-ce-cli', 'containerd.io'])\
+\
+TASK [common : Install Docker Compose] *********************************************************\
+changed: [45.113.235.143]\
+\
+TASK [common : Create directory] ***************************************************************\
+changed: [45.113.235.143] => (item=/home/ubuntu/web_setup)\
+changed: [45.113.235.143] => (item=/home/ubuntu/couchdb_setup)\
+changed: [45.113.235.143] => (item=/home/ubuntu/couchdb_setup/data)\
+changed: [45.113.235.143] => (item=/home/ubuntu/crawler_setup)\
+changed: [45.113.235.143] => (item=/home/ubuntu/couchdb_setup/couchdb_configs)\
+\
+TASK [setup_swarm : Leave previous swarm on a node] ********************************************\
+fatal: [45.113.235.143]: FAILED! => \{"changed": true, "cmd": ["docker", "swarm", "leave", "--force"], "delta": "0:00:00.040046", "end": "2019-05-10 07:34:41.864369", "msg": "non-zero return code", "rc": 1, "start": "2019-05-10 07:34:41.824323", "stderr": "Error response from daemon: This node is not part of a swarm", "stderr_lines": ["Error response from daemon: This node is not part of a swarm"], "stdout": "", "stdout_lines": []\}\
+...ignoring\
+\
+TASK [setup_swarm : Setup master node] *********************************************************\
+skipping: [45.113.235.143]\
+\
+TASK [setup_swarm : Get the join-token of manager] *********************************************\
+skipping: [45.113.235.143]\
+\
+TASK [setup_swarm : Modify join_token] *********************************************************\
+skipping: [45.113.235.143]\
+\
+TASK [setup_swarm : Reload join token] *********************************************************\
+ok: [45.113.235.143]\
+\
+TASK [setup_swarm : Join a swarm] **************************************************************\
+changed: [45.113.235.143]\
+\
+TASK [setup_couchdb_cluster : Copy CouchDB setup file to remote] *******************************\
+changed: [45.113.235.143] => (item=docker-compose.yml)\
+changed: [45.113.235.143] => (item=cluster.sh)\
+\
+TASK [setup_couchdb_cluster : Copy CouchDB configs to remote] **********************************\
+changed: [45.113.235.143]\
+\
+TASK [setup_couchdb_cluster : Remove previous CouchDB service] *********************************\
+changed: [45.113.235.143]\
+\
+TASK [setup_couchdb_cluster : Build CouchDB service -- "slave2"] *******************************\
+changed: [45.113.235.143]\
+\
+TASK [setup_couchdb_cluster : Wait 10 seconds for services to start] ***************************\
+Pausing for 10 seconds\
+(ctrl+C then 'C' = continue early, ctrl+C then 'A' = abort)\
+ok: [45.113.235.143]\
+\
+TASK [setup_couchdb_cluster : Run cluster setup script] ****************************************\
+changed: [45.113.235.143]\
+\
+TASK [setup_couchdb_cluster : debug] ***********************************************************\
+ok: [45.113.235.143] => \{\
+    "output.stdout": "Join in CouchDB Cluster\\n\{\\"ok\\":true\}\\n\{\\"ok\\":true\}"\
+\}\
+\
+PLAY [slave3] **********************************************************************************\
+\
+TASK [Gathering Facts] *************************************************************************\
+ok: [103.6.254.117]\
+\
+TASK [common : Update apt package] *************************************************************\
+ok: [103.6.254.117]\
+\
+TASK [common : Install dependencies] ***********************************************************\
+changed: [103.6.254.117] => (item=['python3-setuptools', 'python3-pip', 'curl', 'vim', 'apt-transport-https', 'ca-certificates', 'gnupg-agent', 'software-properties-common'])\
+\
+TASK [common : Uninstall old versions of docker] ***********************************************\
+ok: [103.6.254.117] => (item=['docker', 'docker-engine', 'docker.io'])\
+\
+TASK [common : Add Docker\'92s official GPG key] **************************************************\
+changed: [103.6.254.117]\
+\
+TASK [common : Configure Docker apt repository] ************************************************\
+changed: [103.6.254.117]\
+\
+TASK [common : Install Docker] *****************************************************************\
+changed: [103.6.254.117] => (item=['docker-ce', 'docker-ce-cli', 'containerd.io'])\
+\
+TASK [common : Install Docker Compose] *********************************************************\
+changed: [103.6.254.117]\
+\
+TASK [common : Create directory] ***************************************************************\
+changed: [103.6.254.117] => (item=/home/ubuntu/web_setup)\
+changed: [103.6.254.117] => (item=/home/ubuntu/couchdb_setup)\
+changed: [103.6.254.117] => (item=/home/ubuntu/couchdb_setup/data)\
+changed: [103.6.254.117] => (item=/home/ubuntu/crawler_setup)\
+changed: [103.6.254.117] => (item=/home/ubuntu/couchdb_setup/couchdb_configs)\
+\
+TASK [setup_swarm : Leave previous swarm on a node] ********************************************\
+fatal: [103.6.254.117]: FAILED! => \{"changed": true, "cmd": ["docker", "swarm", "leave", "--force"], "delta": "0:00:00.036879", "end": "2019-05-10 07:36:32.103425", "msg": "non-zero return code", "rc": 1, "start": "2019-05-10 07:36:32.066546", "stderr": "Error response from daemon: This node is not part of a swarm", "stderr_lines": ["Error response from daemon: This node is not part of a swarm"], "stdout": "", "stdout_lines": []\}\
+...ignoring\
+\
+TASK [setup_swarm : Setup master node] *********************************************************\
+skipping: [103.6.254.117]\
+\
+TASK [setup_swarm : Get the join-token of manager] *********************************************\
+skipping: [103.6.254.117]\
+\
+TASK [setup_swarm : Modify join_token] *********************************************************\
+skipping: [103.6.254.117]\
+\
+TASK [setup_swarm : Reload join token] *********************************************************\
+ok: [103.6.254.117]\
+\
+TASK [setup_swarm : Join a swarm] **************************************************************\
+changed: [103.6.254.117]\
+\
+TASK [setup_couchdb_cluster : Copy CouchDB setup file to remote] *******************************\
+changed: [103.6.254.117] => (item=docker-compose.yml)\
+changed: [103.6.254.117] => (item=cluster.sh)\
+\
+TASK [setup_couchdb_cluster : Copy CouchDB configs to remote] **********************************\
+changed: [103.6.254.117]\
+\
+TASK [setup_couchdb_cluster : Remove previous CouchDB service] *********************************\
+changed: [103.6.254.117]\
+\
+TASK [setup_couchdb_cluster : Build CouchDB service -- "slave3"] *******************************\
+changed: [103.6.254.117]\
+\
+TASK [setup_couchdb_cluster : Wait 10 seconds for services to start] ***************************\
+Pausing for 10 seconds\
+(ctrl+C then 'C' = continue early, ctrl+C then 'A' = abort)\
+ok: [103.6.254.117]\
+\
+TASK [setup_couchdb_cluster : Run cluster setup script] ****************************************\
+changed: [103.6.254.117]\
+\
+TASK [setup_couchdb_cluster : debug] ***********************************************************\
+ok: [103.6.254.117] => \{\
+    "output.stdout": "Join in CouchDB Cluster\\n\{\\"ok\\":true\}\\n\{\\"ok\\":true\}"\
+\}\
+\
+PLAY [master] **********************************************************************************\
+\
+TASK [Gathering Facts] *************************************************************************\
+ok: [45.113.233.94]\
+\
+TASK [deploy_crawler : Check the status of cluster CouchDB membership] *************************\
+changed: [45.113.233.94]\
+\
+TASK [deploy_crawler : debug] ******************************************************************\
+ok: [45.113.233.94] => \{\
+    "output.stdout": \{\
+        "all_nodes": [\
+            "couchdb@103.6.254.117",\
+            "couchdb@45.113.233.94",\
+            "couchdb@45.113.235.12",\
+            "couchdb@45.113.235.143"\
+        ],\
+        "cluster_nodes": [\
+            "couchdb@103.6.254.117",\
+            "couchdb@45.113.233.94",\
+            "couchdb@45.113.235.12",\
+            "couchdb@45.113.235.143"\
+        ]\
+    \}\
+\}\
+\
+TASK [deploy_crawler : Copy Crawler setup files to remote] *************************************\
+changed: [45.113.233.94] => (item=Dockerfile)\
+changed: [45.113.233.94] => (item=crawler.py)\
+changed: [45.113.233.94] => (item=twitterProcessor.py)\
+\
+TASK [deploy_crawler : Start Crawler service (Crawl place -- "Melbourne")] *********************\
+changed: [45.113.233.94]\
+\
+TASK [deploy_crawler : Start Crawler service (Crawl place -- "Melbourne")] *********************\
+changed: [45.113.233.94]\
+\
+PLAY [slave1] **********************************************************************************\
+\
+TASK [Gathering Facts] *************************************************************************\
+ok: [45.113.235.12]\
+\
+TASK [deploy_crawler : Check the status of cluster CouchDB membership] *************************\
+skipping: [45.113.235.12]\
+\
+TASK [deploy_crawler : debug] ******************************************************************\
+skipping: [45.113.235.12]\
+\
+TASK [deploy_crawler : Copy Crawler setup files to remote] *************************************\
+changed: [45.113.235.12] => (item=Dockerfile)\
+changed: [45.113.235.12] => (item=crawler.py)\
+changed: [45.113.235.12] => (item=twitterProcessor.py)\
+\
+TASK [deploy_crawler : Start Crawler service (Crawl place -- "Sydney")] ************************\
+changed: [45.113.235.12]\
+\
+TASK [deploy_crawler : Start Crawler service (Crawl place -- "Sydney")] ************************\
+changed: [45.113.235.12]\
+\
+PLAY [slave2] **********************************************************************************\
+\
+TASK [Gathering Facts] *************************************************************************\
+ok: [45.113.235.143]\
+\
+TASK [deploy_crawler : Check the status of cluster CouchDB membership] *************************\
+skipping: [45.113.235.143]\
+\
+TASK [deploy_crawler : debug] ******************************************************************\
+skipping: [45.113.235.143]\
+\
+TASK [deploy_crawler : Copy Crawler setup files to remote] *************************************\
+changed: [45.113.235.143] => (item=Dockerfile)\
+changed: [45.113.235.143] => (item=crawler.py)\
+changed: [45.113.235.143] => (item=twitterProcessor.py)\
+\
+TASK [deploy_crawler : Start Crawler service (Crawl place -- "Perth")] *************************\
+changed: [45.113.235.143]\
+\
+TASK [deploy_crawler : Start Crawler service (Crawl place -- "Perth")] *************************\
+changed: [45.113.235.143]\
+\
+PLAY [slave3] **********************************************************************************\
+\
+TASK [Gathering Facts] *************************************************************************\
+ok: [103.6.254.117]\
+\
+TASK [deploy_crawler : Check the status of cluster CouchDB membership] *************************\
+skipping: [103.6.254.117]\
+\
+TASK [deploy_crawler : debug] ******************************************************************\
+skipping: [103.6.254.117]\
+\
+TASK [deploy_crawler : Copy Crawler setup files to remote] *************************************\
+changed: [103.6.254.117] => (item=Dockerfile)\
+changed: [103.6.254.117] => (item=crawler.py)\
+changed: [103.6.254.117] => (item=twitterProcessor.py)\
+\
+TASK [deploy_crawler : Start Crawler service (Crawl place -- "Brisbane")] **********************\
+changed: [103.6.254.117]\
+\
+TASK [deploy_crawler : Start Crawler service (Crawl place -- "Brisbane")] **********************\
+changed: [103.6.254.117]\
+\
+PLAY RECAP *************************************************************************************\
+103.6.254.117              : ok=23   changed=16   unreachable=0    failed=0\
+45.113.233.94              : ok=24   changed=18   unreachable=0    failed=0\
+45.113.235.12              : ok=23   changed=16   unreachable=0    failed=0\
+45.113.235.143             : ok=23   changed=16   unreachable=0    failed=0}
