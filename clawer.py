@@ -59,19 +59,29 @@ def get_tweet(consumer_key, consumer_secret, access_token, access_token_secret,
         i = 0
         while True:
             try:
-                # i+=1
-                # if i > 5:
-                #     print('Update view')
-                #     vg.updateView()
+                i+=1
+                if i > 5:
+                    print('Update view')
+                    vg.updateView()
                 count = 0
                 for tweet in api.search(q="place:%s" % place_id[1], count=100, max_id=max_id-1):
                     count += 1
                     tweet_ids.append(tweet.id)
                     user_ids.add(str(tweet._json['user']['id']))
+
                     tweet._json['_id'] = str(tweet.id)
                     text = tweet._json['text']
                     score = tp.sentimentValue(text)
                     tweet._json['wrath_score'] = score
+
+                    x_min = tweet.place.bounding_box.coordinates[0][0][0]
+                    x_max = tweet.place.bounding_box.coordinates[0][1][0]
+                    y_min = tweet.place.bounding_box.coordinates[0][0][1]
+                    y_max = tweet.place.bounding_box.coordinates[0][2][1]
+                    x = (x_min+x_max)/2.0
+                    y = (y_min+y_max)/2.0
+                    surburb_name = tp.locate(x ,y)
+                    tweet._json['place']['full_name'] = surburb_name
                     try:
                         if score > MAX_THRESHOLD:
                             positive_db.save(tweet._json)
