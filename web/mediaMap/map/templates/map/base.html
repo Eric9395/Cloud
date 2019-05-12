@@ -1,0 +1,87 @@
+{% load static %}
+<html lang="en-us">
+
+<head>
+    <title>TEAM 20</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href='https://fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'>
+
+    {% block content-css %}{% endblock %}
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css"
+          integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
+
+</head>
+
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand" id="brand" href="#">TEAM 20</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbar">
+        <ul class="navbar-nav col-md-10 mr-auto">
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'map:index' %}">Home <span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'map:sentiment' %}">Sentiment</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'map:avengers' %}">Avengers</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'map:traffic' %}">Traffic Complaints</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'map:affordability' %}">Rental Affordability</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'map:aboutUs' %}">About us</a>
+            </li>
+        </ul>
+        <ul class="navbar-nav mr-auto navbar-right">
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'map:report' %}">Report</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="https://github.com/GatoY/mediaOnMap">Github</a>
+            </li>
+        </ul>
+
+    </div>
+</nav>
+
+{% block content %}{% endblock %}
+
+<script src="https://code.jquery.com/jquery-3.3.1.js"
+        integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
+        crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"
+        integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ"
+        crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"
+        integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm"
+        crossorigin="anonymous"></script>
+
+<script>
+    $('#navbar').find('a').each(function () {
+        if (this.href === document.location.href || document.location.href.search(this.href) >= 0) {
+            $(this).parent().addClass('active'); // this.className = 'active';
+        }
+    });
+
+    let DOMAIN = "http://127.0.0.1:8000";
+    let API_DOMAIN = DOMAIN + "/api/v1";
+
+</script>
+
+{% block content-js %}{% endblock %}
+
+
+</body>
+</html>
