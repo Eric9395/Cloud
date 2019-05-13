@@ -59,10 +59,6 @@ def get_tweet(consumer_key, consumer_secret, access_token, access_token_secret,
         i = 0
         while True:
             try:
-                i+=1
-                if i > 5:
-                    print('Update view')
-                    vg.updateView()
                 count = 0
                 for tweet in api.search(q="place:%s" % place_id[1], count=100, max_id=max_id-1):
                     count += 1
