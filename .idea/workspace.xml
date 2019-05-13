@@ -16,8 +16,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/clawer.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-783">
-              <caret line="135" column="80" selection-start-line="135" selection-start-column="80" selection-end-line="135" selection-end-column="80" />
+            <state relative-caret-position="352">
+              <caret line="137" column="62" selection-start-line="137" selection-start-column="62" selection-end-line="137" selection-end-column="62" />
               <folding>
                 <element signature="e#0#14#0" expanded="true" />
               </folding>
@@ -28,8 +28,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/viewGenerator.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="286">
-              <caret line="13" lean-forward="true" selection-start-line="13" selection-end-line="13" />
+            <state relative-caret-position="198">
+              <caret line="9" column="54" selection-start-line="9" selection-start-column="54" selection-end-line="9" selection-end-column="54" />
             </state>
           </provider>
         </entry>
@@ -37,7 +37,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/twitterProcessor.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="198">
+            <state relative-caret-position="-132">
               <caret line="9" lean-forward="true" selection-start-line="9" selection-end-line="9" />
               <folding>
                 <element signature="e#0#37#0" expanded="true" />
@@ -50,7 +50,7 @@
         <entry file="file://$PROJECT_DIR$/aaa.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="198">
-              <caret line="9" column="8" lean-forward="true" selection-start-line="9" selection-start-column="8" selection-end-line="9" selection-end-column="8" />
+              <caret line="9" column="8" selection-start-line="9" selection-start-column="8" selection-end-line="9" selection-end-column="8" />
             </state>
           </provider>
         </entry>
@@ -131,16 +131,16 @@
         <option value="$PROJECT_DIR$/twitterDataAnalysis.py" />
         <option value="$PROJECT_DIR$/README.md" />
         <option value="$PROJECT_DIR$/test.py" />
-        <option value="$PROJECT_DIR$/twitterProcessor.py" />
         <option value="$PROJECT_DIR$/viewGenerator.py" />
         <option value="$PROJECT_DIR$/aaa.py" />
+        <option value="$PROJECT_DIR$/twitterProcessor.py" />
         <option value="$PROJECT_DIR$/clawer.py" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="727" />
-    <option name="y" value="87" />
+    <option name="x" value="695" />
+    <option name="y" value="50" />
     <option name="width" value="980" />
     <option name="height" value="1040" />
   </component>
@@ -165,8 +165,8 @@
   </component>
   <component name="PropertiesComponent">
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
-    <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../CCC/test_1.1.py" />
+    <property name="settings.editor.selected.configurable" value="editor.preferences.fonts.default" />
   </component>
   <component name="RunDashboard">
     <option name="ruleStates">
@@ -180,7 +180,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Python.aaa">
+  <component name="RunManager" selected="Python.clawer">
     <configuration name="aaa" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="CCC_ass2" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -215,7 +215,7 @@
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/clawer.py" />
-      <option name="PARAMETERS" value="Zf28oOjHPsWlCgZ0n9TF42XDg jnWreweMUzZwSYRlL5hAEqpGGIO8DMVMAhtRqOG7fmiTHzM3bN 1119421816508825600-eEehgx2JYnp8frBiNJCMrTxdEdaCps u16kBCbFQwl0kCOkFGTMoM4oEmRHGuP4FBsbXp0kv3NHC Melbourne 127.0.0.1 Admin admin aaa" />
+      <option name="PARAMETERS" value="Zf28oOjHPsWlCgZ0n9TF42XDg jnWreweMUzZwSYRlL5hAEqpGGIO8DMVMAhtRqOG7fmiTHzM3bN 1119421816508825600-eEehgx2JYnp8frBiNJCMrTxdEdaCps u16kBCbFQwl0kCOkFGTMoM4oEmRHGuP4FBsbXp0kv3NHC Australia 127.0.0.1 Admin admin aaa" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
       <option name="MODULE_MODE" value="false" />
@@ -295,8 +295,8 @@
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Python.aaa" />
         <item itemvalue="Python.clawer" />
+        <item itemvalue="Python.aaa" />
         <item itemvalue="Python.store_demo" />
         <item itemvalue="Python.homework3" />
         <item itemvalue="Python.test" />
@@ -475,19 +475,34 @@
       <option name="project" value="LOCAL" />
       <updated>1557650616154</updated>
     </task>
-    <option name="localTasksCounter" value="24" />
+    <task id="LOCAL-00024" summary="simplify code">
+      <created>1557651178069</created>
+      <option name="number" value="00024" />
+      <option name="presentableId" value="LOCAL-00024" />
+      <option name="project" value="LOCAL" />
+      <updated>1557651178069</updated>
+    </task>
+    <task id="LOCAL-00025" summary="simplify code">
+      <created>1557706836152</created>
+      <option name="number" value="00025" />
+      <option name="presentableId" value="LOCAL-00025" />
+      <option name="project" value="LOCAL" />
+      <updated>1557706836152</updated>
+    </task>
+    <option name="localTasksCounter" value="26" />
     <servers />
   </component>
   <component name="ToolWindowManager">
     <frame x="-7" y="-7" width="1550" height="838" extended-state="6" />
+    <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.17239101" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.17239101" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
-      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.49867898" visible="true" weight="0.13314448" />
-      <window_info anchor="bottom" id="Debug" order="3" sideWeight="0.49867898" weight="0.24929178" />
+      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.49867898" weight="0.09915014" />
+      <window_info active="true" anchor="bottom" id="Debug" order="3" sideWeight="0.49867898" visible="true" weight="0.27053824" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />
@@ -534,8 +549,8 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/clawer.py</url>
-          <line>118</line>
-          <option name="timeStamp" value="40" />
+          <line>46</line>
+          <option name="timeStamp" value="43" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
@@ -605,13 +620,6 @@
     </expressions>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/../CCC/test_1.1.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="82">
-          <caret line="131" column="49" lean-forward="true" selection-start-line="131" selection-start-column="44" selection-end-line="131" selection-end-column="49" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/text.py" />
     <entry file="file://$USER_HOME$/AppData/Roaming/Python/Python36/site-packages/tweepy/binder.py">
       <provider selected="true" editor-type-id="text-editor">
@@ -777,9 +785,30 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/twitterProcessor.py">
+    <entry file="file://$PROJECT_DIR$/aaa.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="198">
+          <caret line="9" column="8" selection-start-line="9" selection-start-column="8" selection-end-line="9" selection-end-column="8" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../CCC/test_1.1.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="242">
+          <caret line="70" column="52" selection-start-line="70" selection-start-column="41" selection-end-line="70" selection-end-column="52" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/viewGenerator.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="198">
+          <caret line="9" column="54" selection-start-line="9" selection-start-column="54" selection-end-line="9" selection-end-column="54" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/twitterProcessor.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-132">
           <caret line="9" lean-forward="true" selection-start-line="9" selection-end-line="9" />
           <folding>
             <element signature="e#0#37#0" expanded="true" />
@@ -787,24 +816,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/viewGenerator.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="286">
-          <caret line="13" lean-forward="true" selection-start-line="13" selection-end-line="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/aaa.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="198">
-          <caret line="9" column="8" lean-forward="true" selection-start-line="9" selection-start-column="8" selection-end-line="9" selection-end-column="8" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/clawer.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-783">
-          <caret line="135" column="80" selection-start-line="135" selection-start-column="80" selection-end-line="135" selection-end-column="80" />
+        <state relative-caret-position="352">
+          <caret line="137" column="62" selection-start-line="137" selection-start-column="62" selection-end-line="137" selection-end-column="62" />
           <folding>
             <element signature="e#0#14#0" expanded="true" />
           </folding>

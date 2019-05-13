@@ -69,14 +69,18 @@ def get_tweet(consumer_key, consumer_secret, access_token, access_token_secret,
                     text = tweet._json['text']
                     score = tp.sentimentValue(text)
                     tweet._json['wrath_score'] = score
+                    if tweet._json['coordinates']:
+                        surburb_name = tp.locate(tweet._json['coordinates']['coordinates'][0],
+                                                 tweet._json['coordinates']['coordinates'][1])
+                    else:
+                        x_min = tweet.place.bounding_box.coordinates[0][0][0]
+                        x_max = tweet.place.bounding_box.coordinates[0][1][0]
+                        y_min = tweet.place.bounding_box.coordinates[0][0][1]
+                        y_max = tweet.place.bounding_box.coordinates[0][2][1]
+                        x = (x_min+x_max)/2.0
+                        y = (y_min+y_max)/2.0
+                        surburb_name = tp.locate(x,y)
 
-                    x_min = tweet.place.bounding_box.coordinates[0][0][0]
-                    x_max = tweet.place.bounding_box.coordinates[0][1][0]
-                    y_min = tweet.place.bounding_box.coordinates[0][0][1]
-                    y_max = tweet.place.bounding_box.coordinates[0][2][1]
-                    x = (x_min+x_max)/2.0
-                    y = (y_min+y_max)/2.0
-                    surburb_name = tp.locate(x,y)
                     if surburb_name:
                         tweet._json['place']['full_name'] = surburb_name
 
@@ -121,13 +125,17 @@ def get_tweet(consumer_key, consumer_secret, access_token, access_token_secret,
                             score = tp.sentimentValue(text)
                             tweet._json['wrath_score'] = score
 
-                            x_min = tweet.place.bounding_box.coordinates[0][0][0]
-                            x_max = tweet.place.bounding_box.coordinates[0][1][0]
-                            y_min = tweet.place.bounding_box.coordinates[0][0][1]
-                            y_max = tweet.place.bounding_box.coordinates[0][2][1]
-                            x = (x_min + x_max) / 2.0
-                            y = (y_min + y_max) / 2.0
-                            surburb_name = tp.locate(x, y)
+                            if tweet._json['coordinates']:
+                                surburb_name = tp.locate(tweet._json['coordinates']['coordinates'][0],
+                                                         tweet._json['coordinates']['coordinates'][1])
+                            else:
+                                x_min = tweet.place.bounding_box.coordinates[0][0][0]
+                                x_max = tweet.place.bounding_box.coordinates[0][1][0]
+                                y_min = tweet.place.bounding_box.coordinates[0][0][1]
+                                y_max = tweet.place.bounding_box.coordinates[0][2][1]
+                                x = (x_min + x_max) / 2.0
+                                y = (y_min + y_max) / 2.0
+                                surburb_name = tp.locate(x, y)
                             if surburb_name:
                                 tweet._json['place']['full_name'] = surburb_name
 
