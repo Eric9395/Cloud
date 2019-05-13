@@ -84,13 +84,13 @@ class viewGenerator:
             data['pride_score'][item.key] = item.value
 
         data['hashtag'] = {}
-        for item in self.dataDB.view('summary/get_hashtag_sum', group=True, group_level=2, descending=True, limit=50):
+        for item in self.dataDB.view('summary/get_hashtag_sum', group=True, group_level=2):
             if item.key[1] not in data['hashtag']:
                 data['hashtag'][item.key[1]] = {}
             data['hashtag'][item.key[1]][item.key[0]] = item.value
 
         data['hashtag_total'] = {}
-        for item in self.dataDB.view('summary/get_hashtag_sum', group=True, group_level=1, descending=True, limit=50):
+        for item in self.dataDB.view('summary/get_hashtag_sum', group=True, group_level=1):
             data['hashtag_total'][item.key[0]] = item.value
 
         self.resultDB.update([data])
