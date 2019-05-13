@@ -110,3 +110,7 @@ class twitterProcessor():
 
     def sentimentValue(self, tweetText):
         return self.classifier.prob_classify(self.bag_of_words(tweetText)).prob('pos')
+
+
+tp = twitterProcessor()
+print(tp.locate(145.053135344, -37.972566514250005))
