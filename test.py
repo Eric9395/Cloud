@@ -5,6 +5,8 @@ import sys
 import requests
 
 
+
+
 def initial_database(couchdb_username, couchdb_password, database_name):
     global server, tweets_db
     server = couchdb.Server(url='http://'+couchdb_username+':'+couchdb_password+'@127.0.0.1:5984/')

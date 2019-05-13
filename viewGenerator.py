@@ -7,10 +7,10 @@ class viewGenerator:
         self.server = couchdb.Server(serverFullAddress)
         self.dataDB = self.server[dataDB]
         try:
-            self.resultDB = self.server['result' + dataDB]  # if database has already created
+            self.resultDB = self.server['result_' + dataDB]  # if database has already created
         except couchdb.http.ResourceNotFound as e:
-            self.resultDB = self.server.create('result' + dataDB)  # First time
-            self.resultDB = self.server['result'+dataDB]
+            self.resultDB = self.server.create('result_' + dataDB)  # First time
+            self.resultDB = self.server['result_'+dataDB]
 
         self.allView = {
             'get_wrath_score': {
@@ -85,10 +85,12 @@ class viewGenerator:
 
         data['hashtag'] = {}
         for item in self.dataDB.view('summary/get_hashtag_sum', group=True, group_level=2, descending=True, limit=50):
-            data['hashtag'][item.key] = item.value
+            if item.key[1] not in data['hashtag']:
+                data['hashtag'][item.key[1]] = {}
+            data['hashtag'][item.key[1]][item.key[0]] = item.value
 
         data['hashtag_total'] = {}
         for item in self.dataDB.view('summary/get_hashtag_sum', group=True, group_level=1, descending=True, limit=50):
-            data['hashtag_total'][item.key] = item.value
+            data['hashtag_total'][item.key[0]] = item.value
 
         self.resultDB.update([data])
