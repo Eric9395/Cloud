@@ -56,7 +56,7 @@ class viewGenerator:
             '''
             },
             'get_hashtag_sum': {
-                'map': 'function(doc){for(var i=0; i<doc.entities.hashtags.length;i++){emit([doc.entities.hashtags[i].text, doc.place.full_name], 1);}}',
+                'map': 'function(doc){for(var i=0; i<doc.entities.hashtags.length;i++){emit([doc.entities.hashtags[i].text.toLowercase(), doc.place.full_name], 1);}}',
                 'reduce': 'function(keys, values){return sum(values);}'
             }
         }
