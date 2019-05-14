@@ -1,3 +1,9 @@
+# Team 20
+# Team member: Site Huang, 908282
+#              Chenyuan Zhang, 815901
+#              Zixuan Zhang, 846305
+#              Zhentao Zhang, 864735
+#              Kangyun Dou, 740145
 import couchdb
 
 
@@ -70,27 +76,24 @@ class viewGenerator:
             self.dataDB['_design/summary'] = dict(language='javascript', views=self.allView)
 
     def updateView(self):
-
-        data = self.resultDB.get('0')
-        if not data:
-            data = {'_id': '0'}
-
-        data['wrath_score'] = {}
-        for item in self.dataDB.view('summary/get_wrath_score', group=True):
-            data['wrath_score'][item.key] = item.value
-
-        data['pride_score'] = {}
-        for item in self.dataDB.view('summary/get_pride_score', group=True):
-            data['pride_score'][item.key] = item.value
-
-        data['hashtag'] = {}
-        for item in self.dataDB.view('summary/get_hashtag_sum', group=True, group_level=2):
-            if item.key[1] not in data['hashtag']:
-                data['hashtag'][item.key[1]] = {}
-            data['hashtag'][item.key[1]][item.key[0]] = item.value
-
-        data['hashtag_total'] = {}
-        for item in self.dataDB.view('summary/get_hashtag_sum', group=True, group_level=1):
-            data['hashtag_total'][item.key[0]] = item.value
-
-        self.resultDB.update([data])
+        try:
+            data = self.resultDB.get('0')
+            if not data:
+                data = {'_id': '0'}
+            data['wrath_score'] = {}
+            for item in self.dataDB.view('summary/get_wrath_score', group=True):
+                data['wrath_score'][item.key] = item.value
+            data['pride_score'] = {}
+            for item in self.dataDB.view('summary/get_pride_score', group=True):
+                data['pride_score'][item.key] = item.value
+            data['hashtag'] = {}
+            for item in self.dataDB.view('summary/get_hashtag_sum', group=True, group_level=2):
+                if item.key[1] not in data['hashtag']:
+                    data['hashtag'][item.key[1]] = {}
+                data['hashtag'][item.key[1]][item.key[0]] = item.value
+            data['hashtag_total'] = {}
+            for item in self.dataDB.view('summary/get_hashtag_sum', group=True, group_level=1):
+                data['hashtag_total'][item.key[0]] = item.value
+            self.resultDB.update([data])
+        except:
+            pass
