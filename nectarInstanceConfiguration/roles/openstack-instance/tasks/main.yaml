@@ -1,0 +1,30 @@
+# Team 20
+# Team member: Site Huang, 908282
+#              Chenyuan Zhang, 815901
+#              Zixuan Zhang, 846305
+#              Zhentao Zhang, 864735
+#              Kangyun Dou, 740145
+# Create an instance on NeCTAR
+
+- name: Create an instance
+  os_server:
+    name: '{{ instance_name }}{{ index }}'
+    image: '{{ instance_image }}'
+    key_name: '{{ instance_key_name }}'
+    flavor: '{{ instance_flavor }}'
+    availability_zone: '{{ availability_zone }}'
+    security_groups: '{{ sg_names }}'
+    volumes: '{{ item }}'
+    auto_floating_ip: yes
+    wait: yes
+    timeout: 600
+    state: present
+  loop: '{{ os_vol_ids }}'
+  loop_control:
+    index_var: index
+  register: os_instance
+
+- debug:
+    msg: "{{ item.name }} has been created. IP address is {{ item.openstack.public_v4 }}"
+  loop: "{{ os_instance }}"
+  when: item.openstack is defined
