@@ -1,0 +1,52 @@
+---
+# Team 20
+# Team member: Site Huang, 908282
+#              Chenyuan Zhang, 815901
+#              Zixuan Zhang, 846305
+#              Zhentao Zhang, 864735
+#              Kangyun Dou, 740145
+
+- hosts: master
+  vars_files:
+    - host_vars/vars.yml
+  become: yes
+  roles:
+    # - common
+    # - setup_swarm
+    # - setup_couchdb_cluster
+    - deploy_crawler
+    # - deploy_web
+
+- hosts: slave1
+  vars_files:
+    - host_vars/vars.yml
+  become: yes
+  roles:
+    # - common
+    # - setup_swarm
+    # - setup_couchdb_cluster
+    - deploy_crawler
+    # - deploy_web
+
+- hosts: slave2
+  vars_files:
+    - host_vars/vars.yml
+  become: yes
+  roles:
+    # - common
+    # - setup_swarm
+    # - setup_couchdb_cluster
+    - deploy_crawler
+    # - deploy_web
+
+
+- hosts: slave3
+  vars_files:
+    - host_vars/vars.yml
+  become: yes
+  roles:
+    # - common
+    # - setup_swarm
+    # - setup_couchdb_cluster
+    - deploy_crawler
+    # - deploy_web
