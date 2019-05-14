@@ -1,15 +1,5 @@
 ---
 
-- name: Check the status of cluster CouchDB membership
-  when: inventory_hostname in groups['master']
-  become: yes
-  command: "curl http://{{ couchdb_username }}:{{ couchdb_password }}@0.0.0.0:5984/_membership"
-  register: output
-  ignore_errors: yes
-
-- debug: var=output.stdout
-  when: inventory_hostname in groups['master']
-
 - name: Copy Crawler setup files to remote
   become: yes
   template:
@@ -36,3 +26,13 @@
   command: "docker run -d {{ crawler_tag }}"
   args:
     chdir: "{{ crawler_dir }}"
+
+- name: Check the status of cluster CouchDB membership
+  when: inventory_hostname in groups['slave3']
+  become: yes
+  command: "curl http://{{ couchdb_username }}:{{ couchdb_password }}@0.0.0.0:5984/_membership"
+  register: output
+  ignore_errors: yes
+
+- debug: var=output.stdout
+  when: inventory_hostname in groups['slave3']
