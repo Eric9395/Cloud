@@ -18,3 +18,11 @@ As long as all the dependacies illustrated in the report are installed, the code
 - hosts: A list of nodes IP addressses and vars
 - roles: Ansible playbook execution tasks
 - docker_install.yml: The main entrance of the ansible playbook code.
+
+### Team
+- Team 20
+- Team member: - Site Huang, 908282
+               - Chenyuan Zhang, 815901
+               - Zixuan Zhang, 846305
+               - Zhentao Zhang, 864735
+               - Kangyun Dou, 740145
