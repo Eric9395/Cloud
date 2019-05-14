@@ -11,9 +11,9 @@
     - host_vars/vars.yml
   become: yes
   roles:
-    # - common
-    # - setup_swarm
-    # - setup_couchdb_cluster
+    - common
+    - setup_swarm
+    - setup_couchdb_cluster
     - deploy_crawler
     # - deploy_web
 
@@ -22,9 +22,9 @@
     - host_vars/vars.yml
   become: yes
   roles:
-    # - common
-    # - setup_swarm
-    # - setup_couchdb_cluster
+    - common
+    - setup_swarm
+    - setup_couchdb_cluster
     - deploy_crawler
     # - deploy_web
 
@@ -33,9 +33,9 @@
     - host_vars/vars.yml
   become: yes
   roles:
-    # - common
-    # - setup_swarm
-    # - setup_couchdb_cluster
+    - common
+    - setup_swarm
+    - setup_couchdb_cluster
     - deploy_crawler
     # - deploy_web
 
@@ -45,8 +45,8 @@
     - host_vars/vars.yml
   become: yes
   roles:
-    # - common
-    # - setup_swarm
-    # - setup_couchdb_cluster
+    - common
+    - setup_swarm
+    - setup_couchdb_cluster
     - deploy_crawler
     # - deploy_web
