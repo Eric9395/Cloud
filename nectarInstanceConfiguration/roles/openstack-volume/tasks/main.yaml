@@ -1,0 +1,26 @@
+# Team 20
+# Team member: Site Huang, 908282
+#              Chenyuan Zhang, 815901
+#              Zixuan Zhang, 846305
+#              Zhentao Zhang, 864735
+#              Kangyun Dou, 740145
+# Create volumes from vars
+
+- name: Create volume(s) on NeCTAR
+  os_volume:
+    display_name: '{{ vol_name }}{{ item }}'
+    size: '{{ vol_size }}'
+    availability_zone: '{{ availability_zone }}'
+    wait: yes
+    timeout: 600
+    state: present
+  with_sequence: count={{ instance_number }}
+  register: os_vol
+
+- name: Create a list of volume Ids
+  set_fact:
+    os_vol_ids: '{{ os_vol_ids|default([]) + [ item.id ]}}'
+  loop: '{{ os_vol.results }}'
+
+- debug:
+    msg: "Volume {{ os_vol_ids }} has been created."

@@ -1,0 +1,18 @@
+# Team 20
+# Team member: Site Huang, 908282
+#              Chenyuan Zhang, 815901
+#              Zixuan Zhang, 846305
+#              Zhentao Zhang, 864735
+#              Kangyun Dou, 740145
+- hosts: localhost
+  vars_files:
+    - host_vars/nectar.yaml
+  gather_facts: true
+
+  roles:
+    - role: openstack-common
+    - role: openstack-images
+    - role: openstack-volume
+    - role: openstack-security-group
+    - role: openstack-keypairs
+    - role: openstack-instance
