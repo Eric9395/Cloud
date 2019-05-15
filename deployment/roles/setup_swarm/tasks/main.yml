@@ -1,9 +1,10 @@
 ---
-
-# - name: Leave previous swarm on a node
-#   become: yes
-#   command: docker swarm leave --force
-#   ignore_errors: yes
+# Team 20
+# Team member: Site Huang, 908282
+#              Chenyuan Zhang, 815901
+#              Zixuan Zhang, 846305
+#              Zhentao Zhang, 864735
+#              Kangyun Dou, 740145
 
 - name: Setup master node
   when: inventory_hostname in groups['master']

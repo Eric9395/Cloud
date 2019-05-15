@@ -1,0 +1,44 @@
+{
+  "Mon": {
+    "positive": 2992,
+    "negative": 1120,
+    "neutral": 2973,
+    "percentage": 0.4223
+  },
+  "Tue": {
+    "positive": 294,
+    "negative": 117,
+    "neutral": 311,
+    "percentage": 0.406
+  },
+  "Wed": {
+    "positive": 46,
+    "negative": 18500,
+    "neutral": 4590,
+    "percentage": 0.418
+  },
+  "Thu": {
+    "positive": 6195,
+    "negative": 2397,
+    "neutral": 6214,
+    "percentage": 0.4184
+  },
+  "Fri": {
+    "positive": 6072,
+    "negative": 2306,
+    "neutral": 6412,
+    "percentage": 0.4105
+  },
+  "Sat": {
+    "positive": 6016,
+    "negative": 2498,
+    "neutral": 6309,
+    "percentage": 0.4059
+  },
+  "Sun": {
+    "positive": 3329,
+    "negative": 1412,
+    "neutral": 3333,
+    "percentage": 0.4123
+  }
+}

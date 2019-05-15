@@ -1,0 +1,71 @@
+{% extends 'map/base.html' %}
+{% load static %}
+
+{% block content-css %}
+<link href="{% static 'map/css/index.css' %}" rel='stylesheet' type='text/css'>
+{% endblock content-css %}
+
+
+{% block content %}
+<div class="container" style="margin-bottom: 80px;">
+    <div class="row">
+        <!--<div id="map"></div>-->
+        <div class="card z-depth-1-half" style="width: 100%; margin-bottom: 20px">
+            <div class="card-body">
+                <h4 class="card-title">2019 COMP90024 Assignment 2</h4>
+                <h5 class="card-subtitle mb-2 text-muted">Team 20</h5>
+                <p class="card-text">Reference:&nbsp;&nbsp;&nbsp;
+                    <a href="http://www.abs.gov.au/AUSSTATS/abs@.nsf/DetailsPage/1270.0.55.006July%202011?OpenDocument">
+                        Australian Bureau of Statistics</a>&nbsp;&nbsp;&nbsp;
+                    <a href="https://portal.aurin.org.au/">AURIN</a>&nbsp;&nbsp;&nbsp;
+                    <a href="https://developer.twitter.com/">Twitter API</a>&nbsp;
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <h3 align="center" style="margin-top: 20px; margin-bottom: 20px">
+        Scenarios
+    </h3>
+
+    <div class="row">
+        <div class="col-sm-6 col-md-6 col-xl-3 mb-3">
+            <a href="{% url 'map:wrath' %}">
+                <img class="img-thumbnail mb-3" src="{% static 'map/img/wrath.png' %}" alt="wrath"
+                     align="center">
+                <h5 class="mb-1" align="center">Wrath Analysis</h5>
+            </a>
+            <p class="text-muted">Wrath analysis: darker the color is, more angry the people in the area could be...</p>
+        </div>
+        <div class="col-sm-6 col-md-6 col-xl-3 mb-3">
+            <a href="{% url 'map:pride' %}">
+                <img class="img-thumbnail mb-3" src="{% static 'map/img/pride.png' %}" alt="pride"
+                     align="center">
+                <h5 class="mb-1" align="center">Pride Analysis</h5>
+            </a>
+            <p class="text-muted">More popular the person are, more pride the person could be...</p>
+        </div>
+        <div class="col-sm-6 col-md-6 col-xl-3 mb-3">
+            <a href="{% url 'map:hashtags' %}">
+                <img class="img-thumbnail mb-3" src="{% static 'map/img/hashtag.png' %}" alt="hashtags"
+                     align="center">
+                <h5 class="mb-1" align="center">Hashtags</h5>
+            </a>
+            <p class="text-muted">Which topics are the wrath people and pride people interested in?</p>
+        </div>
+        <div class="col-sm-6 col-md-6 col-xl-3 mb-3">
+            <a href="{% url 'map:aurin' %}">
+                <img class="img-thumbnail mb-3" src="{% static 'map/img/Income.png' %}" alt="affordability"
+                     align="center">
+                <h5 class="mb-1" align="center">RAI(Aurin)</h5>
+            </a>
+            <p class="text-muted">Does the RAI level of one region affect the Wrath or Pride? </p>
+        </div>
+    </div>
+</div>
+{% endblock content %}
+
+{% block content-js %}
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBXMED9UYwf1tu1UFhs-YezMto6ukUZnhU"></script>
+<script src="{% static 'map/js/index.js' %}"></script>
+{% endblock content-js %}

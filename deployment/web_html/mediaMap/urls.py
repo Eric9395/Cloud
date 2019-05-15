@@ -4,4 +4,3 @@ urlpatterns = [
     path('', include(('map.urls','map'))),
 
                ]
-

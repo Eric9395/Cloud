@@ -15,7 +15,7 @@
     - setup_swarm
     - setup_couchdb_cluster
     - deploy_crawler
-    # - deploy_web
+    - deploy_web
 
 - hosts: slave1
   vars_files:
@@ -26,7 +26,7 @@
     - setup_swarm
     - setup_couchdb_cluster
     - deploy_crawler
-    # - deploy_web
+    - deploy_web
 
 - hosts: slave2
   vars_files:
@@ -37,7 +37,7 @@
     - setup_swarm
     - setup_couchdb_cluster
     - deploy_crawler
-    # - deploy_web
+    - deploy_web
 
 
 - hosts: slave3
@@ -49,4 +49,4 @@
     - setup_swarm
     - setup_couchdb_cluster
     - deploy_crawler
-    # - deploy_web
+    - deploy_web

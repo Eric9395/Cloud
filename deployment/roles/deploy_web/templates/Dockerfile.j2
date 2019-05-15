@@ -1,5 +1,15 @@
 FROM python:3.6.8
+
 ENV PYTHONUNBUFFERED 1
+
 WORKDIR /web
+
 COPY . /web
-RUN pip3 install --trusted-host pypi.python.org Django
+
+RUN pip3 install couchdb
+
+RUN pip3 install Django
+
+RUN pip3 install django-cors-headers
+
+RUN pip3 install django-cors-middleware

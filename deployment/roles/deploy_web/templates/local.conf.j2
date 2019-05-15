@@ -2,13 +2,13 @@
 upstream web {
     # docker will automatically resolve this to the correct address
     # because we use the same name as the service: "web"
-    server web:80;
+    server web:8000;
 }
 
 # now we declare our main server
 server {
 
-    listen 80;
+    listen 8000;
     server_name localhost;
 
     location / {

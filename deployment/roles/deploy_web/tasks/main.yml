@@ -1,5 +1,12 @@
 ---
 
+# Team 20
+# Team member: Site Huang, 908282
+#              Chenyuan Zhang, 815901
+#              Zixuan Zhang, 846305
+#              Zhentao Zhang, 864735
+#              Kangyun Dou, 740145
+
 - name: Copy html to remote
   become: yes
   synchronize:
@@ -21,23 +28,12 @@
 
 - name: Build Webservice -- "{{couchdb_hostname}}"
   become: yes
-  command: "docker-compose up -d"
+  command: "docker-compose down"
   args:
     chdir: "{{ home_dir }}/web_html"
 
-# - name: Start Web service
-#   become: yes
-#   command: docker stack deploy -c docker-compose.yml webservice
-#   args:
-#     chdir: "{{ home_dir }}/web_html/"
-#
-# - name: Scale Web service to all nodes
-#   become: yes
-#   command: "docker service scale webservice_web={{ num_scale_webservices }}"
-#
-# - name: Check the status of Web service
-#   become: yes
-#   command: docker service ps webservice_web
-#   register: output
-#
-# - debug: var=output.stdout
+- name: Build Webservice -- "{{couchdb_hostname}}"
+  become: yes
+  command: "docker-compose up -d"
+  args:
+    chdir: "{{ home_dir }}/web_html"
